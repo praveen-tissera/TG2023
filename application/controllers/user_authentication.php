@@ -22,7 +22,7 @@ Class User_Authentication extends CI_Controller {
 
 	// Show login page
 	public function index() {
-			$this->load->view('welcome_message');
+			$this->load->view('contactus');
 			
 	}
 
