@@ -11,4 +11,8 @@ class User extends CI_Controller{
 
         $this->load->view('login',$data);
     }
+    public function userID($id){
+        $data['userid'] = $id;
+        $this->load->view('userlist', $data);
+    }
 }
