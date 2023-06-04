@@ -7,9 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="form_submit.php" method="get">
+    <form action="form_submit.php" method="post" style="display:flex; flex-direction:column; top-padding:40px">
         <input type="email" name="email" id="" placeholder="your email">
         <input type="password" name="password" id="" placeholder="your password">
+        <input type="password" name="retypepass" id="" placeholder="retype your password here">
         <input type="submit" value="Login">
     </form>
 </body>
