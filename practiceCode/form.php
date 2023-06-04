@@ -7,8 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <input type="email" name="email" id="">
-    <input type="password" name="passwd" id="">
-    <input type="submit" value="Login">
+    <form action="form_submit.php" method="get">
+        <input type="email" name="email" id="" placeholder="your email">
+        <input type="password" name="passwd" id="" placeholder="your password">
+        <input type="submit" value="Login">
+    </form>
 </body>
 </html>
