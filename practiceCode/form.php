@@ -8,9 +8,11 @@
 </head>
 <body>
 
-<form action="" method="get">
+<form action="form_sumbit.php" method="post">
     <input type="email" name ="useremail" placeholder="email">
-    <input type="password" nmae ="userpassword" placeholder="password">
+    <input type="password" name ="userpassword" placeholder="password">
+    <input type="password" name ="retypepassword" placeholder="retype password">
+
     <button type="submit" name="login"  >LOGIN  </button>
 
 </form>
@@ -20,3 +22,4 @@
 
 </body>
 </html>
+
