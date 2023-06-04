@@ -9,7 +9,7 @@
 <body>
     <form action="form_submit.php" method="get">
         <input type="email" name="email" id="" placeholder="your email">
-        <input type="password" name="passwd" id="" placeholder="your password">
+        <input type="password" name="password" id="" placeholder="your password">
         <input type="submit" value="Login">
     </form>
 </body>
