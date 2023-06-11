@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <form>
+    <form action="register_submit.php" method="post">
         <table border="1">
             <tr>
                 <td colspan="2">Register Page</td>
