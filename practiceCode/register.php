@@ -25,7 +25,7 @@
                 </tr>
                 <tr>
                     <td>Address</td>
-                    <td><textarea name="text" cols="30" rows="10" style="" name="address"></textarea></td>
+                    <td><textarea cols="30" rows="10" style="" name="address"></textarea></td>
                 </tr>
                 <tr>
                     <td>Password</td>
