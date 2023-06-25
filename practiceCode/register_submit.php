@@ -1,23 +1,21 @@
-<?php
-
+<?php 
 print_r($_POST);
-echo $_POST('Email');
+echo $_POST['email'];
 
-//connect to database
+// connect to the databae
+// create a link to Database
 $connection = mysqli_connect('127.0.0.1','root', '', 'user_db');
 if($connection){
-echo "Connected Succesfully";
+ echo "Connected Successfully";
 }else{
-    echo "Databse connection fail"
+    echo "database connection fails";
 }
+// insert data into the database
+// table name,  insert query
 
-//insert data into the database
-//table name, insert query
-
-$query_string = ""
+$query_string = "INSERT INTO `register_tbl` (`id`, `name`, `email`, `password`, `address`, `created_date`) VALUES (NULL, '{$_POST['name']}', '{$_POST['email']}', '{$_POST['password']}', '{$_POST['address']}', '2023-06-18')";
 
 echo $query_string;
 
-mysqli_query($connection, $query_string)
-
+mysqli_query($connection, $query_string);
 ?>
