@@ -8,10 +8,12 @@
     <title>Registration Form</title>
 </head>
 
-<body><?php
+<body>
+    <?php 
     if(isset($_GET['message'])){
         echo $_GET['message'];
     }
+   
     ?>
     <form action="register_submit.php" method="post">
         <table border="2">
