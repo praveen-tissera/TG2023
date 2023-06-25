@@ -17,5 +17,14 @@ $query_string = "INSERT INTO `register_tbl` (`id`, `name`, `email`, `password`, 
 
 echo $query_string;
 
-mysqli_query($connection, $query_string);
+$result = mysqli_query($connection, $query_string);
+
+if(mysqli_affected_rows($connection) == 1){
+    echo "action successful";
+    header('Location:register.php?message=action successful');
+}else if(mysqli_affected_rows(($connection)) == 0){
+    echo "no action took place";
+}else if(mysqli_affected_rows($connection) == -1){
+    echo "CRUD operation failure";
+}
 ?>

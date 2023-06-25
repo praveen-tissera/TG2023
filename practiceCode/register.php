@@ -9,6 +9,11 @@
 </head>
 
 <body>
+    <?php
+    if(isset($_GET['message'])){
+        echo $_GET['message'];
+    }
+    ?>
     <div class="box" style="display: flex; align-items: center; justify-content: center; width: auto; height: 500px;">
         <form action="register_submit.php" method="post">
             <table border="2">
