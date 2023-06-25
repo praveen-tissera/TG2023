@@ -8,6 +8,11 @@
 </head>
 
 <body>
+    <?php
+    if(isset($_GET['message'])){
+        echo $_GET['message'];
+    }
+    ?>
     <form action="register_submit.php" method="post">
         <table border="1">
             <tr>
