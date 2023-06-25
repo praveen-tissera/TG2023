@@ -10,71 +10,71 @@
 
 <body>
     <form action="register_submit.php" method="post">
-    <table border="2">
+        <table border="2">
 
-        <tr>
+            <tr>
 
-            <td colspan="2">Register Page</td>
+                <td colspan="2">Register Page</td>
 
-        </tr>
-
-
-
-
-        <tr>
-
-            <td>Name</td>
-
-            <td><input type="text" name="name"></td>
-
-        </tr>
-        <tr>
-            <td>Password</td>
-            <td><input type="password" name="password"></td>
-        </tr>
+            </tr>
 
 
 
 
-        <tr>
+            <tr>
 
-            <td>Email</td>
+                <td>Name</td>
 
-            <td><input type="text" name="email"></td>
+                <td><input type="text" name="name"></td>
 
-        </tr>
-
-
-
-
-
-        <tr>
-
-            <td>Address</td>
-
-            <td>
-
-                <textarea name="address" cols="10" rows="10"></textarea>
-
-            </td>
-
-        </tr>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="password" name="password"></td>
+            </tr>
 
 
 
 
-        <tr>
+            <tr>
 
-            <td></td>
+                <td>Email</td>
 
-            <td><input type="submit" name="submit" value="register"></td>
+                <td><input type="text" name="email"></td>
 
-        </tr>
+            </tr>
 
 
 
-    </table>
-</form>
+
+
+            <tr>
+
+                <td>Address</td>
+
+                <td>
+
+                    <textarea name="address" cols="10" rows="10"></textarea>
+
+                </td>
+
+            </tr>
+
+
+
+
+            <tr>
+
+                <td></td>
+
+                <td><input type="submit" name="submit" value="register"></td>
+
+            </tr>
+
+
+
+        </table>
+    </form>
 </body>
 
 </html>
