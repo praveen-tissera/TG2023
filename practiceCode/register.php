@@ -8,7 +8,15 @@
     <title>Document</title>
 </head>
 
+
+
 <body>
+    <?php
+    if(isset($_GET['message'])){
+        $script = "<script>alert('{$_GET['message']}')<script>";
+        echo $script;
+    }
+    ?>
     <form action="register_submit.php" method="post">
         <table border="2">
 
