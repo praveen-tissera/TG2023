@@ -1,0 +1,111 @@
+
+/* CTA styles start here */
+
+
+select,input[text]{
+  text-transform: capitalize;
+}
+.banner {
+  height: 100vh;
+  min-height: 500px;
+  background-image: url('../img/slider/back-image.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+.banner-content-wrapper{
+  background-color:rgba(0,0,0,.6);
+}
+
+/* login page style */
+
+body {
+  font-family: "Lato", sans-serif;
+  background: lavenderblush;
+}
+
+
+
+.main-head{
+  height: 150px;
+  background: #FFF;
+ 
+}
+
+.sidenav {
+  height: 100%;
+  background-color: #000;
+  background-image: url('../img/portal-login.jpg');
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  background-size: cover;
+  padding-top: 20px;
+  background-position: center;
+}
+
+
+.main {
+  padding: 0px 10px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+}
+
+@media screen and (max-width: 450px) {
+  .login-form{
+      margin-top: 10%;
+  }
+
+  .register-form{
+      margin-top: 10%;
+  }
+}
+
+@media screen and (min-width: 768px){
+  .main{
+      margin-left: 40%; 
+  }
+
+  .sidenav{
+      width: 40%;
+      position: fixed;
+      z-index: 1;
+      top: 0;
+      left: 0;
+  }
+
+  .login-form{
+      margin-top: 80%;
+  }
+
+  .register-form{
+      margin-top: 20%;
+  }
+}
+
+
+.login-main-text{
+
+  padding: 50px;
+  color: rgb(0, 0, 0);
+}
+
+.login-main-text h2{
+  font-weight: 300;
+}
+
+.btn-black{
+  background-color: #000 !important;
+  color: #fff;
+}
+.table{
+  font-size: 14px;
+}
+
+.footer{
+  background-color: #000;
+  color: #fff;
+  height: 150px;
+  margin-top: 150px;
+}
