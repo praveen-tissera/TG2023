@@ -6,7 +6,18 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registration Form</title>
+    
 </head>
+
+<?php
+
+if(isset($_GET['message'])){
+
+    $script = "<script>alert('{$_GET['message']}')</script>";
+    echo $script;
+}
+
+?>
 
 <body>
     <form action="register_submit.php" method="post">
