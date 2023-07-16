@@ -17,12 +17,21 @@ if($_POST['userpassword'] == $_POST['retypepassword']){
        echo "database connection fails";
    }
 
-   $result = mysql_query($connection,$query);
+   $result = mysqli_query($connection,$query);
 
    //convert result into array from
    $result_in_array = mysqli_fetch_assoc($result);
    print_r($result_in_array);
+   //if user exist 
+   if($result_in_array['userExist']== 1){
+
+   }else{
+    //redirecting to login page 
+    header('Location:login.php?message= email or password incorrect, try again');
+
+   }
+
+   // if user not exist
 }else{
     echo "Password mismatch please try again";
 }
-
