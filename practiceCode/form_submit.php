@@ -39,7 +39,7 @@ if($_POST['userpassword'] == $_POST['retypepassword']){
 
 
 
-   $result = mysql_query($connection,$query);
+   $result = mysqli_query($connection,$query);
 
 
 
@@ -49,6 +49,15 @@ if($_POST['userpassword'] == $_POST['retypepassword']){
    $result_in_array = mysqli_fetch_assoc($result);
 
    print_r($result_in_array);
+   //if user exist
+   if($result_in_array['userExist']==1){
+    //redirecting to login page
+    header('Location:form.php?message= email or password incorrect. Try again');
+   }else{
+
+   }
+
+   //if user not exist
 
 }else{
 
