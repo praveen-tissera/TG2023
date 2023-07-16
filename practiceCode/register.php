@@ -12,10 +12,12 @@
 
 <body>
     <?php
-    if(isset($_GET['message'])){
-        $script = "<script>alert('{$_GET['message']}')<script>";
-        echo $script;
+
+    if (isset($_GET['message'])) {
+
+        echo $_GET['message'];
     }
+
     ?>
     <form action="register_submit.php" method="post">
         <table border="2">
