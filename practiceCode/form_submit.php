@@ -27,7 +27,7 @@ if($_POST['userpassword'] == $_POST['retypepassword']){
 
    }else{
     //redirecting to login page 
-    header('Location:login.php?message= email or password incorrect, try again');
+    header('Location:form.php?message= email or password incorrect, try again');
 
    }
 
