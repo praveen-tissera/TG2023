@@ -7,7 +7,7 @@ if ($_POST['userpassword'] == $_POST['retypepassword']) {
     //check password is match with retype password
     //pass email and password to the db and validate 
 
-    $query = "SELECT COUNT(*) as userExist FROM `register_tbl` WHERE email='{$_POST['useremail']}' && password = '{$_POST['userpassword']}'";
+    $query = "SELECT COUNT(*) as userExist FROM `register_tbl` WHERE email='{$_POST['useremail']}' && password='{$_POST['userpassword']}'";
     $connection = mysqli_connect('127.0.0.1', 'root', '', 'user_db');
     if ($connection) {
         echo "Connected Successfully";
