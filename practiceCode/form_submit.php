@@ -20,10 +20,15 @@ if ($_POST['userpassword'] == $_POST['retypepassword']) {
 
     // convert result into array form
     $result_in_array = mysqli_fetch_assoc($result);
-    print_r($result_in_array);
+    // print_r($result_in_array);
     // if user  exit
     if($result_in_array['userExist'] == 1){
-      header('Location:profile.php');  
+        // start session
+        session_start();
+        // insert some unique value to the session array 
+        $_SESSION['userEmail'] = $_POST['useremail'];
+         echo $_SESSION['userEmail'];
+     // header('Location:profile.php');  
     }else{
         // redirect to login page
         header('Location:form.php?message= email or password incorrect. try again');
