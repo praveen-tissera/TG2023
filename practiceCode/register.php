@@ -9,10 +9,18 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     <?php
     if (isset($GET['message'])) {
             echo $_GET['message'];
     }
+=======
+    <?php 
+    if(isset($_GET['message'])){
+        echo $_GET['message'];
+    }
+   
+>>>>>>> 138772f712e4014c242eb385c0da58f35e1036cc
     ?>
     <form action="register_submit.php" method="post">
         <table border="2">
