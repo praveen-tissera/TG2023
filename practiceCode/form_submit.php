@@ -22,7 +22,10 @@ if ($_POST['userpassword'] == $_POST['retypepassword']) {
     print_r($result_in_array);
     //if user not exist
     if($result_in_array['userExist'] == 1){
-    header('Location:profile.php');
+        session_start();
+        $_SESSION['userEmail'] = $_POST['useremail'];
+        echo $_SESSION['userEmail'];
+        header('Location:profile.php');
     }else{
         //ridirect to the login page
         header('Location:form.php?message= email or password inorrect. Please try again.'); //redirect to another page
