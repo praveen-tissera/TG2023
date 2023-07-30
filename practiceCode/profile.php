@@ -24,12 +24,41 @@ if(!isset($_SESSION['userEmail'])){
     <h1>Profle</h1>
 
     <?php
-        // SELECT * FROM `register_tbl` WHERE email = 'nuwan@gmail.com';
+        // SELECT * FROM `register_tbl` WHERE email = 'sithike@gmail.com';
         $connection = mysqli_connect('127.0.0.1', 'root', '', 'user_db');
         $query = "SELECT * FROM `register_tbl` WHERE email = '{$_SESSION['userEmail']}'";
         $result = mysqli_query($connection,$query);
         $result_array = mysqli_fetch_assoc($result);
         print_r($result_array);
+
+        echo "<table border='1'>";
+        echo "<tr>";
+        echo "<td>";
+        echo "Name";
+        echo "</td>";
+        echo "<td>";
+        echo $result_array['name'];
+        echo "</td>";
+        echo "</tr>";
+    
+    
+        echo "<tr>";
+        echo "<td>";
+        echo "Email";
+        echo "</td>";
+        echo "<td>";
+        echo $result_array['email'];
+        echo "</td>";
+        echo "</tr>";
+    
+        echo "<tr>";
+        echo "<td>";
+        echo "Password";
+        echo "</td>";
+        echo "<td>";
+        echo $result_array['password'];
+        echo "</td>";
+        echo "</tr>";
         
     
     ?>
