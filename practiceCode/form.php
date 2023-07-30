@@ -7,12 +7,14 @@
     <title>Document</title>
 </head>
 <body>
+<?php require_once('navigation.php') ?>
 <?php 
     if(isset($_GET['message'])){
         echo $_GET['message'];
     }
    
     ?>
+    
     <form action="form_submit.php" method="post">
         <input type="email" name="useremail" value="example@gmail.com" placeholder="your email">
         <input type="password" name="userpassword" placeholder="password">

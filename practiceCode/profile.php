@@ -14,25 +14,64 @@ if(!isset($_SESSION['userEmail'])){
     <title>Document</title>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li>Home</li>
-            <li><a href="profile.php">profile</a></li>
-            <li><a href="logout.php"> logout</a></li>
-        </ul>
-    </nav>
+   <?php require_once('navigation.php') ?>
     <h1>Profle</h1>
 
     <?php
         // SELECT * FROM `register_tbl` WHERE email = 'nuwan@gmail.com';
-        $connection = mysqli_connect('127.0.0.1', 'root', '', 'user_db');
+        require_once('connection.php');
         $query = "SELECT * FROM `register_tbl` WHERE email = '{$_SESSION['userEmail']}'";
         $result = mysqli_query($connection,$query);
         $result_array = mysqli_fetch_assoc($result);
         print_r($result_array);
+
+        // show content in html table
+
+        echo "<table border='1'>";
+            echo "<tr>";
+                echo "<td>";
+                    echo "Name";
+                echo "</td>";
+                echo "<td>";
+                    echo $result_array['name'];
+                echo "</td>";
+                
+            echo "</tr>";
+
+            echo "<tr>";
+                echo "<td>";
+                    echo "Email";
+                echo "</td>";
+                echo "<td>";
+                    echo $result_array['email'];
+                echo "</td>";
+                
+            echo "</tr>";
+
+            echo "<tr>";
+                echo "<td>";
+                    echo "Address";
+                echo "</td>";
+                echo "<td>";
+                    echo $result_array['address'];
+                echo "</td>";
+                
+            echo "</tr>";
+
+            echo "<tr>";
+                echo "<td>";
+                    echo "Register Date";
+                echo "</td>";
+                echo "<td>";
+                    echo $result_array['created_date'];
+                echo "</td>";
+                
+            echo "</tr>";
+        echo "</table>";
         
     
     ?>
+
     
 </body>
 </html>

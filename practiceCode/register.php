@@ -9,6 +9,7 @@
 </head>
 
 <body>
+<?php require_once('navigation.php') ?>
     <?php 
     if(isset($_GET['message'])){
         echo $_GET['message'];
