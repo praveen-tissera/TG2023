@@ -3,12 +3,7 @@ print_r($_POST);
 echo $_POST["email"];
 // connect to the database
 // create a link to Database
-$connection = mysqli_connect('127.0.0.1','root','','user_db');
-if($connection){
-    echo "Connected Successfully";
-}else{
-    echo "database connection fails";
-}
+require_once('connection.php');
 // insert data into the database
 // table name, insert query
 $current_date = date('Y-m-d');

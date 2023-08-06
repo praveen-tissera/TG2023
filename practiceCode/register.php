@@ -6,9 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registeration Form</title>
+    <link rel="stylesheet" href="styles/css/bootstrap.min.css">
 </head>
 
 <body>
+<?php require_once('navigation.php')?>
     <?php
     if(isset($_GET['message'])){
         echo $_GET['message'];
