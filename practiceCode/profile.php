@@ -12,6 +12,7 @@ if(!isset($_SESSION['userEmail'])){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="styles/css/bootstrap.min.css">
 </head>
 <body>
    <?php require_once('navigation.php') ?>
