@@ -8,9 +8,8 @@ Class Login extends CI_Controller {
 	}
 
     public function index(){
-        $this -> load -> view('register');
+        $this->load->view('register');
     }
-    
     // userlogin method
 
     public function userlogin($name){
@@ -21,18 +20,16 @@ Class Login extends CI_Controller {
     }
 
     public function registerSubmit(){
-        $this->form_validation->set_rules('name','name', 'required');
-        $this->form_validation->set_rules('email','email', 'required');
-        $this->form_validation->set_rules('password','This stf required', 'required');
-        $this->form_validation->set_rules('address','This stf required', 'required');
-           if ($this->form_validation->run() == FALSE)
-                {
-                        $this->load->view('myform');
+        $this->form_validation->set_rules('name', 'Username', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        if ($this->form_validation->run() == FALSE){
+                        $this->load->view('register');
                 }
-                else
-                {
-                        // $this->load->view('formsuccess')
-                        echo 'sucess';
+                else{
+                    echo "success";
+                        // $this->load->view('formsuccess');
                 }
     }
 }
