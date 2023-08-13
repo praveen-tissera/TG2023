@@ -5,10 +5,11 @@ Class Login extends CI_Controller {
 		parent::__construct();
 	}
 
-    // userlogin method
+public function index(){
+    $this->load->view('register');
+}
 
     public function userlogin($name){
-        // logic need to create
         $data['name'] = $name;
         print_r($data);
         $this->load->view('login',$data);
