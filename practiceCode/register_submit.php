@@ -4,12 +4,7 @@ echo $_POST['email'];
 
 // connect to the databae
 // create a link to Database
-$connection = mysqli_connect('127.0.0.1','root', '', 'user_db');
-if($connection){
- echo "Connected Successfully";
-}else{
-    echo "database connection fails";
-}
+require_once('connection.php');
 // insert data into the database
 // table name,  insert query
 $current_date = date('Y-m-d');
@@ -22,7 +17,9 @@ $result = mysqli_query($connection, $query_string);
 
 if(mysqli_affected_rows($connection) == 1){
     echo "recorde added successfully";
-    header('Location:form.php?message= email or password incorrect. try again');
+
+    header('Location:register.php?message= record added successfully');
+
 }else if(mysqli_affected_rows($connection) == -1){
     echo "error";
     
