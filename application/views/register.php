@@ -1,9 +1,6 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,8 +21,8 @@
 
                 <h1>Register New User</h1>
 
-                <form action="register_submit.php" method="post">
-
+                
+                    <?php echo form_open('login/registerSubmit')?>
                     <table class="table">
 
 
@@ -70,15 +67,11 @@
 
                             <td></td>
 
-                            <td><input type="submit" name="submit" value="Register" class="form-control"></td>
+                            <td><input  class="btn btn-primary" type="submit" name="submit" value="Register" class="form-control"></td>
 
                         </tr>
-
-
-
                     </table>
-
-                </form>
+               <?php echo form_close();?>
 
             </div>
 
