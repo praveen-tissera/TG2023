@@ -11,7 +11,8 @@
         <div class="row">
             <div class="col-12">
                 <h1>Register New User</h1>
-        <form action="register_submit.php" method="post">
+        <!-- <form action="register_submit.php" method="post"> -->
+            <?php echo form_open('login/registerSubmit') ?>
         <table class='table'>
             <tr>
                 <td colspan="2">Register page</td>
@@ -36,11 +37,11 @@
             </tr>
             <tr>
                 <td></td>
-                <td><input type="btn-black" name="submit" value="Register"></td>
+                <td><input type="btn btn-primary" name="submit" value="Register"></td>
             </tr>
 
         </table>
-    </form>
+<?php echo form_close(); ?>
             </div>
 </div>
     </div>
