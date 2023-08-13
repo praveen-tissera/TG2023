@@ -12,6 +12,8 @@
             <div class="col-12">
                 <h1>Register New User</h1>
         <!-- <form action="register_submit.php" method="post"> -->
+         
+        <?php echo validation_errors('<div class="alert alert-primary" role="alert">','</div>') ?>
             <?php echo form_open('login/registerSubmit') ?>
         <table class='table'>
             <tr>
