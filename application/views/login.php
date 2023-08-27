@@ -1,5 +1,15 @@
-
-<h1><?php echo $welcome; ?></h1>
-<p><?php echo $userID; ?></p>
-
-<h1>Login Page</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>login page</h1>
+    <?php 
+    
+        echo $name;
+    ?>
+</body>
+</html>
