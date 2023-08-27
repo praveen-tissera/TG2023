@@ -12,6 +12,18 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
+                <?php 
+                    if(isset($success)){
+                        echo "<div class='alert alert-success'>";
+                        echo $success;
+                        echo "</div>";
+                    }
+                    if(isset($error)){
+                        echo "<div class='alert alert-danger'>";
+                        echo $error;
+                        echo "</div>";
+                    }
+                ?>
                 <h1>Register New User</h1>
 
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>

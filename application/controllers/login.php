@@ -5,6 +5,7 @@ Class Login extends CI_Controller {
 		parent::__construct();
         $this->load->helper('form');
         $this->load->library('form_validation');
+        $this->load->model('user_model');
 	}
 
     public function index(){
@@ -29,6 +30,34 @@ Class Login extends CI_Controller {
                 }
                 else{
                     echo "success";
+                    // print_r($_POST);
+                    $current_date = date('Y-m-d');
+                    // associative array
+                    $data = array(
+                       'id'=>NULL,
+                       'name'=>$_POST['name'],
+                       'email'=> $_POST['email'],
+                       'password'=> $_POST['password'],
+                       'address' => $_POST['address'],
+                       'created_date' =>  $current_date
+                    );
+
+                    // print_r($data);
+                    // pass this array to model
+                    $result = $this->user_model->registerUser($data);
+                    if($result){
+                        $data = array(
+                            'success'=>'User Register Successfuly'
+                        );
+                        $this->load->view('register',$data);
+                    }else{
+                        $data = array(
+                            'error'=>'User Exist with this Email. Please try again'
+                        );
+                        $this->load->view('register',$data);
+                    }
+                   
+
                         // $this->load->view('formsuccess');
                 }
     }
