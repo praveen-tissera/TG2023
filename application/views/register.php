@@ -31,8 +31,13 @@ Class User_Authentication extends CI_Controller {
 	$this->load->view('registration_form');
 	}
 
+<<<<<<< Updated upstream
 	// Validate and store registration data in database
 	public function new_user_registration() {
+=======
+                <h1>Register New User</h1>
+                <?php echo validation_errors('<div class="alert alert-danger ">','</div>'); ?>
+>>>>>>> Stashed changes
 
 		
 	}
