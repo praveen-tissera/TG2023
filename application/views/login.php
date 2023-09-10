@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>logsin</title>
+    <meta nam="viewpoint" content="width=device-width inital_scale=1.0">
+    <link rel=stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?">
 </head>
 <body>
-    <h1>login page</h1>
-    <?php 
-    
-        echo $name;
-    ?>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                
+            </div>
+        </div>
+    </div>
 </body>
 </html>
