@@ -18,4 +18,16 @@ class User_model extends CI_Model{
         }
         
     }
+    public function loginCheck($data){
+        $condition = "email='{$data['email']}' && password='{$data['password']}'";
+        $query = $this->db->select('*')
+                        ->where($condition)
+                        ->get('register_tbl');
+        echo $this->db->last_query();
+        if($query->num_rows() == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

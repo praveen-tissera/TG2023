@@ -6,6 +6,7 @@ Class Login extends CI_Controller {
         $this->load->helper('form');
         $this->load->library('form_validation');
         $this->load->model('user_model');
+        $this->load->library('session');
 	}
 
     public function index(){
@@ -13,11 +14,17 @@ Class Login extends CI_Controller {
     }
     // userlogin method
 
-    public function userlogin($name){
-        // logic need to create
-        $data['name'] = $name;
-        print_r($data);
-        $this->load->view('login',$data);
+    public function userlogin(){
+        $success = $this->session->flashdata('success');
+		$error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+      $this->load->view('login',$data);
     }
 
     public function registerSubmit(){
@@ -60,5 +67,31 @@ Class Login extends CI_Controller {
 
                         // $this->load->view('formsuccess');
                 }
+    }
+    public function loginSubmit(){
+        print_r($_POST);
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        if ($this->form_validation->run() == FALSE){
+            $this->load->view('login');
+        }else{
+            $data = array(
+                'email'=> $_POST['email'],
+                'password'=> $_POST['password'],
+             );
+             $result = $this->user_model->loginCheck($data);
+             if($result){
+                // set session
+             }else{
+                // $data = array(
+                //     'error'=>'Email or password incorrect. Please check'
+                // );
+                // $this->load->view('login',$data);
+                $this->session->set_flashdata('error','Email or password incorrect. Please check');
+                redirect('login/userlogin');
+
+             }
+
+        }
     }
 }
