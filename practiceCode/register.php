@@ -5,11 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Registeration Form</title>
+=======
+    <title>Registration Form</title>
+>>>>>>> main
     <link rel="stylesheet" href="styles/css/bootstrap.min.css">
 </head>
 
 <body>
+<<<<<<< HEAD
 <?php require_once('navigation.php')?>
     <?php
     if(isset($_GET['message'])){
@@ -17,6 +22,14 @@
     }
     
     ?>
+=======
+    <?php require_once('navigation.php') ?>
+    <?php if (isset($_GET['message'])) { ?>
+        <div class="alert alert-success" role="alert">
+            <?php echo $_GET['message']; ?>
+        </div>
+    <?php } ?>
+>>>>>>> main
     <form action="register_submit.php" method="post">
         <table border="2">
             <tr>

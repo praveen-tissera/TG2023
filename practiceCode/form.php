@@ -10,6 +10,7 @@
 </head>
 
 <body>
+<<<<<<< HEAD
     <!-- bootstrap grid system layout-->
     <?php require_once('navigation.php') ?>
 
@@ -33,6 +34,21 @@
         </div>
     </div>
 
+=======
+<?php require_once('navigation.php') ?>
+<?php if(isset($_GET['message'])){ ?>
+<div class="alert alert-success" role="alert">
+    <?php echo $_GET['message']; ?>
+</div>
+<?php }?>
+    
+    <form action="form_submit.php" method="post">
+        <input type="email" name="useremail" value="example@gmail.com" placeholder="your email">
+        <input type="password" name="userpassword" placeholder="password">
+        <input type="password" name="retypepassword" placeholder="retype password">
+        <input type="submit" name="login" value="Login" >
+    </form>
+>>>>>>> main
 </body>
 
 </html>
