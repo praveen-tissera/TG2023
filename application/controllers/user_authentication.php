@@ -1,7 +1,7 @@
 <?php
 
 //session_start(); //we need to start session in order to access it through CI
-
+//domain/User_Authentication/user_registration_show/5
 Class User_Authentication extends CI_Controller {
 
 	public function __construct() {

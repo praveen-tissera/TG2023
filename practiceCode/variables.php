@@ -1,29 +1,36 @@
-<?php 
-print_r($_POST);
-echo $_POST['email'];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <?php 
+        
+        $_2new_t8 = 100;
+        $value = 300;
+        $name = 'Nuwan';
+        echo '<h1>Welcome $name to my PHP class</h1>';
+        echo "<h1>Welcome $name to my PHP class</h1>";
+        echo '<br>';
+        echo $name;
+        $fname = $name;
+        $name = 'Gayan';
 
-// connect to the databae
-// create a link to Database
-require_once('connection.php');
-// insert data into the database
-// table name,  insert query
-$current_date = date('Y-m-d');
-$query_string = "INSERT INTO `register_tbl` (`id`, `name`, `email`, `password`, `address`, `created_date`) VALUES (NULL, '{$_POST['name']}', '{$_POST['email']}', '{$_POST['password']}', '{$_POST['address']}', '$current_date')";
+        // constant variable
 
-echo $query_string;
+        define('IP','127.0.0.1');
+        echo IP;
+        define('IP', 'adfasf');
 
-$result = mysqli_query($connection, $query_string);
-// if recorde added that count will be return from the mysqli_affected_rows query if its fail return -1 or nothing happen will return 0
+        // Arrays
+        $names = Array();
+        $names[0] = 'Nuwan';
+        $names[1] = 'Gayan';
+        print_r($names[1]);
 
-if(mysqli_affected_rows($connection) == 1){
-    echo "recorde added successfully";
-
-    header('Location:register.php?message= record added successfully');
-
-}else if(mysqli_affected_rows($connection) == -1){
-    echo "error";
-    
-}else if(mysqli_affected_rows($connection) == 0){
-    echo "nothing added into the database";
-}
-?>
+    ?>
+</body>
+</html>

@@ -1,91 +1,16 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
-
-    <title>Register</title>
-
+    <title>Document</title>
 </head>
-
 <body>
-
-    <div class="container">
-
-        <div class="row">
-
-            <div class="col-12">
-
-                <h1>Register New User</h1>
-
-                <form action="register_submit.php" method="post">
-
-                    <table class="table">
-
-
-
-                        <tr>
-
-                            <td>Name</td>
-
-                            <td><input type="text" name="name" class="form-control"></td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Email</td>
-
-                            <td><input type="text" name="email" class="form-control"></td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Password</td>
-
-                            <td><input type="password" name="password" class="form-control"></td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td>Address</td>
-
-                            <td>
-
-                                <textarea name="address" cols="30" rows="10" class="form-control"></textarea>
-
-                            </td>
-
-                        </tr>
-
-                        <tr>
-
-                            <td></td>
-
-                            <td><input type="submit" name="submit" value="Register" class="form-control"></td>
-
-                        </tr>
-
-
-
-                    </table>
-
-                </form>
-
-            </div>
-
-        </div>
-
-    </div>
-
+    <h1>User List</h1>
+    <?php 
+    echo 'User ID is ' . $userid;
+    ?>
 </body>
-
 </html>
+

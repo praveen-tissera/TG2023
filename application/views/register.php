@@ -1,60 +1,68 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
 
-//session_start(); //we need to start session in order to access it through CI
-//domain/User_Authentication/user_registration_show/5
-Class User_Authentication extends CI_Controller {
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
+    <title>Register</title>
+</head>
 
-	public function __construct() {
-		parent::__construct();
-
-		// Load form helper library
-		$this->load->helper('form');
-
-		// Load form validation library
-		$this->load->library('form_validation');
-
-		// Load session library
-		$this->load->library('session');
-
-		// Load database
-		$this->load->model('login_database');
-	}
-
-	// Show login page
-	public function index() {
-			$this->load->view('contactus');
-			
-	}
-
-	// Show registration page
-	public function user_registration_show() {
-	$this->load->view('registration_form');
-	}
-
-<<<<<<< Updated upstream
-	// Validate and store registration data in database
-	public function new_user_registration() {
-=======
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <?php 
+                    if(isset($success)){
+                        echo "<div class='alert alert-success'>";
+                        echo $success;
+                        echo "</div>";
+                    }
+                    if(isset($error)){
+                        echo "<div class='alert alert-danger'>";
+                        echo $error;
+                        echo "</div>";
+                    }
+                ?>
                 <h1>Register New User</h1>
-                <?php echo validation_errors('<div class="alert alert-danger ">','</div>'); ?>
->>>>>>> Stashed changes
 
-		
-	}
+                <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
-	// Check for user login process
-	public function user_login_process() {
+                    <?php echo form_open('login/registerSubmit') ?>
+                    <table class="table">
+                        <tr>
+                            <td colspan="2">Register page</td>
+                        </tr>
+                        <tr>
+                            <td>Name</td>
+                            <td><input class="form-control" type="text" name="name"></td>
+                        </tr>
+                        <tr>
+                            <td>Email</td>
+                            <td><input class="form-control" type="text" name="email"></td>
+                        </tr>
+                        <tr>
+                            <td>Password</td>
+                            <td><input class="form-control" type="password" name="password"></td>
+                        </tr>
+                        <tr>
+                            <td>Address</td>
+                            <td>
+                                <textarea class="form-control" name="address" cols="30" rows="10"></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><input class="btn btn-primary" type="submit" name="submit" value="Register"></td>
+                        </tr>
 
-		
-	}
+                    </table>
+               <?php echo form_close(); ?>
 
-	// Logout from user page
-	public function logout() {
+            </div>
+        </div>
 
-	}
-		
-		
+    </div>
+</body>
 
-}
-
-?>
+</html>
