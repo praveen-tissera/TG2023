@@ -15,6 +15,7 @@ Class Login extends CI_Controller {
     // userlogin method
 
     public function userlogin(){
+        
         $success = $this->session->flashdata('success');
 		$error = $this->session->flashdata('error');
         $data = [];
@@ -24,7 +25,17 @@ Class Login extends CI_Controller {
         if (!empty($error)) {
             $data['error'] = $error;
         }
-      $this->load->view('login',$data);
+        if(isset($data['error']) || isset($data['success'])){
+            $this->load->view('login',$data);
+        }else{
+            if($this->checkSessionExist()){
+                $this->load->view('profile');
+            }else{
+                $this->load->view('login',$data);
+            }
+        }
+        
+      
     }
 
     public function registerSubmit(){
@@ -81,7 +92,17 @@ Class Login extends CI_Controller {
              );
              $result = $this->user_model->loginCheck($data);
              if($result){
-                // set session
+                // set session 
+                $resutlUserData = $this->user_model->getUserData($data);
+                print_r($resutlUserData);
+                $session_user = array(
+                    'id'=> $resutlUserData[0]->id,
+                    'login'=> true,
+                    'name' => $resutlUserData[0]->name
+                );
+                // update session object with new session data
+                $this->session->set_userdata('userinfo', $session_user);
+                redirect('/login/profile');
              }else{
                 // $data = array(
                 //     'error'=>'Email or password incorrect. Please check'
@@ -93,5 +114,29 @@ Class Login extends CI_Controller {
              }
 
         }
+    }
+    public function profile(){
+        $sessionData = $this->session->userdata('userinfo');
+        print_r($sessionData);
+        if($this->checkSessionExist()){
+            $this->load->view('profile');
+        }
+        
+    }
+
+    private function checkSessionExist(){
+        if(!$this->session->has_userdata('userinfo')){
+            $this->session->set_flashdata('error','Please login first to access the page');
+            redirect('login/userlogin');
+        }else{
+            return true;
+        }
+    }
+
+    public function logout(){
+        $this->session->unset_userdata('userinfo');
+        $this->session->set_flashdata('success','Logout successfully');
+            redirect('login/userlogin');
+        
     }
 }

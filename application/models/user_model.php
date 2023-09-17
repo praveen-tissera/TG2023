@@ -24,8 +24,23 @@ class User_model extends CI_Model{
                         ->where($condition)
                         ->get('register_tbl');
         echo $this->db->last_query();
+        // return $query->result();
         if($query->num_rows() == 1){
             return true;
+        }else{
+            return false;
+        }
+    }
+
+    public function getUserData($data){
+        $condition = "email='{$data['email']}'";
+        $query = $this->db->select('*')
+                        ->where($condition)
+                        ->get('register_tbl');
+        echo $this->db->last_query();
+        // return $query->result();
+        if($query->num_rows() == 1){
+            return $query->result();
         }else{
             return false;
         }
