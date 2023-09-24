@@ -9,7 +9,7 @@ if ($_POST['userpassword'] == $_POST['retypepassword']) {
 
     // 
     $query = "SELECT COUNT(*) as userExist FROM `register_tbl` WHERE email='{$_POST['useremail']}' && password = '{$_POST['userpassword']}'";
-    $connection = mysqli_connect('127.0.0.1', 'root', '', 'user_db');
+    require_once('connection.php');
     if ($connection) {
         echo "Connected Successfully";
     } else {
@@ -28,7 +28,7 @@ if ($_POST['userpassword'] == $_POST['retypepassword']) {
         // insert some unique value to the session array 
         $_SESSION['userEmail'] = $_POST['useremail'];
          echo $_SESSION['userEmail'];
-     // header('Location:profile.php');  
+     header('Location:profile.php');  
     }else{
         // redirect to login page
         header('Location:form.php?message= email or password incorrect. try again');
