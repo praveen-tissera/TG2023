@@ -18,9 +18,9 @@
                 <?php 
                     print_r($this->session->userdata('userinfo'));
                     // print_r($myprofile);
-
+                   echo form_open('login/editProfileSubmit');
                     echo "<table class='table'>";
-                   $userId = 0;
+                    $userId = 0;
                     foreach ($myprofile as $key => $value) {
                         // print_r($value->id);
                         $userId = $value->id;
@@ -39,7 +39,8 @@
                         echo "User Name";
                         echo "</td>";
                         echo "<td>";
-                        echo $value->name;
+                        echo "<input class='form-control' type='text' value='{$value->name}' name='username'>";
+                        
                         echo "</td>";
 
                     echo "</tr>";
@@ -49,7 +50,8 @@
                     echo "Email";
                     echo "</td>";
                     echo "<td>";
-                    echo $value->email;
+                    echo "<input class='form-control' type='text' value='{$value->email}' name='email'>";
+                    
                     echo "</td>";
 
                 echo "</tr>";
@@ -58,7 +60,11 @@
                 echo "Address";
                 echo "</td>";
                 echo "<td>";
+                
+                echo "<textarea class='form-control'>";
                 echo $value->address;
+                echo "</textarea>";
+                
                 echo "</td>";
                 echo "</tr>";
 
@@ -70,15 +76,13 @@
                 echo $value->created_date;
                 echo "</td>";
                 echo "</tr>";
-
-
-
-
-
-                    }
+                }
+              
                     echo "</table>";
+                    echo "<input type='submit' class='btn btn-success' value='Update'>";
+                    echo form_close();
                 ?>
-                <a href="<?php echo base_url().'/login/editProfile/'.$userId ?>">Edit Profile</a>
+                
             </div>
         </div>
     </div>
