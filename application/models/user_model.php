@@ -45,7 +45,8 @@ class User_model extends CI_Model{
             return false;
         }
     }
-    public function getUserDatabyID($id){
+
+    public function getUserDataByID($id){
         $condition = "id='{$id}'";
         $query = $this->db->select('*')
                         ->where($condition)
@@ -56,6 +57,26 @@ class User_model extends CI_Model{
             return $query->result();
         }else{
             return false;
+        }
+    }
+
+    public function updateProfile($data){
+        $condition ="id  ='{$data['id']}'";
+        $this->db->set('name', $data['name']);
+        $this->db->set('email', $data['email']);
+        $this->db->set('address', $data['address']);
+        
+        $this->db->where($condition);
+        
+        $this->db->update('register_tbl');
+
+         echo $this->db->last_query();
+        if($this->db->affected_rows() == 1){
+            return(1);
+        }else if($this->db->affected_rows() == 0){
+            return(0);
+        }else{
+            return(-1);
         }
     }
 }
