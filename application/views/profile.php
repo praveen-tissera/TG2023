@@ -14,7 +14,19 @@
         <div class="row">
             <div class="col">
                 <h1>My Profile</h1>
-                
+                <?php 
+                    if(isset($success)){
+                        echo "<div class='alert alert-success'>";
+                        echo $success;
+                        echo "</div>";
+                    }
+                    if(isset($error)){
+                        echo "<div class='alert alert-danger'>";
+                        echo $error;
+                        echo "</div>";
+                    }
+                    
+                ?>
                 <?php 
                     print_r($this->session->userdata('userinfo'));
                     // print_r($myprofile);
@@ -78,7 +90,13 @@
                     }
                     echo "</table>";
                 ?>
-                <a href="<?php echo base_url().'/login/editProfile/'.$userId ?>">Edit Profile</a>
+                <?php 
+                    print_r($this->session->userdata('routing'));
+                    if($this->session->userdata('routing')['profile']['edit']){ ?>
+                        <a href="<?php echo base_url().'/login/editProfile/'.$userId ?>">Edit Profile</a>
+                    <?php } ?>
+              
+                
             </div>
         </div>
     </div>
