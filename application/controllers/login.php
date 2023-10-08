@@ -117,9 +117,24 @@ Class Login extends CI_Controller {
     }
     public function profile(){
         $sessionData = $this->session->userdata('userinfo');
-        print_r($sessionData);
+        //print_r($sessionData);
         if($this->checkSessionExist()){
-            $this->load->view('profile');
+            $result = $this->user_model->getUserDatabyID($sessionData['id']);
+            if($result){
+                $data['myprofile'] = $result;
+                $this->load->view('profile',$data);
+            }
+        }
+        
+    }
+
+    public function editProfile($id){
+        if($this->checkSessionExist()){
+            $result = $this->user_model->getUserDatabyID($id);
+            if($result){
+                $data['myprofile'] = $result;
+                $this->load->view('edit-profile',$data);
+            }
         }
         
     }

@@ -18,6 +18,7 @@
                 <?php
                 //print_r($this->session->userdata('userinfo'));
                 //print_r($myprofile);
+                echo form_open('login/editProfileSubmit');
                 echo "<table class='table'>";
                 $userId=0;
                 foreach($myprofile as $key => $value){
@@ -36,7 +37,15 @@
                         echo "Username";
                         echo "</td>";
                         echo "<td>";
-                        echo $value->name;
+                        echo "<input type='text' class='form-control' value='{$value->name}'>";
+                        echo "</td>";
+                    echo "</tr>";
+                    echo "<tr>";
+                        echo "<td>";
+                        echo "Useremail";
+                        echo "</td>";
+                        echo "<td>";
+                        echo "<input type='text' class='form-control' value='{$value->email}'>";
                         echo "</td>";
                     echo "</tr>";
                     echo "<tr>";
@@ -44,7 +53,9 @@
                         echo "Address";
                         echo "</td>";
                         echo "<td>";
+                        echo "<textarea class='form-control'>";
                         echo $value->address;
+                        echo "</textarea>";
                         echo "</td>";
                     echo "</tr>";
                     echo "<tr>";
@@ -56,7 +67,10 @@
                         echo "</td>";
                     echo "</tr>";
                 }
+               
                 echo "</table>";
+                echo '<input type="submit" class="btn btn-success" value="Update">';
+                echo form_close();
 
                 ?>
                 <a href="<?php echo base_url().'/login/editProfile/'.$userId ?>">Edit Profile</a>

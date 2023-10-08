@@ -45,4 +45,17 @@ class User_model extends CI_Model{
             return false;
         }
     }
+    public function getUserDatabyID($id){
+        $condition = "id='{$id}'";
+        $query = $this->db->select('*')
+                        ->where($condition)
+                        ->get('register_tbl');
+        echo $this->db->last_query();
+        // return $query->result();
+        if($query->num_rows() == 1){
+            return $query->result();
+        }else{
+            return false;
+        }
+    }
 }
