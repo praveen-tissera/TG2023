@@ -14,7 +14,19 @@
         <div class="row">
             <div class="col">
                 <h1>My Profile</h1>
-                
+                <?php 
+                    if(isset($success)){
+                        echo "<div class='alert alert-success'>";
+                        echo $success;
+                        echo "</div>";
+                    }
+                    if(isset($error)){
+                        echo "<div class='alert alert-danger'>";
+                        echo $error;
+                        echo "</div>";
+                    }
+                    
+                ?>
                 <?php 
                     print_r($this->session->userdata('userinfo'));
                     // print_r($myprofile);
@@ -24,6 +36,7 @@
                     foreach ($myprofile as $key => $value) {
                         // print_r($value->id);
                         $userId = $value->id;
+                        echo "<input type='hidden' name='userid' value='{$value->id}'>";
                         echo "<tr>";
                             echo "<td>";
                             echo "User ID";
@@ -61,7 +74,7 @@
                 echo "</td>";
                 echo "<td>";
                 
-                echo "<textarea class='form-control'>";
+                echo "<textarea class='form-control' name='address'>";
                 echo $value->address;
                 echo "</textarea>";
                 

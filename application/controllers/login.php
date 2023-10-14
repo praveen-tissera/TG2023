@@ -100,8 +100,22 @@ Class Login extends CI_Controller {
                     'login'=> true,
                     'name' => $resutlUserData[0]->name
                 );
+                if($resutlUserData[0]->role == 'admin'){
+                    $actions = array(
+                        'dashboard'=>['view'=>true,
+                                        'edit'=>true,
+                                        'delete'=>true
+                            ],
+                        'profile'=>['view'=>true,
+                                    'edit'=>true,
+                                    'delete'=>true
+                        ],
+                    );
+                }
+                
                 // update session object with new session data
                 $this->session->set_userdata('userinfo', $session_user);
+                $this->session->set_userdata('routing', $actions);
                 redirect('/login/profile');
              }else{
                 // $data = array(
@@ -116,6 +130,15 @@ Class Login extends CI_Controller {
         }
     }
     public function profile(){
+        $success = $this->session->flashdata('success');
+		$error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
         $sessionData = $this->session->userdata('userinfo');
         // print_r($sessionData);
         if($this->checkSessionExist()){
@@ -130,6 +153,15 @@ Class Login extends CI_Controller {
         
     }
     public function editProfile($id){
+        $success = $this->session->flashdata('success');
+		$error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
         if($this->checkSessionExist()){
 
             $result = $this->user_model->getUserDataByID($id);
@@ -140,7 +172,38 @@ Class Login extends CI_Controller {
             
         }
     }
+    public function editProfileSubmit(){
+        $this->form_validation->set_rules('username', 'Username', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        if ($this->form_validation->run() == FALSE){
+            $this->session->set_flashdata('error','Form details cannot be empty');
+            redirect("/login/editProfile/{$_POST['userid']}");
+        }else{
+            print_r($_POST);
+            $data = array(
+                'id'=>$_POST['userid'],
+                'name'=>$_POST['username'],
+                'email'=> $_POST['email'],
+                'address' => $_POST['address']
+             );
+             $result = $this->user_model->updateProfile($data);
+             if($result == 1){
+                $this->session->set_flashdata('success','Profile data updated successfully');
+                redirect("/login/profile/");
+             }elseif($result == 0){
+                $this->session->set_flashdata('success','Profile data upto date');
+                redirect("/login/profile/");
+             }else{
+                $this->session->set_flashdata('error','Error occured Please try again');
+                redirect("/login/editProfile/{$_POST['userid']}");
+             }
 
+        }
+
+       
+
+    }
     private function checkSessionExist(){
         if(!$this->session->has_userdata('userinfo')){
             $this->session->set_flashdata('error','Please login first to access the page');

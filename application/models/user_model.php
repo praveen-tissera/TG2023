@@ -65,11 +65,8 @@ class User_model extends CI_Model{
         $this->db->set('name', $data['name']);
         $this->db->set('email', $data['email']);
         $this->db->set('address', $data['address']);
-        
         $this->db->where($condition);
-        
         $this->db->update('register_tbl');
-
          echo $this->db->last_query();
         if($this->db->affected_rows() == 1){
             return(1);
