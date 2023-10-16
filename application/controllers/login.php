@@ -102,21 +102,59 @@ Class Login extends CI_Controller {
                 );
                 if($resutlUserData[0]->role == 'admin'){
                     $actions = array(
-                        'dashboard'=>['view'=>true,
-                                        'edit'=>true,
-                                        'delete'=>true
+                        'dashboard'=>['myprofile'=>true,
+                                        'teamprofile'=>true,
+                                        'product'=>true,
+                                        'reports'=>true
                             ],
                         'profile'=>['view'=>true,
                                     'edit'=>true,
                                     'delete'=>true
                         ],
+                        'teamprofile'=>['view'=>true,
+                                    'edit'=>true,
+                                    'delete'=>true
+                        ],
+                        'product'=>['view'=>true,
+                                    'edit'=>true,
+                                    'delete'=>true
+                                    ],
+                        'reports'=>['view'=>true,
+                                    'edit'=>true,
+                                    'delete'=>true
+                                    ],
+
+                    );
+                }elseif($resutlUserData[0]->role == 'coordinator'){
+                    $actions = array(
+                        'dashboard'=>['myprofile'=>true,
+                                        'teamprofile'=>true,
+                                        'product'=>true,
+                                        'reports'=>false
+                            ],
+                        'profile'=>['view'=>true,
+                                    'edit'=>true,
+                                    'delete'=>false
+                                    ],
+                        'teamprofile'=>['view'=>true,
+                                    'edit'=>false,
+                                    'delete'=>false
+                                    ],
+                        'product'=>['view'=>true,
+                                    'edit'=>true,
+                                    'delete'=>false
+                                    ],
+                        'reports'=>['view'=>false,
+                                    'edit'=>false,
+                                    'delete'=>false
+                                    ],
                     );
                 }
                 
                 // update session object with new session data
                 $this->session->set_userdata('userinfo', $session_user);
                 $this->session->set_userdata('routing', $actions);
-                redirect('/login/profile');
+                redirect('/login/dashboard');
              }else{
                 // $data = array(
                 //     'error'=>'Email or password incorrect. Please check'
@@ -128,6 +166,20 @@ Class Login extends CI_Controller {
              }
 
         }
+    }
+
+    public function dashboard(){
+        $success = $this->session->flashdata('success');
+		$error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $this->load->view('dashboard',$data);
+        
     }
     public function profile(){
         $success = $this->session->flashdata('success');
