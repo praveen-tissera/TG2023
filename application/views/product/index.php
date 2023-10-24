@@ -27,8 +27,8 @@
 			box-shadow: 0 0.5rem 1rem hsl(0 0% 0% / 20%);
             display: flex;
             align-items: center;
-            padding: 20px;
-
+            
+            background-color: #ffffff;
             position: relative;
         }
 
@@ -52,12 +52,24 @@
             border-color: #e4e1d6;
         }
         .product-image{
-            flex: 1;
+            margin: 0px 20px 0px 0px;
+            height: 250px;
+            width: 250px;
+
+            border-top-left-radius: 15px;
+            border-bottom-left-radius: 15px;
+
+            overflow: hidden;
+        }
+
+        .product-image img{
+            width: 100%;
+            height: 100%;
         }
 
         .product-details{
             flex: 3;
-            padding: 0 20px;
+            margin: 20px;
         }
 
         .alert{
@@ -82,9 +94,17 @@
             padding: 15px;
             border-radius: 4px;
         }
+
+        .center {
+            position: absolute;
+            top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);	
+			text-align: center;
+        }
     </style>
 </head>
-<body>
+<body style="background-color: #f0f0f0;">
     <div class="container mt-5">
         <h2>Products</h2>
 
@@ -101,6 +121,10 @@
         <button class="btn btn-warning float-right" data-toggle="modal" data-target="#newProductModal">Add product</button>
 
         <div class="product-container">
+            <?php if(count($products) == 0):?>
+                <h2 class="display-4 center">No products to display</h2>
+            <?php endif;?>
+
             <?php foreach($products as $product):?>
 
             <div class="product row col-xs-8 fadeA" onmouseenter="showActions(this)" onmouseleave="hideActions(this)">
@@ -116,8 +140,8 @@
                     <i class="fas fa-trash" style="font-size: 18px;"></i>
                     </a>
                 </div>
-                <div class="product-image">
-                    <img src="<?php echo base_url().'/images/products/'.$product->image ?>" alt="Product Image 1" class="productImage" style="max-width: 150px; max-height: 150px;">
+                <div class="product-image ">
+                    <img src="<?php echo base_url().'/images/products/'.$product->image ?>" alt="Product Image 1" class="productImage" style="max-width: 250px; max-height: 250px;">
                 </div>
                 <div class="product-details">
                     <h4><?php echo html_escape($product->name) ?></h4>
@@ -144,7 +168,7 @@
                         <div class="profile-pic-wrapper">
                         <div class="pic-holder">
                             <!-- uploaded pic shown here -->
-                            <img id="add-productImage" class="pic" src="https://source.unsplash.com/random/150x150?product" crossorigin="anonymous">
+                            <img id="add-productImage" class="pic" src="https://source.unsplash.com/random/250x250/?product" crossorigin="anonymous">
 
                             <input class="uploadProfileInput" type="file" name="image" id="newProductImage" accept="image/*" style="opacity: 0;" />
                             <label for="newProductImage" class="upload-file-block">
@@ -195,7 +219,7 @@
                         <div class="profile-pic-wrapper">
                         <div class="pic-holder">
                             <!-- uploaded pic shown here -->
-                            <img id="product-image" class="pic" src="https://source.unsplash.com/random/150x150?product">
+                            <img id="product-image" class="pic">
 
                             <input class="uploadProfileInput" type="file" name="image" id="editProductImage" accept="image/*" style="opacity: 0;" />
                             <label for="editProductImage" class="upload-file-block">
@@ -342,8 +366,8 @@
 
             var img = document.getElementById('add-productImage');
             var canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
+            canvas.width = 250;
+            canvas.height = 250;
 
             var ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0);
