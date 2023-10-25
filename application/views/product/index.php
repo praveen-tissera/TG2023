@@ -25,11 +25,14 @@
             margin: 20px 40px;
             border-radius: 15px;
 			box-shadow: 0 0.5rem 1rem hsl(0 0% 0% / 20%);
-            display: flex;
             align-items: center;
             
             background-color: #ffffff;
             position: relative;
+
+            padding-left: 250px;
+
+            text-overflow: ellipsis;
         }
 
         .product-actions{
@@ -43,23 +46,29 @@
         .product-actions button {
             background-color: #e4e1d6;
             color: #22211d;
-            
+            border-color: #e4e1d6;
+            width: 44px;
+            height: 38px;
         }
         
         .product-actions a {
+            width: 44px;
+            height: 38px;
             background-color: #e4e1d6;
             color: #22211d;
             border-color: #e4e1d6;
         }
         .product-image{
-            margin: 0px 20px 0px 0px;
+            overflow: hidden;
             height: 250px;
             width: 250px;
 
+            position: absolute;
+            left: 0;
+            top: 0;
+
             border-top-left-radius: 15px;
             border-bottom-left-radius: 15px;
-
-            overflow: hidden;
         }
 
         .product-image img{
@@ -68,7 +77,8 @@
         }
 
         .product-details{
-            flex: 3;
+            height: 210px;            
+            overflow: auto;
             margin: 20px;
         }
 
@@ -135,10 +145,13 @@
                     style="border-top-right-radius: 0;border-bottom-right-radius: 0;">
                         <i class="fas fa-pen" style="font-size: 18px;"></i>
                     </button>
-                    <a class="btn" href="<?php echo base_url().'product/remove/'.$product->id?>"
-                    style="border-top-left-radius: 0;border-bottom-left-radius: 0;">
+                    <form action="<?php echo base_url().'product/remove/'?>" method="post" style="padding: 0; margin:0;">
+                    <input type="hidden" name="id" value="<?php echo $product->id?>">
+                    <button type="submit" class="btn"
+                    style="border-top-left-radius: 0;border-bottom-left-radius: 0;padding: 0; margin:0;">
                     <i class="fas fa-trash" style="font-size: 18px;"></i>
-                    </a>
+                    </button>
+                    </form>
                 </div>
                 <div class="product-image ">
                     <img src="<?php echo base_url().'/images/products/'.$product->image ?>" alt="Product Image 1" class="productImage" style="max-width: 250px; max-height: 250px;">

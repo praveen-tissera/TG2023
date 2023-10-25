@@ -1,5 +1,7 @@
 <?php
 
+
+
 class Product extends CI_Controller {
     public function __construct()
     {
@@ -71,6 +73,10 @@ class Product extends CI_Controller {
     }
 
     public function add(){
+        if(!(isset($_POST['name']) && isset ($_POST['description']))){
+            $this->session->set_flashdata('error', 'specify the fields first');
+            redirect('/product');
+        }
         if(!empty($_FILES['image']['name'])){
 
             $filename = time().$_FILES['image']['name'];
@@ -109,6 +115,11 @@ class Product extends CI_Controller {
     }
 
     public function edit(){
+        if(!(isset($_POST['name']) && isset ($_POST['description']))){
+            $this->session->set_flashdata('error', 'specify the fields first');
+            redirect('/product');
+        }
+
         if(!empty($_FILES['image']['name'])){
 
             $filename = time().$_FILES['image']['name'];
@@ -144,11 +155,13 @@ class Product extends CI_Controller {
         redirect('/product');
     }
 
-    public function remove($product_id){
-        if($this->product_model->removeProduct($product_id))
+    public function remove(){
+        
+        if(isset($_POST['id'])){
+            $this->product_model->removeProduct($_POST['id']);
             $this->session->set_flashdata('message', 'Product removed.');
-        else
-            $this->session->set_flashdata('error', 'Something went wrong');
+        }else
+            $this->session->set_flashdata('error', 'No direct access');
 
         redirect('/product');
     }
