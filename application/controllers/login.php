@@ -118,11 +118,12 @@ Class Login extends CI_Controller {
                         'product'=>['view'=>true,
                                     'edit'=>true,
                                     'delete'=>true
-                        ],
+                                    ],
                         'reports'=>['view'=>true,
                                     'edit'=>true,
                                     'delete'=>true
-                        ],
+                                    ],
+
                     );
                 }elseif($resutlUserData[0]->role == 'coordinator'){
                     $actions = array(
@@ -134,19 +135,19 @@ Class Login extends CI_Controller {
                         'profile'=>['view'=>true,
                                     'edit'=>true,
                                     'delete'=>false
-                        ],
+                                    ],
                         'teamprofile'=>['view'=>true,
                                     'edit'=>false,
                                     'delete'=>false
-                        ],
+                                    ],
                         'product'=>['view'=>true,
                                     'edit'=>true,
                                     'delete'=>false
-                        ],
+                                    ],
                         'reports'=>['view'=>false,
                                     'edit'=>false,
                                     'delete'=>false
-                        ],
+                                    ],
                     );
                 }
                 
@@ -165,6 +166,20 @@ Class Login extends CI_Controller {
              }
 
         }
+    }
+
+    public function dashboard(){
+        $success = $this->session->flashdata('success');
+		$error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $this->load->view('dashboard',$data);
+        
     }
     public function profile(){
         $success = $this->session->flashdata('success');
@@ -189,22 +204,6 @@ Class Login extends CI_Controller {
         }
         
     }
-
-    public function dashboard(){
-        $success = $this->session->flashdata('success');
-		$error = $this->session->flashdata('error');
-        $data = [];
-        if (!empty($success)) {
-            $data['success'] = $success;
-        }
-        if (!empty($error)) {
-            $data['error'] = $error;
-        }
-        $this->load->view('dashboard',$data);
-       
-    }
-
-
     public function editProfile($id){
         $success = $this->session->flashdata('success');
 		$error = $this->session->flashdata('error');
