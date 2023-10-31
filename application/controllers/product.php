@@ -56,6 +56,7 @@ class Product extends CI_Controller
 			);
 			print_r($productdata);
 			$this->db->insert('product_tbl', $productdata);
+			$this->load->view('product/product_select');
 		} else {
 			$error = array('error' => $this->upload->display_errors());
 			//echo $config['upload_path'];

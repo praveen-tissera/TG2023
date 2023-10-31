@@ -69,7 +69,7 @@
                     echo "Image";
                     echo "</td>";
                     echo "<td>";
-                    echo $img;
+                    //the image does not load
                     echo "<img src='$img' alt='Product Image' >";
                     echo "</td>";
                     echo "</tr>";
