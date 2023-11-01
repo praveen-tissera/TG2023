@@ -19,4 +19,3 @@ Class product_model extends CI_Model {
     }
         
 }
-?>

@@ -9,6 +9,9 @@
 </head>
 
 <body>
+    <?php
+    $this->load->view('/common/nav.php');
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -41,7 +44,7 @@
                 <div class="form-group">
                     <?php echo "<input class='form-control' type='file' name='userfile' size='20' required />"; ?>
                 </div>
-                
+
                 <input class="btn btn-primary" type="submit" name="submit" value="Upload">
 
                 <?php echo form_close(); ?>

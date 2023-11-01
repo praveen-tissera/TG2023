@@ -33,7 +33,7 @@
 
                 echo "<table class='table'>";
                 foreach ($product_info as $key => $value) {
-                    $img = base_url('images/food/'.$value->image);
+                    $img = base_url('images/food/' . $value->image);
 
                     echo "<tr>";
                     echo "<td>";
@@ -69,7 +69,6 @@
                     echo "Image";
                     echo "</td>";
                     echo "<td>";
-                    //the image does not load
                     echo "<img src='$img' alt='Product Image' >";
                     echo "</td>";
                     echo "</tr>";

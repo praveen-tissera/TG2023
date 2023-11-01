@@ -32,6 +32,8 @@ class Product extends CI_Controller
 		$current_date = date('Y-m-d');
 
 		$new_name = time() . $_FILES["userfile"]['name'];
+		$new_name = str_replace(' ', '-', $new_name);
+
 		$config = array(
 			'upload_path' => './images/food',
 			'allowed_types' => "gif|jpg|png|jpeg|pdf",
@@ -77,7 +79,7 @@ class Product extends CI_Controller
 		if ($result) {
 			print_r($result);
 			$data['product_info'] = $result;
-			$this->load->view('product/product_view',$data);
+			$this->load->view('product/product_view', $data);
 		} else {
 			$data = array(
 				'error' => 'Invalid title. Please try again'
