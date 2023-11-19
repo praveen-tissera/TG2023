@@ -16,8 +16,10 @@ class Product extends CI_Controller
 
 		date_default_timezone_set("Asia/colombo");
 		//	$this->load->model('user_model');
+		$this->load->model('product_model');
 
 		$this->load->library('upload');
+		$this->load->library('pagination');
 	}
 
 	public function index()
@@ -93,5 +95,51 @@ class Product extends CI_Controller
 	{
 		//loads product_create view
 		$this->load->view('/product/product_create');
+	}
+
+	public function getAllProducts($offset = 0)
+	{
+		$config = array();
+		$config['base_url'] = base_url() . 'product/getAllProducts';
+		$config['total_rows'] = $this->product_model->get_count();
+		$config['per_page'] = 1;
+		//Ecapsulation pagination
+		$config['full_tag_open'] = '<ul class="pagination justify-content-center';
+		$config['full_tag_close'] = '</ul>';
+		//First link
+		$config['first_link'] = 'First';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+		//Customizing the "Digit" Link
+		$config['num_tag_open'] = '<li class="page-item">';
+		$config['num_tag_close'] = '</li>';
+		//previous page set up
+		$config['prev_link'] = 'Previous';
+		$config['prev_tag_open'] = '<li class="page-item">';
+		$config['prev_tag_close'] = '</li>';
+		//Last page
+		$config['last_link'] = 'Last';
+		$config['last_tag_open'] = '<li class="page-item">';
+		$config['last_tag_close'] = '</li>';
+		//Next page
+		$config['next_link'] = 'First';
+		$config['first_tag_open'] = '<li class="page-item">';
+		$config['first_tag_close'] = '</li>';
+
+
+		$config['attributes'] = ['class' => 'page-link'];
+
+		//curent page
+		$config['cur_tag_open'] = '<li class="page-item active"><span class="page-link >';
+		$config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
+
+
+		$this->pagination->initialize($config);
+
+
+		$data['links'] = $this->pagination->create_links();
+		$data['items'] = $this->product_model->getAllProducts($config['per_page'], $offset);
+
+		$this->load->view('/product/product_viewall', $data);
 	}
 }
