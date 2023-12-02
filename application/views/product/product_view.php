@@ -7,12 +7,25 @@
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
 </head>
 <body>
-    <h1>Product Page</h1>
-    <?php echo form_open_multipart('product/addNewCategory');?>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+            <h1>Product Page</h1>
+            <?php echo form_open_multipart('product/addNewCategory');?>
+            <div class="form-group">
+            <?php echo "<input type='text' class='form-control' name='title' required />"; ?>
+            </div>
+            <div class="form-group">
+            <?php echo "<input type='text' class='form-control' name='description' required />"; ?>
+            </div>
             <div class="form-group">
             <?php echo "<input type='file' class='form-control' name='userfile' size='20' required />"; ?>
             </div>
-            <input class="btn btn-primary" type="submit" name="submit" value="Upload">
-    <?php echo form_close();?>
+            <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+            <?php echo form_close();?>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
