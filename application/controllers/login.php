@@ -28,14 +28,14 @@ Class Login extends CI_Controller {
         if(isset($data['error']) || isset($data['success'])){
             $this->load->view('login',$data);
         }else{
-            if($this->checkSessionExist()){
+            if(null !== $this->session->userdata('routing')){
                 $this->load->view('profile');
             }else{
                 $this->load->view('login',$data);
             }
         }
         
-      
+       
     }
 
     public function registerSubmit(){
@@ -154,7 +154,7 @@ Class Login extends CI_Controller {
                 // update session object with new session data
                 $this->session->set_userdata('userinfo', $session_user);
                 $this->session->set_userdata('routing', $actions);
-                redirect('/login/dashboard');
+                redirect('/user/dashboard');
              }else{
                 // $data = array(
                 //     'error'=>'Email or password incorrect. Please check'
@@ -168,42 +168,6 @@ Class Login extends CI_Controller {
         }
     }
 
-    public function dashboard(){
-        $success = $this->session->flashdata('success');
-		$error = $this->session->flashdata('error');
-        $data = [];
-        if (!empty($success)) {
-            $data['success'] = $success;
-        }
-        if (!empty($error)) {
-            $data['error'] = $error;
-        }
-        $this->load->view('dashboard',$data);
-        
-    }
-    public function profile(){
-        $success = $this->session->flashdata('success');
-		$error = $this->session->flashdata('error');
-        $data = [];
-        if (!empty($success)) {
-            $data['success'] = $success;
-        }
-        if (!empty($error)) {
-            $data['error'] = $error;
-        }
-        $sessionData = $this->session->userdata('userinfo');
-        // print_r($sessionData);
-        if($this->checkSessionExist()){
-
-            $result = $this->user_model->getUserDataByID($sessionData['id']);
-            if($result){
-                $data['myprofile'] = $result;
-                $this->load->view('profile',$data);
-            }
-            
-        }
-        
-    }
     public function editProfile($id){
         $success = $this->session->flashdata('success');
 		$error = $this->session->flashdata('error');
@@ -265,10 +229,5 @@ Class Login extends CI_Controller {
         }
     }
 
-    public function logout(){
-        $this->session->unset_userdata('userinfo');
-        $this->session->set_flashdata('success','Logout successfully');
-            redirect('login/userlogin');
-        
-    }
+    
 }

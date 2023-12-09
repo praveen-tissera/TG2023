@@ -91,9 +91,8 @@
                     echo "</table>";
                 ?>
                 <?php 
-                    print_r($this->session->userdata('routing'));
                     if($this->session->userdata('routing')['profile']['edit']){ ?>
-                        <a href="<?php echo base_url().'/login/editProfile/'.$userId ?>">Edit Profile</a>
+                        <a class="btn btn-primary" href="<?php echo base_url().'/user/editProfile/'.$userId ?>" role="button">Edit Profile</a>
                     <?php } ?>
               
                 

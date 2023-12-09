@@ -1,0 +1,183 @@
+<?php
+
+class worker extends CI_Controller
+{
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->load->model('user_model');
+        $this->load->library('session');
+        $this->load->model('worker_model');
+        date_default_timezone_set("Asia/colombo");
+    }
+
+    public function manage_worker()
+    {
+        $this->load->view('worker/manage_workers');
+    }
+
+    public function register_worker()
+    {
+        $this->load->view('worker/register_workers');
+    }
+
+    public function mark_attendance()
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $attendance = $this->worker_model->attendance();
+        $data['attendance'] = $attendance;
+        $this->load->view('worker/mark_attendance', $data);
+    }
+
+    public function register_worker_Submit()
+    {
+        $this->form_validation->set_rules('name', 'Username', 'required');
+        $this->form_validation->set_rules('email', 'Email', 'required');
+        $this->form_validation->set_rules('password', 'Password', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('register');
+        } else {
+            echo "success";
+            // print_r($_POST);
+            $current_date = date('Y-m-d');
+            // associative array
+            $data = array(
+                'id' => NULL,
+                'name' => $_POST['name'],
+                'email' => $_POST['email'],
+                'password' => $_POST['password'],
+                'address' => $_POST['address'],
+                'created_date' =>  $current_date
+            );
+
+            // print_r($data);
+            // pass this array to model
+            $result = $this->user_model->registerUser($data);
+            if ($result) {
+                $data = array(
+                    'success' => 'User Register Successfuly'
+                );
+                $this->load->view('register', $data);
+            } else {
+                $data = array(
+                    'error' => 'User Exist with this Email. Please try again'
+                );
+                $this->load->view('register', $data);
+            }
+
+
+            // $this->load->view('formsuccess');
+        }
+    }
+    public function attendanceSubmit()
+    {
+        print_r($_POST);
+        $this->form_validation->set_rules('status', 'boolean', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Attendance cannot be empty');
+            redirect("worker/mark_attendance");
+        } else {
+            $attendance = $this->session->flashdata('attendance');
+            $result = array_merge_recursive($attendance, $_POST);
+            $currentdate = date('Y-m-d');
+            foreach ($result as $key => $value) {
+                $data = array(
+                    'worker_id' => $value->worker_id,
+                    'date' => $currentdate,
+                    'status' => $value->status
+
+                );
+            }
+
+            $result = $this->worker_model->attendance_submit($data);
+            if ($result == 1) {
+                $this->session->set_flashdata('success', 'Attendance marked successfully');
+                redirect("worker/manage_worker");
+            } else {
+                $this->session->set_flashdata('error', 'Error occured Please try again');
+                redirect("worker/mark_attendance");
+            }
+        }
+    }
+    public function view_worker(){
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $result = $this->worker_model->getworkerData();
+        $data['result'] = $result;
+        $this->load->view('worker/view_worker', $data);
+    }
+    
+    public function editworker($id)
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+
+            $result = $this->worker_model->getworkerDataByID($id);
+            if ($result) {
+                $data['workerdata'] = $result;
+                $this->load->view('worker/edit_worker', $data);
+            }
+        
+    }
+    public function editProfileSubmit()
+    {
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->session->set_flashdata('error', 'Form details cannot be empty');
+            redirect("/worker/editworker/{$_POST['worker_id']}");
+        } else {
+            print_r($_POST);
+            $data = array(
+                'worker_id' => $_POST['worker_id'],
+                'name' => $_POST['name'],
+                'dob' => $_POST['dob'],
+                'emp_status' => $_POST['emp_status'],
+                'wage' => $_POST['wage'],
+                'EPF' => $_POST['EPF'],
+                'EPF_no' => $_POST['EPF_no'],
+                'ETF' => $_POST['ETF'],
+                'ETF_no' => $_POST['ETF_no'],
+                'gender' => $_POST['gender'],
+                'education' => $_POST['education'],
+                'address' => $_POST['address']
+            );
+            $result = $this->worker_model->updateworker($data);
+            if ($result == 1) {
+                $this->session->set_flashdata('success', 'Profile data updated successfully');
+                redirect("/worker/manage_worker/");
+            } elseif ($result == 0) {
+                $this->session->set_flashdata('success', 'Profile data upto date');
+                redirect("/worker/manage_worker/");
+            } else {
+                $this->session->set_flashdata('error', 'Error occured Please try again');
+                redirect("/worker/editworker/{$_POST['worker_id']}");
+            }
+        }
+    }
+}

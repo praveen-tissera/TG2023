@@ -30,7 +30,7 @@
                 <?php 
                     print_r($this->session->userdata('userinfo'));
                     // print_r($myprofile);
-                   echo form_open('login/editProfileSubmit');
+                   echo form_open('user/editProfileSubmit');
                     echo "<table class='table'>";
                     $userId = 0;
                     foreach ($myprofile as $key => $value) {
@@ -89,6 +89,8 @@
                 echo $value->created_date;
                 echo "</td>";
                 echo "</tr>";
+
+                
                 }
               
                     echo "</table>";

@@ -22,7 +22,7 @@ class User_model extends CI_Model{
         $condition = "email='{$data['email']}' && password='{$data['password']}'";
         $query = $this->db->select('*')
                         ->where($condition)
-                        ->get('register_tbl');
+                        ->get('user_tbl');
         echo $this->db->last_query();
         // return $query->result();
         if($query->num_rows() == 1){
@@ -36,7 +36,7 @@ class User_model extends CI_Model{
         $condition = "email='{$data['email']}'";
         $query = $this->db->select('*')
                         ->where($condition)
-                        ->get('register_tbl');
+                        ->get('user_tbl');
         echo $this->db->last_query();
         // return $query->result();
         if($query->num_rows() == 1){
@@ -50,7 +50,7 @@ class User_model extends CI_Model{
         $condition = "id='{$id}'";
         $query = $this->db->select('*')
                         ->where($condition)
-                        ->get('register_tbl');
+                        ->get('user_tbl');
         echo $this->db->last_query();
         // return $query->result();
         if($query->num_rows() == 1){
@@ -66,7 +66,7 @@ class User_model extends CI_Model{
         $this->db->set('email', $data['email']);
         $this->db->set('address', $data['address']);
         $this->db->where($condition);
-        $this->db->update('register_tbl');
+        $this->db->update('user_tbl');
          echo $this->db->last_query();
         if($this->db->affected_rows() == 1){
             return(1);
