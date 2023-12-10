@@ -13,14 +13,14 @@ class worker_model extends CI_Model
     {
         // print_r($data);
         $query = $this->db->select('*')
-            ->where('email', $data['email'])
-            ->get('register_tbl');
+            ->where('name', $data['name'])
+            ->get('worker_tbl');
 
         // echo $query->num_rows();
         if ($query->num_rows() == 1) {
             return false;
         } else {
-            $this->db->insert('register_tbl', $data);
+            $this->db->insert('worker_tbl', $data);
             return true;
         }
     }
@@ -64,12 +64,18 @@ class worker_model extends CI_Model
     public function attendance()
     {
         $this->load->model('worker_model');
-        if ($this->worker_model->check_if_attendance()) {
-            $id = 1;
-            $condition = "worker_id='{$id}'";
+        $currentdate = date('Y-m-d');
+        if ($this->worker_model->check_if_attendance()) {;
+            $query = $this->db->get('worker_tbl');
+            $workerdata = $query->result();
+            $condition = "date='{$currentdate}' ";
             $query = $this->db->select('*')
-                ->where($condition)
-                ->get('worker_tbl');
+            ->where($condition)
+            ->get('attendance_tbl');
+            $attendance = $query->result();
+            foreach($workerdata as $key => $value){
+                $workerdata[$key]['attendance']=$attendance;
+            }
             echo $this->db->last_query();
             if ($query->num_rows() == 1) {
                 return $query->result();
@@ -80,11 +86,14 @@ class worker_model extends CI_Model
 
             $query = $this->db->get('worker_tbl');
             echo $this->db->last_query();
-            // return $query->result();
+            $attendance = $query->result();
+            foreach($attendance as $index){
+                $attendance['worker_id']['attendance'] = $attendance;
+            }
             if ($query->num_rows() == 0) {
                 return false;
             } else {
-                return $query->result();
+                return $attendance;
             }
         }
     }
@@ -114,17 +123,42 @@ class worker_model extends CI_Model
         }
     }
 
-    public function getworkerDataByID($id){
+    public function getworkerDataByID($id)
+    {
         $condition = "worker_id='{$id}'";
         $query = $this->db->select('*')
-                        ->where($condition)
-                        ->get('worker_tbl');
+            ->where($condition)
+            ->get('worker_tbl');
         echo $this->db->last_query();
         // return $query->result();
-        if($query->num_rows() == 1){
+        if ($query->num_rows() == 1) {
             return $query->result();
-        }else{
+        } else {
             return false;
+        }
+    }
+    public function updateworker($data){
+        $condition ="worker_id  ='{$data['worker_id']}'";
+        $this->db->set('name', $data['name']);
+        $this->db->set('dob', $data['dob']);
+        $this->db->set('emp_status', $data['emp_status']);
+        $this->db->set('wage', $data['wage']);
+        $this->db->set('EPF', $data['EPF']);
+        $this->db->set('EPF_no', $data['EPF_no']);
+        $this->db->set('ETF', $data['ETF']);
+        $this->db->set('ETF_no', $data['ETF_no']);
+        $this->db->set('gender', $data['gender']);
+        $this->db->set('education', $data['education']);
+        $this->db->set('address', $data['address']);
+        $this->db->where($condition);
+        $this->db->update('worker_tbl');
+         echo $this->db->last_query();
+        if($this->db->affected_rows() == 1){
+            return(1);
+        }else if($this->db->affected_rows() == 0){
+            return(0);
+        }else{
+            return(-1);
         }
     }
 }

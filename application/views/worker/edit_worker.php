@@ -10,8 +10,10 @@
     <script src="<?php echo base_url() . '/js/popper.min.js' ?>"></script>
     <script src="<?php echo base_url() . '/js/bootstrap.min.js' ?>"></script>
     <script>
-        $("#datepicker").datepicker("setDate", " <?php echo $workerdata['dob'] ?> ");
-    </script>
+  $( function() {
+    $( "#datepicker" ).datepicker();
+  } );
+  </script>
     <title>Profle</title>
 </head>
 
@@ -68,7 +70,7 @@
                     echo "Date Of Birth";
                     echo "</td>";
                     echo "<td>";
-                    echo '<input type="text" id="datepicker" name="dob">';
+                    echo '<input type="date-time" value="{$value->dob}">';
                     echo "</td>";
 
                     echo "</tr>";
@@ -78,7 +80,7 @@
                     echo "Employment Status";
                     echo "</td>";
                     echo "<td>";
-                    echo "<input class='form-control' type='text' value='{$value->emp_status}' name='emp_status>";
+                    echo "<input class='form-control' type='text' value='{$value->emp_status}' name='emp_status'>";
                     echo "</td>";
                     echo "</tr>";
 
@@ -105,7 +107,7 @@
                     echo "EPF Number";
                     echo "</td>";
                     echo "<td>";
-                    echo "<input class='form-control' type='text' value='{$value->EPF_No}' name='EPF_No'>";
+                    echo "<input class='form-control' type='text' value='{$value->EPF_no}' name='EPF_no'>";
                     echo "</td>";
                     echo "</tr>";
 
@@ -145,16 +147,16 @@
                         <label class="btn btn-secondary <?php if ('Male' == $value->gender) {
                                                             echo 'active';
                                                         } ?>">
-                            <input type="radio" name="gender" id="Male" autocomplete="off" <?php if ('Male' == $value->gender) {
-                                                                                                echo 'checked';
-                                                                                            } ?>> Male
+                            <input type="radio" name="gender" id="Male" autocomplete="off" value="" <?php if ('Male' == $value->gender) {
+                                                                                                        echo 'checked';
+                                                                                                    } ?>> Male
                         </label>
                         <label class="btn btn-secondary <?php if ('Female' == $value->gender) {
                                                             echo 'active';
                                                         } ?>">
-                            <input type="radio" name="gender" id="Female" autocomplete="off" <?php if ('Female' == $value->gender) {
-                                                                                                    echo 'checked';
-                                                                                                } ?>> Female
+                            <input type="radio" name="gender" id="Female" autocomplete="off" value="" <?php if ('Female' == $value->gender) {
+                                                                                                            echo 'checked';
+                                                                                                        } ?>> Female
                         </label>
                     </div>
                     <?php
@@ -173,9 +175,9 @@
                     echo "</tr>";
 
                     ?>
+                    <script> var <?php $value->dob ?> = $( ".selector" ).datepicker( "getDate" );</script>
                 <?php
                 }
-
                 echo "</table>";
                 echo "<input type='submit' class='btn btn-success' value='Update'>";
                 echo form_close();

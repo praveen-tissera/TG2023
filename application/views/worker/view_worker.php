@@ -98,7 +98,7 @@
                     echo "EPF Number";
                     echo "</td>";
                     echo "<td>";
-                    echo $value->EPF_No;
+                    echo $value->EPF_no;
                     echo "</td>";
                     echo "</tr>";
 

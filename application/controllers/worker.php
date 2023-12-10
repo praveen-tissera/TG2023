@@ -12,16 +12,35 @@ class worker extends CI_Controller
         $this->load->library('session');
         $this->load->model('worker_model');
         date_default_timezone_set("Asia/colombo");
+        $this->checkSessionExist();
     }
 
     public function manage_worker()
     {
-        $this->load->view('worker/manage_workers');
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $this->load->view('worker/manage_workers',$data);
     }
 
     public function register_worker()
     {
-        $this->load->view('worker/register_workers');
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $this->load->view('worker/register_worker',$data);
     }
 
     public function mark_attendance()
@@ -35,6 +54,7 @@ class worker extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
+        
         $attendance = $this->worker_model->attendance();
         $data['attendance'] = $attendance;
         $this->load->view('worker/mark_attendance', $data);
@@ -43,42 +63,45 @@ class worker extends CI_Controller
     public function register_worker_Submit()
     {
         $this->form_validation->set_rules('name', 'Username', 'required');
-        $this->form_validation->set_rules('email', 'Email', 'required');
-        $this->form_validation->set_rules('password', 'Password', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('register');
+            $this->session->set_flashdata('error', 'Name and Address are required');
+            redirect("worker/register_worker");
         } else {
             echo "success";
             // print_r($_POST);
             $current_date = date('Y-m-d');
             // associative array
             $data = array(
-                'id' => NULL,
+                'worker_id' => $_POST['worker_id'],
                 'name' => $_POST['name'],
-                'email' => $_POST['email'],
-                'password' => $_POST['password'],
-                'address' => $_POST['address'],
-                'created_date' =>  $current_date
+                'dob' => $_POST['dob'],
+                'emp_status' => $_POST['emp_status'],
+                'wage' => $_POST['wage'],
+                'EPF' => $_POST['EPF'],
+                'EPF_no' => $_POST['EPF_no'],
+                'ETF' => $_POST['ETF'],
+                'ETF_no' => $_POST['ETF_no'],
+                'gender' => $_POST['gender'],
+                'education' => $_POST['education'],
+                'address' => $_POST['address']
             );
 
-            // print_r($data);
-            // pass this array to model
-            $result = $this->user_model->registerUser($data);
+
+            $result = $this->worker_model->registerworker($data);
             if ($result) {
                 $data = array(
-                    'success' => 'User Register Successfuly'
+                    'success' => 'Worker Registered Sucessfully'
                 );
-                $this->load->view('register', $data);
+                $this->load->view('worker/manage_workers', $data);
             } else {
                 $data = array(
-                    'error' => 'User Exist with this Email. Please try again'
+                    'error' => 'Worker is already registred'
                 );
-                $this->load->view('register', $data);
+                $this->load->view('worker/register_worker', $data);
             }
 
 
-            // $this->load->view('formsuccess');
         }
     }
     public function attendanceSubmit()
@@ -111,7 +134,8 @@ class worker extends CI_Controller
             }
         }
     }
-    public function view_worker(){
+    public function view_worker()
+    {
         $success = $this->session->flashdata('success');
         $error = $this->session->flashdata('error');
         $data = [];
@@ -125,7 +149,7 @@ class worker extends CI_Controller
         $data['result'] = $result;
         $this->load->view('worker/view_worker', $data);
     }
-    
+
     public function editworker($id)
     {
         $success = $this->session->flashdata('success');
@@ -138,14 +162,13 @@ class worker extends CI_Controller
             $data['error'] = $error;
         }
 
-            $result = $this->worker_model->getworkerDataByID($id);
-            if ($result) {
-                $data['workerdata'] = $result;
-                $this->load->view('worker/edit_worker', $data);
-            }
-        
+        $result = $this->worker_model->getworkerDataByID($id);
+        if ($result) {
+            $data['workerdata'] = $result;
+            $this->load->view('worker/edit_worker', $data);
+        }
     }
-    public function editProfileSubmit()
+    public function editworkerSubmit()
     {
         $this->form_validation->set_rules('address', 'Address', 'required');
         if ($this->form_validation->run() == FALSE) {
@@ -178,6 +201,15 @@ class worker extends CI_Controller
                 $this->session->set_flashdata('error', 'Error occured Please try again');
                 redirect("/worker/editworker/{$_POST['worker_id']}");
             }
+        }
+    }
+    private function checkSessionExist()
+    {
+        if (!$this->session->has_userdata('userinfo')) {
+            $this->session->set_flashdata('error', 'Please login first to access the page');
+            redirect('login/userlogin');
+        } else {
+            return true;
         }
     }
 }

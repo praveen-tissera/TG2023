@@ -32,51 +32,47 @@
                 <h1>Mark Attendance</h1>
             </div>
             <div class="row">
-                <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-                <?php echo form_open('worker/attendanceSubmit') ?>
+                <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); 
+                print_r($attendance); ?>
+                <?php echo form_open('worker/attendanceSubmit'); ?>
                 <?php if (isset($attendance)) {
                     foreach ($attendance as $key => $value) { ?>
                         <div class="form-group">
                             <h3><?php printf($value->name) ?></h3>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary <?php if (0 == $value->status) {
-                                                                    printf('active');
+                                <label class="btn btn-secondary <?php if (true == $value->status) {
+                                                                    echo 'active';
                                                                 } ?>">
-                                    <input type="radio" name="status" id="present<?php printf($value->worker_id) ?>" autocomplete="off" <?php if (0 == $value->status) {
-                                                                                                                                                printf('checked');
-                                                                                                                                            } ?>> Present
+                                    <input type="radio" name="status" id="present" autocomplete="off" value=<?php true ?> <?php if (true == $value->status) {
+                                                                                                                                echo 'checked';
+                                                                                                                            } ?>> Present
                                 </label>
-                                <label class="btn btn-secondary <?php if (0 == $value->status) {
-                                                                    printf('active');
+                                <label class="btn btn-secondary <?php if (false == $value->status) {
+                                                                    echo 'active';
                                                                 } ?>">
-                                    <input type="radio" name="status" id="absent<?php printf($value->worker_id) ?>" autocomplete="off" <?php if (0 == $value->status) {
-                                                                                                                                            printf('checked');
-                                                                                                                                        } ?>> Absent
+                                    <input type="radio" name="status" id="absent" autocomplete="off" value=<?php false ?> <?php if (false == $value->status) {
+                                                                                                                                echo 'checked';
+                                                                                                                            } ?>> Absent
                                 </label>
                             </div>
-
+                        <?php } ?>
                         </div>
-                    <?php } ?>
+                        <div class="row">
+                            <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+                        </div>
+                    <?php } else { ?>
+                        <h2>Error</h2>
+                        <p>Something went wrong and the attendance data was not retrived</p>
             </div>
-            <div class="row">
-                <input class="btn btn-primary" type="submit" name="submit" value="Submit">
-            </div>
-        <?php } else { ?>
-            <h2>Error</h2>
-            <p>Something went wrong and the attendance data was not retrived</p>
-        </div>
-    <?php } ?>
-    <?php $this->session->set_flashdata('attendance', $attendance); ?>
-    <?php echo form_close(); ?>
+        <?php } ?>
+        <?php $this->session->set_flashdata('attendance', $attendance); ?>
+        <?php echo form_close(); ?>
 
-    </div>
+        </div>
     </div>
     </div>
     <script>
-        $('.btn').on('click', function() {
-            $(this).siblings('label').removeClass('active');
-            $(this).addClass('active');
-        });
+        $('.btn-group').button('toggle');
     </script>
 </body>
 
