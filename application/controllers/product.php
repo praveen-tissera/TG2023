@@ -125,4 +125,12 @@ class Product extends CI_Controller{
 		// print_r($result);
 
 	}
+	
+	public function getCharts(){
+		$result = $this->product_model->getMarks();
+		$data['students'] = $result;
+		$this->load->view('/chart/charts_view',$data);
+
+	}
+
 }

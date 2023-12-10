@@ -50,4 +50,9 @@ class Product_model extends CI_Model{
             return(-1);
         }
     }
+    public function getMarks(){
+        $query = $this->db->get('student_marks');
+
+        return $query->result();
+    }
 }
