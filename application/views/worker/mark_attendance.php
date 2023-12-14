@@ -32,27 +32,18 @@
                 <h1>Mark Attendance</h1>
             </div>
             <div class="row">
-                <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); 
-                print_r($attendance); ?>
+                <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
                 <?php echo form_open('worker/attendanceSubmit'); ?>
                 <?php if (isset($attendance)) {
                     foreach ($attendance as $key => $value) { ?>
                         <div class="form-group">
                             <h3><?php printf($value->name) ?></h3>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary <?php if (true == $value->status) {
-                                                                    echo 'active';
-                                                                } ?>">
-                                    <input type="radio" name="status" id="present" autocomplete="off" value=<?php true ?> <?php if (true == $value->status) {
-                                                                                                                                echo 'checked';
-                                                                                                                            } ?>> Present
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="status_<?php echo $value->worker_id ?>" id="present" autocomplete="off" value="1"> Present
                                 </label>
-                                <label class="btn btn-secondary <?php if (false == $value->status) {
-                                                                    echo 'active';
-                                                                } ?>">
-                                    <input type="radio" name="status" id="absent" autocomplete="off" value=<?php false ?> <?php if (false == $value->status) {
-                                                                                                                                echo 'checked';
-                                                                                                                            } ?>> Absent
+                                <label class="btn btn-secondary">
+                                    <input type="radio" name="status_<?php echo $value->worker_id ?>" id="absent" autocomplete="off" value="0"> Absent
                                 </label>
                             </div>
                         <?php } ?>

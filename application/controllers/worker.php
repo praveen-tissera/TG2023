@@ -12,6 +12,7 @@ class worker extends CI_Controller
         $this->load->library('session');
         $this->load->model('worker_model');
         date_default_timezone_set("Asia/colombo");
+        //User must be logged in to access any functions in this controller
         $this->checkSessionExist();
     }
 
@@ -54,14 +55,13 @@ class worker extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
+        if ($this->worker_model->check_if_attendance()) {
+            $data['info'] = "Attendance has already been marked for today";
+        }
 
         $attendance = $this->worker_model->attendance();
         $data['attendance'] = $attendance;
-        if ($this->worker_model->check_if_attendance()) {
-            $this->load->view('worker/mark_attendance', $data);
-        } else {
-            $this->load->view('worker/mark_attendance_unset', $data);
-        }
+        $this->load->view('worker/mark_attendance', $data);
     }
 
     public function register_worker_Submit()
@@ -72,12 +72,9 @@ class worker extends CI_Controller
             $this->session->set_flashdata('error', 'Name and Address are required');
             redirect("worker/register_worker");
         } else {
-            echo "success";
-            // print_r($_POST);
-            $current_date = date('Y-m-d');
             // associative array
             $data = array(
-                'worker_id' => $_POST['worker_id'],
+                'worker_id' => NULL,
                 'name' => $_POST['name'],
                 'dob' => $_POST['dob'],
                 'emp_status' => $_POST['emp_status'],
@@ -116,37 +113,52 @@ class worker extends CI_Controller
         //        redirect("worker/mark_attendance");
         //    }
         //}
+        $i = $result = 0;
         if ($this->worker_model->check_if_attendance()) {
-            $attendance = $this->session->flashdata('attendance');
-            $result = array_merge_recursive($attendance, $_POST);
-            foreach ($result as $key => $value) {
-                $data = array(
-                    'worker_id' => $value->worker_id,
-                    'date' => $currentdate,
-                    'status' => $value->status
+            $i = $result = 0;
+            foreach ($_POST as $key => $value) {
+                if ($value == 'Submit') {
+                    break;
+                } else {
+                    $worker_id = mb_substr($key, -1);
+                    $data = array(
+                        'worker_id' => $worker_id,
+                        'date' => $currentdate,
+                        'status' => $value
 
-                );
+                    );
+                    if ($this->worker_model->attendance_Submit($data)) {
+                        $result = $result + 1;
+                    }
+                    $i = $i + 1;
+                }
             }
-
-            $result = $this->worker_model->attendance_submit($data);
-            
         } else {
             foreach ($_POST as $key => $value) {
-                $worker_id = mb_substr($key, -1);
-                $data = array(
-                    'worker_id' => $worker_id,
-                    'date' => $currentdate,
-                    'status' => $value-> { echo 'status_ . $worker_id'}
+                if ($value == 'Submit') {
+                    break;
+                } else {
+                    $worker_id = mb_substr($key, -1);
+                    $data = array(
+                        'worker_id' => $worker_id,
+                        'date' => $currentdate,
+                        'status' => $value
 
-                );
-                $result = $this->worker_model->attendance_Submit($data);
+                    );
+                    if ($this->worker_model->attendance_Submit_unset($data)) {
+                        $result = $result + 1;
+                    }
+                    $i = $i + 1;
+                }
             }
         }
-        if ($result == 1) {
+        printf($i);
+        printf($result);
+        if ($result == $i) {
             $this->session->set_flashdata('success', 'Attendance marked successfully');
             redirect("worker/manage_worker");
         } else {
-            $this->session->set_flashdata('error', 'Error occured Please try again');
+            $this->session->set_flashdata('error', 'An error occured. Please try again');
             redirect("worker/mark_attendance");
         }
     }
@@ -219,6 +231,23 @@ class worker extends CI_Controller
                 $this->session->set_flashdata('error', 'Error occured Please try again');
                 redirect("/worker/editworker/{$_POST['worker_id']}");
             }
+        }
+    }
+    public function deleteworker($id)
+    {
+        $worker_data = $this->worker_model->getworkerDataByID($id);
+        $data['result'] = $worker_data;
+        $this->load->view('worker/delete_confirmation', $data);
+    }
+    public function deleteworker_confirmation($id)
+    {
+        $result = $this->worker_model->deleteworker($id);
+        if ($result == 1) {
+            $this->session->set_flashdata('success', 'Worker deleted successfully');
+            redirect("/worker/manage_worker/");
+        } elseif ($result == 0) {
+            $this->session->set_flashdata('error', 'Something went wrong. Please try again');
+            redirect("/worker/manage_worker/");
         }
     }
     private function checkSessionExist()

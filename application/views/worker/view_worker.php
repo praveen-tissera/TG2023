@@ -152,6 +152,7 @@
                     echo "</table>";
                     if ($this->session->userdata('routing')['profile']['edit']) { ?>
                         <a class="btn btn-primary" href="<?php echo base_url() . '/worker/editworker/' . $value->worker_id ?>" role="button">Edit Worker</a>
+                        <a class="btn btn-warning" href="<?php echo base_url() . '/worker/deleteworker/' . $value->worker_id ?>" role="button">Delete Worker</a>
                 <?php }
                 }
                 ?>

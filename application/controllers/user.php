@@ -26,7 +26,25 @@ class User extends CI_Controller
         if (isset($this->session->userdata('routing')['dashboard'])) {
             $this->load->view('dashboard', $data);
         } else {
-            $this->session->set_flashdata('error', 'Please login to access the dashboard');
+            $this->session->set_flashdata('error', 'User does not have access');
+            redirect('login/userlogin');
+        }
+    }
+    public function manage_user()
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        if (isset($this->session->userdata('routing')['dashboard'])) {
+            $this->load->view('manage_user', $data);
+        } else {
+            $this->session->set_flashdata('error', 'User does not have access');
             redirect('login/userlogin');
         }
     }

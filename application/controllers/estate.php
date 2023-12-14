@@ -1,6 +1,6 @@
 <?php
 
-class User extends CI_Controller
+class estate extends CI_Controller
 {
 
     public function __construct()
@@ -10,6 +10,9 @@ class User extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('user_model');
         $this->load->library('session');
+        $this->load->model('estate_model');
+        date_default_timezone_set("Asia/colombo");
+        $this->checkSessionExist();
     }
 
     public function manage_estate()
@@ -23,49 +26,11 @@ class User extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-        if (isset($this->session->userdata('routing')['dashboard'])) {
-            $this->load->view('dashboard', $data);
-        } else {
-            $this->session->set_flashdata('error', 'Please login to access the dashboard');
-            redirect('login/userlogin');
-        }
+        $this->load->view('estate/manage_estate', $data);
     }
 
 
-    public function userID($id)
-    {
-        $data['userid'] = $id;
-        $this->load->view('userlist', $data);
-    }
-
-    public function logout()
-    {
-        $this->session->unset_userdata('userinfo');
-        session_destroy();
-        $this->session->set_flashdata('success', 'Logout successfully');
-        redirect('login/userlogin');
-    }
-    public function profile()
-    {
-        $success = $this->session->flashdata('success');
-        $error = $this->session->flashdata('error');
-        $data = [];
-        if (!empty($success)) {
-            $data['success'] = $success;
-        }
-        if (!empty($error)) {
-            $data['error'] = $error;
-        }
-
-        if (null !== $this->session->userdata('userinfo')) {
-            $sessionData = $this->session->userdata('userinfo');
-            $result = $this->user_model->getUserDataByID($sessionData['id']);
-            if ($result) {
-                $data['myprofile'] = $result;
-                $this->load->view('profile', $data);
-            }
-        }
-    }
+    
     public function editProfile($id)
     {
         $success = $this->session->flashdata('success');

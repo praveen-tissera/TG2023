@@ -9,7 +9,7 @@ class worker_model extends CI_Model
 
         date_default_timezone_set("Asia/colombo");
     }
-    public function registerUser($data)
+    public function registerworker($data)
     {
         // print_r($data);
         $query = $this->db->select('*')
@@ -46,6 +46,19 @@ class worker_model extends CI_Model
         return $query->result();
     }
 
+    public function deleteworker($id)
+    {
+        $condition = "worker_id='{$id}'";
+        $this->db->where($condition)
+            ->delete('worker_tbl');
+        echo $this->db->last_query();
+        if ($this->db->affected_rows() == 1) {
+            return (1);
+        } else {
+            return (0);
+        }
+    }
+
     public function check_if_attendance()
     {
         $currentdate = date('Y-m-d');
@@ -63,55 +76,40 @@ class worker_model extends CI_Model
 
     public function attendance()
     {
-        $this->load->model('worker_model');
-        $currentdate = date('Y-m-d');
-        if ($this->worker_model->check_if_attendance()) {;
-            $query = $this->db->get('worker_tbl');
-            $workerdata = $query->result();
-            print_r($workerdata);
-            $condition = "date='{$currentdate}' ";
-            $query = $this->db->select('*')
-                ->where($condition)
-                ->get('attendance_tbl');
-            $attendance = $query->result();
-            echo $this->db->last_query();
-            if ($query->num_rows() == 1) {
-                return $query->result();
-            } else {
-                return false;
-            }
+        $query = $this->db->get('worker_tbl');
+        echo $this->db->last_query();
+        if ($query->num_rows() == 0) {
+            return false;
         } else {
-
-            $query = $this->db->get('worker_tbl');
-            echo $this->db->last_query();
-            if ($query->num_rows() == 0) {
-                return false;
-            } else {
-                return $query->result();;
-            }
+            return $query->result();;
         }
     }
 
+
     public function attendance_submit($data)
     {
-        $currentdate = date('Y-m-d');
-        if ($this->worker_model->check_if_attendance()) {
-            foreach ($data as $key => $value) {
-                $condition = array('worker_id' => $value->worker_id, 'date' => $currentdate);
-                $this->db->set('status', $value->status);
-                $this->db->where($condition);
-                $this->db->update('attendance_tbl');
-            }
-        } else {
-            $this->db->insert('attendance_tbl', $data);
-        }
 
+        $condition = array('worker_id' => $data['worker_id'], 'date' => $data['date']);
+        $this->db->set('status', $data['status']);
+        $this->db->where($condition);
+        $this->db->update('attendance_tbl');
 
         echo $this->db->last_query();
-        if ($this->db->affected_rows() == 0) {
-            return (0);
-        } else {
+        //A diffrent methord must be used check wheather the query worked
+        if ($this->db->affected_rows() == 1) {
             return (1);
+        } else {
+            return (0);
+        }
+    }
+    public function attendance_submit_unset($data)
+    {
+        $this->db->insert('attendance_tbl', $data);
+        echo $this->db->last_query();
+        if ($this->db->affected_rows() == 1) {
+            return (1);
+        } else {
+            return (0);
         }
     }
 
