@@ -79,8 +79,9 @@
                             <div class="card text-white bg-success mb-3">
 
                                 <div class="card-body">
-                                    <h5 class="card-title">Reports</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                                    <h5 class="card-title">Estate</h5>
+                                    <p class="card-text">Manage and track estate activities</p>
+                                    <a href="<?php echo base_url() . 'estate/manage_estate' ?>" class="stretched-link"></a>
                                 </div>
                             </div>
                         </div>

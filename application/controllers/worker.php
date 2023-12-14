@@ -26,7 +26,7 @@ class worker extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-        $this->load->view('worker/manage_workers',$data);
+        $this->load->view('worker/manage_workers', $data);
     }
 
     public function register_worker()
@@ -40,7 +40,7 @@ class worker extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-        $this->load->view('worker/register_worker',$data);
+        $this->load->view('worker/register_worker', $data);
     }
 
     public function mark_attendance()
@@ -54,10 +54,14 @@ class worker extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-        
+
         $attendance = $this->worker_model->attendance();
         $data['attendance'] = $attendance;
-        $this->load->view('worker/mark_attendance', $data);
+        if ($this->worker_model->check_if_attendance()) {
+            $this->load->view('worker/mark_attendance', $data);
+        } else {
+            $this->load->view('worker/mark_attendance_unset', $data);
+        }
     }
 
     public function register_worker_Submit()
@@ -100,21 +104,21 @@ class worker extends CI_Controller
                 );
                 $this->load->view('worker/register_worker', $data);
             }
-
-
         }
     }
     public function attendanceSubmit()
     {
         print_r($_POST);
-        $this->form_validation->set_rules('status', 'boolean', 'required');
-        if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Attendance cannot be empty');
-            redirect("worker/mark_attendance");
-        } else {
+        $currentdate = date('Y-m-d');
+        //***foreach ($_POST as $key => $value) {
+        //    if ($value->status == NULL) {
+        //        $this->session->set_flashdata('error', 'Attendance cannot be empty');
+        //        redirect("worker/mark_attendance");
+        //    }
+        //}
+        if ($this->worker_model->check_if_attendance()) {
             $attendance = $this->session->flashdata('attendance');
             $result = array_merge_recursive($attendance, $_POST);
-            $currentdate = date('Y-m-d');
             foreach ($result as $key => $value) {
                 $data = array(
                     'worker_id' => $value->worker_id,
@@ -125,15 +129,29 @@ class worker extends CI_Controller
             }
 
             $result = $this->worker_model->attendance_submit($data);
-            if ($result == 1) {
-                $this->session->set_flashdata('success', 'Attendance marked successfully');
-                redirect("worker/manage_worker");
-            } else {
-                $this->session->set_flashdata('error', 'Error occured Please try again');
-                redirect("worker/mark_attendance");
+            
+        } else {
+            foreach ($_POST as $key => $value) {
+                $worker_id = mb_substr($key, -1);
+                $data = array(
+                    'worker_id' => $worker_id,
+                    'date' => $currentdate,
+                    'status' => $value-> { echo 'status_ . $worker_id'}
+
+                );
+                $result = $this->worker_model->attendance_Submit($data);
             }
         }
+        if ($result == 1) {
+            $this->session->set_flashdata('success', 'Attendance marked successfully');
+            redirect("worker/manage_worker");
+        } else {
+            $this->session->set_flashdata('error', 'Error occured Please try again');
+            redirect("worker/mark_attendance");
+        }
     }
+
+
     public function view_worker()
     {
         $success = $this->session->flashdata('success');
