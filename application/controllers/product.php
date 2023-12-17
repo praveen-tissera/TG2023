@@ -132,5 +132,30 @@ class Product extends CI_Controller{
 		$this->load->view('/chart/charts_view',$data);
 
 	}
+	public function showPdf(){
+		$result = $this->product_model->getMarks();
+	
+		$html = "<table width='100%'><tr><td><h3 style='margin-bottom:0;padding-bottom:0;'>Create Tech Academy</h3><p style='margin-top:0;padding-top:0;'>Phone: +94764354222 | Email: info@cta.lk</p></td><td align='right'>Date Issued<br>";
+		$html .= date("F j, Y");
+		$html .= "</td></tr></table> <hr>";
+
+		$html .= "<table border='1' style='width:100%;border:1px black solid;border-collapse: collapse;margin-bottom:50px;'><tr><th style='padding:10px;' >Student Name</th><th style='padding:10px;'>Science Marks</th><th style='padding:10px;'>Math Marks</th></tr>";
+		foreach ($result as $key => $value) {
+			$html .= "<tr><td style='padding:10px;'>{$value->name}</td><td style='padding:10px;text-align:center'>{$value->math_marks}</td><td style='padding:10px;text-align:center'>{$value->science_marks}</td></tr>";
+		};
+		$html .= "</table>";
+
+		$customePaper = array(0, 0, 500, 500);
+		$this->load->library('pdf');
+		$this->dompdf->loadHtml($html); // load all html and css contents in view
+		// $this->dompdf->setPaper('A4', 'landscape');
+		// $this->dompdf->setPaper('A4', 'portrait');
+		$this->dompdf->setPaper($customePaper, 'landscape'); // set pdf paper size and orientation
+		$this->dompdf->render(); // its convert all html & css elements to pdf
+		$this->dompdf->stream("sample.pdf", array("Attachment" => 0)); //used to output generated in broswer and its automatically download the pdf
+
+		
+
+	}
 
 }
