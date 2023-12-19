@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="row">
-            <?php if ($this->session->userdata('routing')['dashboard']) { ?>
+            <?php if ($this->session->userdata('routing')) { ?>
                 <div class="col-3">
                     <div class="card text-white bg-primary mb-3">
                         <div class="card-body">
@@ -51,7 +51,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Add Estate Work</h5>
                             <p class="card-text">Add work done on current date</p>
-                            <a href="<?php echo base_url() . 'worker/manage_worker' ?>" class="stretched-link"></a>
+                            <a href="<?php echo base_url() . 'estate/add_work' ?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

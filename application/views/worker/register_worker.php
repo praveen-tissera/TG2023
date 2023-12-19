@@ -86,7 +86,7 @@
                                     <input type="radio" name="gender" id="Male" autocomplete="off" value="Male">Male
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="emp_status" id="Female" autocomplete="off" value="Female">Female
+                                    <input type="radio" name="gender" id="Female" autocomplete="off" value="Female">Female
                                 </label>
                             </div>
                         </td>

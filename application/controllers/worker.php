@@ -243,7 +243,7 @@ class worker extends CI_Controller
     {
         $result = $this->worker_model->deleteworker($id);
         if ($result == 1) {
-            $this->session->set_flashdata('success', 'Worker deleted successfully');
+            $this->session->set_flashdata('success', 'Worker marked for deletion successfully. Data will be removed later');
             redirect("/worker/manage_worker/");
         } elseif ($result == 0) {
             $this->session->set_flashdata('error', 'Something went wrong. Please try again');
@@ -257,6 +257,53 @@ class worker extends CI_Controller
             redirect('login/userlogin');
         } else {
             return true;
+        }
+    }
+    public function for_deletion()
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        if (false == $this->worker_model->for_deletion()) {
+            $data['error'] = "No workers are marked for deletion";
+        }
+
+        $result = $this->worker_model->for_deletion();
+        $data['result'] = $result;
+        $this->load->view('worker/for_deletion', $data);
+    }
+    public function perm_delete_worker($id)
+    {
+        $worker_data = $this->worker_model->getworkerDataByID($id);
+        $data['result'] = $worker_data;
+        $this->load->view('worker/perm_delete_confirmation', $data);
+    }
+    public function perm_deleteworker_confirmation($id)
+    {
+        $result = $this->worker_model->perm_deleteworker($id);
+        if ($result == 1) {
+            $this->session->set_flashdata('success', 'Worker data removed');
+            redirect("/worker/manage_worker/");
+        } elseif ($result == 0) {
+            $this->session->set_flashdata('error', 'Something went wrong. Please try again');
+            redirect("/worker/manage_worker/");
+        }
+    }
+    public function restore_worker($id)
+    {
+        $result = $this->worker_model->restore_worker($id);
+        if ($result == 1) {
+            $this->session->set_flashdata('success', 'Worker restored sucessfully');
+            redirect("/worker/manage_worker/");
+        } elseif ($result == 0) {
+            $this->session->set_flashdata('error', 'Something went wrong. Please try again');
+            redirect("/worker/manage_worker/");
         }
     }
 }

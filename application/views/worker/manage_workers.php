@@ -59,7 +59,17 @@
                     </div>
                 </div>
             </div>
-
+            <?php if ($this->session->userdata('routing')['worker']['perm_delete']) { ?>
+                <div class="col-3">
+                    <div class="card text-white bg-primary mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Delete</h5>
+                            <p class="card-text">Perform Final Deletion</p>
+                            <a href="<?php echo base_url() . 'worker/for_deletion' ?>" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+            <?php } ?>
         </div>
     </div>
 

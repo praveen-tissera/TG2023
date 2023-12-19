@@ -41,7 +41,10 @@ class worker_model extends CI_Model
 
     public function getworkerData()
     {
-        $query = $this->db->get('worker_tbl');
+        $condition = "active='1'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('worker_tbl');
         echo $this->db->last_query();
         return $query->result();
     }
@@ -49,8 +52,9 @@ class worker_model extends CI_Model
     public function deleteworker($id)
     {
         $condition = "worker_id='{$id}'";
-        $this->db->where($condition)
-            ->delete('worker_tbl');
+        $this->db->set('active', "0");
+        $this->db->where($condition);
+        $this->db->update('worker_tbl');
         echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
@@ -76,7 +80,10 @@ class worker_model extends CI_Model
 
     public function attendance()
     {
-        $query = $this->db->get('worker_tbl');
+        $condition = "active='1'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('worker_tbl');
         echo $this->db->last_query();
         if ($query->num_rows() == 0) {
             return false;
@@ -97,6 +104,8 @@ class worker_model extends CI_Model
         echo $this->db->last_query();
         //A diffrent methord must be used check wheather the query worked
         if ($this->db->affected_rows() == 1) {
+            return (1);
+        } elseif ($this->db->affected_rows() == 0) {
             return (1);
         } else {
             return (0);
@@ -150,6 +159,44 @@ class worker_model extends CI_Model
             return (0);
         } else {
             return (-1);
+        }
+    }
+    public function for_deletion()
+    {
+        $condition = "active='0'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('worker_tbl');
+        echo $this->db->last_query();
+        if ($query->num_rows() == 0) {
+            return false;
+        } else {
+            return $query->result();
+        }
+    }
+    public function perm_deleteworker($id){
+        $condition = "worker_id='{$id}'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->delete('worker_tbl');
+        echo $this->db->last_query();
+        if ($query->num_rows() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    public function restore_worker($id)
+    {
+        $condition = "worker_id='{$id}'";
+        $this->db->set('active', "1");
+        $this->db->where($condition);
+        $this->db->update('worker_tbl');
+        echo $this->db->last_query();
+        if ($this->db->affected_rows() == 1) {
+            return (1);
+        } else {
+            return (0);
         }
     }
 }
