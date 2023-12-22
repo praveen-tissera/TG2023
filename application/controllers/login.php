@@ -140,6 +140,41 @@ class Login extends CI_Controller
                         ],
 
                     );
+                } elseif ($resutlUserData[0]->role == 'owner') {
+                    $actions = array(
+                        'dashboard' => [
+                            'myprofile' => true,
+                            'teamprofile' => true,
+                            'product' => true,
+                            'reports' => true
+                        ],
+                        'profile' => [
+                            'view' => true,
+                            'edit' => true,
+                            'delete' => false
+                        ],
+                        'teamprofile' => [
+                            'view' => true,
+                            'edit' => false,
+                            'delete' => false
+                        ],
+                        'product' => [
+                            'view' => true,
+                            'edit' => true,
+                            'delete' => false
+                        ],
+                        'reports' => [
+                            'view' => false,
+                            'edit' => false,
+                            'delete' => false
+                        ],
+                        'worker' => [
+                            'view' => true,
+                            'edit' => true,
+                            'delete' => true,
+                            'perm_delete' => false
+                        ],
+                    );
                 } elseif ($resutlUserData[0]->role == 'manager') {
                     $actions = array(
                         'dashboard' => [
@@ -150,7 +185,7 @@ class Login extends CI_Controller
                         ],
                         'profile' => [
                             'view' => true,
-                            'edit' => true,
+                            'edit' => false,
                             'delete' => false
                         ],
                         'teamprofile' => [

@@ -14,7 +14,8 @@ class estate extends CI_Controller
         date_default_timezone_set("Asia/colombo");
         $this->checkSessionExist();
         $this->load->library('upload');
-		$this->load->library('pagination');
+        $this->load->library('pagination');
+        $this->load->helper('array');
     }
 
     public function manage_estate()
@@ -58,16 +59,32 @@ class estate extends CI_Controller
         }
         $currentdate = date('Y-m-d');
 
+        if ($_POST['task'] == 'fertilizer') {
+            $colour = "bg-primary";
+        } elseif ($_POST['task'] == 'pesticide') {
+            $colour = "bg-primary";
+        } elseif ($_POST['task'] == 'weedicide') {
+            $colour = "bg-primary";
+        } elseif ($_POST['task'] == 'harvest') {
+            $colour = "bg-primary";
+        } elseif ($_POST['task'] == 'weeding') {
+            $colour = "bg-primary";
+        } elseif ($_POST['task'] == 'prune') {
+            $colour = "bg-primary";
+        } elseif ($_POST['task'] == 'maintenance') {
+            $colour = "bg-primary";
+        }
+
         $data = array(
             'date' => $currentdate,
             'id' => $_POST['zone'],
-            'status' =>$_POST['task']
-
+            'status' => $_POST['task'],
+            'colour' => $colour
         );
-        if($this->estate_model->insert_estate_data($data)){
+        if ($this->estate_model->insert_estate_data($data)) {
             $this->session->set_flashdata('success', 'Work data inserted successfully');
             redirect('estate/manage_estate');
-        }else{
+        } else {
             $this->session->set_flashdata('error', 'Work data was not inserted. Please try again');
             redirect('estate/add_work');
         }
@@ -81,8 +98,9 @@ class estate extends CI_Controller
             return true;
         }
     }
-    public function view_history($offset = 0)
+    public function view_history($start_date = NULL,$end_date = NULL)
     {
+        //standard massage handaling
         $success = $this->session->flashdata('success');
         $error = $this->session->flashdata('error');
         $data = [];
@@ -92,49 +110,24 @@ class estate extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-        
-            $config = array();
-            $config['base_url'] = base_url() . 'estate/view_history';
-            $config['total_rows'] = $this->estate_model->get_count();
-            $config['per_page'] = 10;
-            //Ecapsulation pagination
-            $config['full_tag_open'] = '<ul class="pagination justify-content-center';
-            $config['full_tag_close'] = '</ul>';
-            //First link
-            $config['first_link'] = 'First';
-            $config['first_tag_open'] = '<li class="page-item">';
-            $config['first_tag_close'] = '</li>';
-            //Customizing the "Digit" Link
-            $config['num_tag_open'] = '<li class="page-item">';
-            $config['num_tag_close'] = '</li>';
-            //previous page set up
-            $config['prev_link'] = 'Previous';
-            $config['prev_tag_open'] = '<li class="page-item">';
-            $config['prev_tag_close'] = '</li>';
-            //Last page
-            $config['last_link'] = 'Last';
-            $config['last_tag_open'] = '<li class="page-item">';
-            $config['last_tag_close'] = '</li>';
-            //Next page
-            $config['next_link'] = 'First';
-            $config['first_tag_open'] = '<li class="page-item">';
-            $config['first_tag_close'] = '</li>';
-    
-    
-            $config['attributes'] = ['class' => 'page-link'];
-    
-            //curent page
-            $config['cur_tag_open'] = '<li class="page-item active"><span class="page-link >';
-            $config['cur_tag_close'] = '<span class="sr-only">(current)</span></span></li>';
-    
-    
-            $this->pagination->initialize($config);
-    
-    
-            $data['links'] = $this->pagination->create_links();
-            $data['items'] = $this->estate_model->estate_history($config['per_page'], $offset);
-    
-            $this->load->view('estate/view_history', $data);
-        
+//checks if start and enddates are set
+//if not, the date range of 1 week from the current date is set
+        if (isset($_POST["start_date"])) {
+            $start_date = $_POST["start_date"];
+        } else {
+            $start_date = date("Y") . "-" . date("m") . "-" . (date("d") - 7);
+        }
+        if (isset($_POST["end_date"])) {
+            $end_date = $_POST["end_date"];
+        } else {
+            $end_date = date("Y") . "-" . date("m") . "-" . date("d");
+        }
+        //calls the model estate_history with the start and end dates, and sets the return as index result in array data
+        $data["result"] = $this->estate_model->estate_history($start_date, $end_date);
+        //pass the start and end dates to the array data
+        $data["start_date"] = $start_date;
+        $data["end_date"] = $end_date;
+        //load view with array data
+        $this->load->view('estate/view_history', $data);
     }
 }
