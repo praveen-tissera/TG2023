@@ -42,7 +42,7 @@ class Welcome extends CI_Controller
 
 	public function contactus()
 	{
-		$this->load->view('welcome_message');
+		$this->load->view('contactus');
 	}
 
 	

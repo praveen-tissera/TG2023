@@ -50,6 +50,56 @@
 
                 </table>
                 <?php echo form_close(); ?>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Task</th>
+                            <th scope="col">Colour</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">fertilizer</th>
+                            <td class="table-success"></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row">pesticide</th>
+                            <td class="table-warning"></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row">weedicide</th>
+                            <td class="bg-danger"></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row">harvest</th>
+                            <td class="bg-success"></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row">weeding</th>
+                            <td class="bg-warning"></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row">prune</th>
+                            <td class="bg-info"></td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="row">maintenance</th>
+                            <td class="bg-primary"></td>
+                        </tr>
+                    </tbody>
+                </table>
 
                 <table class="table table-bordered">
                     <thead>

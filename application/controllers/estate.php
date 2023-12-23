@@ -60,17 +60,17 @@ class estate extends CI_Controller
         $currentdate = date('Y-m-d');
 
         if ($_POST['task'] == 'fertilizer') {
-            $colour = "bg-primary";
+            $colour = "table-success";
         } elseif ($_POST['task'] == 'pesticide') {
-            $colour = "bg-primary";
+            $colour = "table-warning";
         } elseif ($_POST['task'] == 'weedicide') {
-            $colour = "bg-primary";
+            $colour = "bg-danger";
         } elseif ($_POST['task'] == 'harvest') {
-            $colour = "bg-primary";
+            $colour = "bg-success";
         } elseif ($_POST['task'] == 'weeding') {
-            $colour = "bg-primary";
+            $colour = "bg-warning";
         } elseif ($_POST['task'] == 'prune') {
-            $colour = "bg-primary";
+            $colour = "bg-info";
         } elseif ($_POST['task'] == 'maintenance') {
             $colour = "bg-primary";
         }
@@ -100,7 +100,7 @@ class estate extends CI_Controller
     }
     public function view_history($start_date = NULL,$end_date = NULL)
     {
-        //standard massage handaling
+        //standard message handaling
         $success = $this->session->flashdata('success');
         $error = $this->session->flashdata('error');
         $data = [];
