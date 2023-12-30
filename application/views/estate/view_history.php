@@ -27,8 +27,8 @@
     ?>
 
     <div class="container">
-        <div class="row">
-            <div class="col-12">
+        <div class="row position-relative">
+            <div class="col-12 position-static">
 
 
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
@@ -119,7 +119,9 @@
                         while ($date <= $end_date) {
                         ?>
                             <tr>
-                                <th scope="row"><?php echo ($date); ?></th>
+                                <th scope="row">
+                                    <?php echo ($date); ?>
+                                </th>
                                 <td class="<?php
                                             $i = 0;
                                             while ($i <= 4) {

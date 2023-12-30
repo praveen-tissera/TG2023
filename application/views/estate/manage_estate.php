@@ -63,14 +63,27 @@
                     <div class="card text-white bg-success mb-3">
 
                         <div class="card-body">
-                            <h5 class="card-title">Estate</h5>
-                            <p class="card-text">Manage and track estate activities</p>
-                            <a href="<?php echo base_url() . 'estate/manage_estate' ?>" class="stretched-link"></a>
+                            <h5 class="card-title">Add Weather</h5>
+                            <p class="card-text">Add the weather for today</p>
+                            <a href="<?php echo base_url() . 'estate/weather' ?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
 
+                <?php if ($this->session->userdata('routing')) { ?>
 
+                    <div class="col-3">
+                        <div class="card text-white bg-secondary mb-3">
+
+                            <div class="card-body">
+                                <h5 class="card-title">View 1 day Report</h5>
+                                <p class="card-text">View indepth information about 1 day</p>
+                                <a href="<?php echo base_url() . 'estate/one_day_report' ?>" class="stretched-link"></a>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php } ?>
             <?php } ?>
         </div>
     </div>

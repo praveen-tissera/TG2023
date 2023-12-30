@@ -98,7 +98,7 @@ class estate extends CI_Controller
             return true;
         }
     }
-    public function view_history($start_date = NULL,$end_date = NULL)
+    public function view_history($start_date = NULL, $end_date = NULL)
     {
         //standard message handaling
         $success = $this->session->flashdata('success');
@@ -110,8 +110,8 @@ class estate extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-//checks if start and enddates are set
-//if not, the date range of 1 week from the current date is set
+        //checks if start and enddates are set
+        //if not, the date range of 1 week from the current date is set
         if (isset($_POST["start_date"])) {
             $start_date = $_POST["start_date"];
         } else {
@@ -129,5 +129,27 @@ class estate extends CI_Controller
         $data["end_date"] = $end_date;
         //load view with array data
         $this->load->view('estate/view_history', $data);
+    }
+    public function one_day_report()
+    {
+        //standard message handling
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        if (isset($_POST["date"])) {
+            $date = $_POST["date"];
+        } else {
+            $date =  date("Y-m-d");
+        }
+        $data["date"] = $date;
+        $data["work_done"] = $this->estate_model->one_day_report_estate($date);
+        $data["weather"] = NULL;
+        $this->load->view('estate/one_day_report', $data);
     }
 }
