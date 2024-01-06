@@ -157,5 +157,10 @@ class Product extends CI_Controller{
 		
 
 	}
+	public function searchReceipe(){
+	
+		$this->load->view('/api/receipe-search');
+
+	}
 
 }
