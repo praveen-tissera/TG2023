@@ -37,11 +37,11 @@
                     <?php if ($key == 'myprofile' && $value == 1) { ?>
                         <div class="col-3">
                             <div class="card text-white bg-primary mb-3">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Manage Users</h5>
-                                        <p class="card-text">View/Edit Users</p>
-                                        <a href="<?php echo base_url() . 'user/manage_user' ?>" class="stretched-link"></a>
-                                    </div>
+                                <div class="card-body">
+                                    <h5 class="card-title">Manage Users</h5>
+                                    <p class="card-text">View/Edit Users</p>
+                                    <a href="<?php echo base_url() . 'user/manage_user' ?>" class="stretched-link"></a>
+                                </div>
                             </div>
                         </div>
                     <?php } ?>
@@ -73,8 +73,19 @@
                         </div>
 
                     <?php } ?>
-                <?php } ?>
+                    <?php if ($key == 'reports' && $value == 1) { ?>
+                        <div class="col-3">
+                            <div class="card text-white bg-success mb-3">
 
+                                <div class="card-body">
+                                    <h5 class="card-title">Chemicals</h5>
+                                    <p class="card-text">Manage and track chemicals activities</p>
+                                    <a href="<?php echo base_url() . 'chemicals/manage_chemicals' ?>" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
+                <?php } ?>
             <?php } ?>
         </div>
     </div>

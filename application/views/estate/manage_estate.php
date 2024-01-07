@@ -69,21 +69,6 @@
                         </div>
                     </div>
                 </div>
-
-                <?php if ($this->session->userdata('routing')) { ?>
-
-                    <div class="col-3">
-                        <div class="card text-white bg-secondary mb-3">
-
-                            <div class="card-body">
-                                <h5 class="card-title">View 1 day Report</h5>
-                                <p class="card-text">View indepth information about 1 day</p>
-                                <a href="<?php echo base_url() . 'estate/one_day_report' ?>" class="stretched-link"></a>
-                            </div>
-                        </div>
-                    </div>
-
-                <?php } ?>
             <?php } ?>
         </div>
     </div>
