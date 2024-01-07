@@ -152,4 +152,7 @@ class estate extends CI_Controller
         $data["weather"] = NULL;
         $this->load->view('estate/one_day_report', $data);
     }
+    public function mark_weather(){
+        
+    }
 }

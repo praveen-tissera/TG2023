@@ -139,4 +139,54 @@ class chemicals_model extends CI_Model
             return (0);
         }
     }
+    public function chemicals_out($data)
+    {
+        $this->db->insert('chemical_out_tbl', $data);
+        if ($this->db->affected_rows() == 0) {
+            return (0);
+        } else {
+            $condition = "chem_id = {$data['chem_id']}";
+            $query = $this->db->select('*')
+                ->where($condition)
+                ->get('current_chemical_tbl');
+            $query_result = $query->result();
+            $amount = $query_result[0]->amount - $data['amount'];
+            $condition = "chem_id= {$data['chem_id']}";
+            $this->db->set('amount', $amount);
+            $this->db->where($condition);
+            $this->db->update('current_chemical_tbl');
+            echo $this->db->last_query();
+            if ($this->db->affected_rows() == 0) {
+                return (0);
+            } else {
+                return (1);
+            }
+        }
+    }
+    public function chemical_history($start_date, $end_date)
+    {
+        $date = $start_date;
+        $result = array();
+        while ($date <= $end_date) {
+            $condition = "date='{$date}'";
+            $query = $this->db->select('*')
+                ->where($condition)
+                ->get('chemical_in_tbl');
+            echo ($this->db->last_query());
+            $result["in"][$date] = $query->result();
+
+            $condition = "date='{$date}'";
+            $query = $this->db->select('*')
+                ->where($condition)
+                ->get('chemical_out_tbl');
+            echo ($this->db->last_query());
+            $result["out"][$date] = $query->result();
+
+
+            $formated_date = date_create($date);
+            date_add($formated_date, date_interval_create_from_date_string("1 day"));
+            $date = date_format($formated_date, "Y-m-d");
+        }
+        return $result;
+    }
 }

@@ -82,7 +82,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Remove Chemicals</h5>
                             <p class="card-text">Mark Chemicals as consumed</p>
-                            <a href="<?php echo base_url() . 'chemicals/weather' ?>" class="stretched-link"></a>
+                            <a href="<?php echo base_url() . 'chemicals/consume_chemicals' ?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

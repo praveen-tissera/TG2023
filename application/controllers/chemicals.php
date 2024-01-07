@@ -135,6 +135,44 @@ class chemicals extends CI_Controller
             redirect('chemicals/add_chemicals');
         }
     }
+    public function consume_chemicals()
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $data["chemicals"] = $this->chemicals_model->get_chemicals();
+        $this->load->view('chemicals/chemicals_consumption', $data);
+    }
+    public function consume_chemicals_submit()
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $data = array(
+            'chem_id' => $_POST['chem_id'],
+            'date' => date('Y-m-d'),
+            'amount' => $_POST['amount']
+        );
+        if ($this->chemicals_model->chemicals_out($data)) {
+            $this->session->set_flashdata('success', 'Transaction recorded Sucessfully');
+            redirect('chemicals/manage_chemicals');
+        } else {
+            $this->session->set_flashdata('error', 'Tranaction failed. Please try again');
+            redirect('chemicals/consume_chemicals');
+        }
+    }
     private function checkSessionExist()
     {
         if (!$this->session->has_userdata('userinfo')) {
@@ -209,5 +247,37 @@ class chemicals extends CI_Controller
             $this->session->set_flashdata('error', 'Chemical Failed to Edit. Please try again');
             redirect('chemicals/chemical');
         }
+    }
+    public function view_history($start_date = NULL, $end_date = NULL)
+    {
+        //standard message handaling
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        //checks if start and enddates are set
+        //if not, the date range of 1 week from the current date is set
+        if (isset($_POST["start_date"])) {
+            $start_date = $_POST["start_date"];
+        } else {
+            $start_date = date("Y") . "-" . date("m") . "-" . (date("d") - 7);
+        }
+        if (isset($_POST["end_date"])) {
+            $end_date = $_POST["end_date"];
+        } else {
+            $end_date = date("Y") . "-" . date("m") . "-" . date("d");
+        }
+        //calls the model estate_history with the start and end dates, and sets the return as index result in array data
+        $data["result"] = $this->chemicals_model->chemical_history($start_date, $end_date);
+        //pass the start and end dates to the array data
+        $data["start_date"] = $start_date;
+        $data["end_date"] = $end_date;
+        //load view with array data
+        $this->load->view('chemicals/view_history', $data);
     }
 }
