@@ -93,7 +93,7 @@
                         <div class="card-body">
                             <h5 class="card-title">Suppliers</h5>
                             <p class="card-text">Manage Suppliers</p>
-                            <a href="<?php echo base_url() . 'chemicals/weather' ?>" class="stretched-link"></a>
+                            <a href="<?php echo base_url() . 'chem_supplier/manage_suppliers' ?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
