@@ -25,6 +25,8 @@
         echo "</div>";
     }
     print_r($result);
+    print_r($chemicals);
+    print_r($suppliers);
     ?>
 
     <div class="container">
@@ -34,7 +36,7 @@
 
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
-                <?php echo form_open('chemiclas/view_history') ?>
+                <?php echo form_open('chemicals/view_history') ?>
                 <table class="table">
 
                     <tr>
@@ -56,11 +58,10 @@
                     <thead>
                         <tr>
                             <th scope="col" style="text-align:center;">Date</th>
-                            <th scope="col" style="text-align:center;">1</th>
-                            <th scope="col" style="text-align:center;">2</th>
-                            <th scope="col" style="text-align:center;">3</th>
-                            <th scope="col" style="text-align:center;">4</th>
-                            <th scope="col" style="text-align:center;">5</th>
+                            <th scope="col" style="text-align:center;">Chemical</th>
+                            <th scope="col" style="text-align:center;">Amount</th>
+                            <th scope="col" style="text-align:center;">Cost</th>
+                            <th scope="col" style="text-align:center;">Supplier</th>
                         </tr>
                     </thead>
 
@@ -69,44 +70,67 @@
                         $date = $start_date;
                         while ($date <= $end_date) {
                         ?>
-                            <tr>
-                                <th scope="row">
-                                    <?php echo ($date); ?>
-                                </th>
-
-                            </tr>
-                        <?php
-                            $formated_date = date_create($date);
-                            date_add($formated_date, date_interval_create_from_date_string("1 day"));
-                            $date = date_format($formated_date, "Y-m-d");
-                        }
-                        ?>
-                    </tbody>
-                </table>
-
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="text-align:center;">Date</th>
-                            <th scope="col" style="text-align:center;">1</th>
-                            <th scope="col" style="text-align:center;">2</th>
-                            <th scope="col" style="text-align:center;">3</th>
-                            <th scope="col" style="text-align:center;">4</th>
-                            <th scope="col" style="text-align:center;">5</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <?php
-                        $date = $start_date;
-                        while ($date <= $end_date) {
-                        ?>
-                            <tr>
-                                <th scope="row">
-                                    <?php echo ($date); ?>
-                                </th>
-
-                            </tr>
+                            <?php foreach ($result["in"][$date] as $key => $value) { ?>
+                                <tr class="table-success">
+                                    <th scope="row">
+                                        <?php echo ($date); ?>
+                                    </th>
+                                    <td>
+                                        <?php
+                                        foreach ($chemicals as $x => $chem) {
+                                            if ($chem->chem_id == $value->chem_id) {
+                                                echo ($chem->name);
+                                                break;
+                                            }
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo ($value->amount);
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo ($value->cost);
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        foreach ($suppliers as $x => $sup) {
+                                            if ($sup->supplier_id == $value->supplier) {
+                                                echo ($sup->name);
+                                                break;
+                                            }
+                                        }
+                                        ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                            <?php foreach ($result["out"][$date] as $key => $value) { ?>
+                                <tr class="table-danger">
+                                    <th scope="row">
+                                        <?php echo ($date); ?>
+                                    </th>
+                                    <td>
+                                        <?php
+                                        foreach ($chemicals as $x => $chem) {
+                                            if ($chem->chem_id == $value->chem_id) {
+                                                echo ($chem->name);
+                                                break;
+                                            }
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo ($value->amount);
+                                        ?>
+                                    </td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            <?php } ?>
                         <?php
                             $formated_date = date_create($date);
                             date_add($formated_date, date_interval_create_from_date_string("1 day"));

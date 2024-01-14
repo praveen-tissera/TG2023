@@ -30,8 +30,16 @@ class chemicals_model extends CI_Model
     }
     public function get_suppliers()
     {
-        $query = $this->db->get('supplier_tbl');
-        return $query->result();
+        $condition = "status='1'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('supplier_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
     }
     public function getChemicalDataByID($id)
     {
@@ -167,19 +175,21 @@ class chemicals_model extends CI_Model
     {
         $date = $start_date;
         $result = array();
+        echo ($end_date);
+        echo ($start_date);
         while ($date <= $end_date) {
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('chemical_in_tbl');
-            echo ($this->db->last_query());
+            print_r($this->db->last_query());
             $result["in"][$date] = $query->result();
 
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('chemical_out_tbl');
-            echo ($this->db->last_query());
+            print_r($this->db->last_query());
             $result["out"][$date] = $query->result();
 
 
