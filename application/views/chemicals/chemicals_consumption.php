@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <?php
+    $this->load->view('/common/nav.php');
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -48,7 +51,7 @@
                             <input type="text" class="form-control" name="amount" id="new_name">
                         </td>
                     </tr>
-                    
+
                     <tr>
                         <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"></td>
                     </tr>

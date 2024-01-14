@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
-    <title>Chemicals</title>
+    <title>Suppliers</title>
 </head>
 
 <body>
@@ -48,28 +48,19 @@
 
                     echo "<tr>";
                     echo "<td>";
-                    echo "Chemicals ID";
+                    echo "Supplier ID";
                     echo "</td>";
                     echo "<td>";
-                    echo $value->chem_id;
-                    echo "</td>";
-                    echo "</tr>";
-
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Type";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->type;
+                    echo $value->supplier_id;
                     echo "</td>";
                     echo "</tr>";
 
                     echo "<tr>";
                     echo "<td>";
-                    echo "Description";
+                    echo "Adress";
                     echo "</td>";
                     echo "<td>";
-                    echo $value->description;
+                    echo $value->address;
                     echo "</td>";
                     echo "</tr>";
 
@@ -79,8 +70,8 @@
                     <?php
                     echo "</table>";
                     if ($this->session->userdata('routing')['profile']['edit']) { ?>
-                        <a class="btn btn-primary" href="<?php echo base_url() . '/chemicals/editchemical/' . $value->chem_id ?>" role="button">Edit Chemical</a>
-                        <a class="btn btn-warning" href="<?php echo base_url() . '/chemicals/deletechemical/' . $value->chem_id ?>" role="button">Delete Chemical</a>
+                        <a class="btn btn-primary" href="<?php echo base_url() . '/chem_supplier/edit_supplier/' . $value->supplier_id ?>" role="button">Edit Supplier</a>
+                        <a class="btn btn-warning" href="<?php echo base_url() . '/chem_supplier/delete_supplier/' . $value->supplier_id ?>" role="button">Delete Supplier</a>
                 <?php }
                 }
                 ?>

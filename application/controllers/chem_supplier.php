@@ -73,7 +73,7 @@ class chem_supplier extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-        $data["result"] = $this->chemicals_model->get_chemicals();
+        $data["result"] = $this->chem_supplier_model->get_suppliers();
         $this->load->view('chemicals/suppliers/view_suppliers', $data);
     }
 
@@ -86,7 +86,7 @@ class chem_supplier extends CI_Controller
             return true;
         }
     }
-    public function editchemical($id)
+    public function edit_supplier($id)
     {
         $success = $this->session->flashdata('success');
         $error = $this->session->flashdata('error');
@@ -98,32 +98,35 @@ class chem_supplier extends CI_Controller
             $data['error'] = $error;
         }
 
-        $result = $this->chemicals_model->getChemicalDataByID($id);
+        $result = $this->chem_supplier_model->get_Supplier_Data_By_ID($id);
         if ($result) {
             $data['result'] = $result;
-            $this->load->view('chemicals/edit_chemical', $data);
+            $this->load->view('chemicals/suppliers/edit_supplier', $data);
         }
     }
-    public function editChemicalSubmit()
+    public function edit_supplier_submit()
     {
         print_r($_POST);
         $data = array(
-            'chem_id' => $_POST["chem_id"],
+            'supplier_id' => $_POST['supplier_id'],
             'name' => $_POST["name"],
-            'type' => $_POST['type'],
-            'description' => $_POST['description'],
+            'address' => $_POST['address']
 
         );
-
-        if ($this->chemicals_model->edit_chemical($data)) {
-            $this->session->set_flashdata('success', 'Chemical Edited Successfully');
-            redirect('chemicals/manage_chemicals');
+        $result = $this->chem_supplier_model->edit_supplier($data);
+        if ($result == 1) {
+            $this->session->set_flashdata('success', 'Supplier Edited Successfully');
+            redirect('chem_supplier/manage_suppliers');
+        } elseif ($result == 0) {
+            $this->session->set_flashdata('success', 'No Data Changed');
+            redirect('chem_supplier/manage_suppliers');
         } else {
-            $this->session->set_flashdata('error', 'Chemical Failed to Edit. Please try again');
-            redirect('chemicals/editchemical');
+            $this->session->set_flashdata('error', 'Supplier Failed to Edit. Please try again');
+            redirect('chem_supplier/manage_suppliers');
         }
     }
-    public function deletechemical($id)
+
+    public function delete_supplier($id)
     {
         $success = $this->session->flashdata('success');
         $error = $this->session->flashdata('error');
@@ -135,21 +138,20 @@ class chem_supplier extends CI_Controller
             $data['error'] = $error;
         }
 
-        $result = $this->chemicals_model->getChemicalDataByID($id);
+        $result = $this->chem_supplier_model->get_Supplier_Data_By_ID($id);
         if ($result) {
             $data['result'] = $result;
-            $this->load->view('chemicals/delete_confirmation', $data);
+            $this->load->view('chemicals/suppliers/delete_confirmation', $data);
         }
     }
 
-    public function deletechemical_confirmation($id)
+    public function delete_supplier_confirmation($id)
     {
-        if ($this->chemicals_model->delete_chemical($id)) {
-            $this->session->set_flashdata('success', 'Chemical Edited Successfully');
-            redirect('chemicals/manage_chemicals');
+        if ($this->chem_supplier_model->delete_supplier($id)) {
+            $this->session->set_flashdata('success', 'Supplier Deleted Successfully');
         } else {
-            $this->session->set_flashdata('error', 'Chemical Failed to Edit. Please try again');
-            redirect('chemicals/chemical');
+            $this->session->set_flashdata('error', 'Chemical Failed to Delete. Please try again');
         }
+        redirect('chem_supplier/manage_suppliers');
     }
 }
