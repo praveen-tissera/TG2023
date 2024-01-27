@@ -162,6 +162,7 @@ class estate extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
+        $data["current_date"] = date('Y-m-d');
         $this->load->view('estate/weather', $data);
     }
 }
