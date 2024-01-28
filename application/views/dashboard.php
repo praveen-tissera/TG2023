@@ -85,6 +85,18 @@
                             </div>
                         </div>
                     <?php } ?>
+                    <?php if ($key == 'reports' && $value == 1) { ?>
+                        <div class="col-3">
+                            <div class="card text-white bg-success mb-3">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Fianaces</h5>
+                                    <p class="card-text">Manage and track financial activities</p>
+                                    <a href="<?php echo base_url() . 'finance/manage_finance' ?>" class="stretched-link"></a>
+                                </div>
+                            </div>
+                        </div>
+                    <?php } ?>
                 <?php } ?>
             <?php } ?>
         </div>
