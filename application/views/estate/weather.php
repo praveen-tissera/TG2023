@@ -14,32 +14,47 @@
 </head>
 
 <body>
+    <?php
+    $this->load->view('/common/nav.php');
+    ?>
+    <?php
+    if (isset($success)) {
+        echo "<div class='alert alert-success'>";
+        echo $success;
+        echo "</div>";
+    }
+    if (isset($error)) {
+        echo "<div class='alert alert-danger'>";
+        echo $error;
+        echo "</div>";
+    }
+    ?>
     <main class="container">
         <div class="row">
-            <div class="col-4">
+            <div class="col-12">
                 <button id="searchbutton" class="btn btn-warning" onclick="get_data();">Get weather Data</button>
-            </div>
+                <div class="spinner-border hide" id="loading">
+                    <span class="sr-only"></span>
+                </div>
 
-        </div>
-        <div class="spinner-border hide" id="loading">
-            <span class="sr-only"></span>
-        </div>
-        <div class="row">
-            <div class="col">
-                <table class="table" id="weatherdata">
+                <?php echo form_open('estate/weather_submit') ?>
+                <table class="table">
+                    <tr>
+                        <td><input class="form-control" type="text" name="weather" id="weather_submit"></td>
+                    </tr>
+                    <tr>
+                        <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"></td>
+                    </tr>
                 </table>
+                <?php echo form_close(); ?>
             </div>
         </div>
     </main>
 
 
     <script>
-        function get_data() {
+        async function get_data() {
             document.getElementById("loading").setAttribute("class", "spinner-border view");
-            searchApiRequest();
-        }
-
-        async function searchApiRequest() {
             const Latitude = '7.053104739696581';
             const Longitude = '80.56118568695192';
             // send us json object
@@ -50,34 +65,11 @@
             // to extract the JSON body content from the Response object, we use the json() method, which returns a second promise that resolves with the result of parsing the response body text as JSON.
             let data = await responce.json();
             console.log('Json Object', data);
-            //useApiData(data);
-        }
-
-        function useApiData(data) {
-
-            // console.log(data.hits);
-            let list = `<thead>
-                        <tr>
-                            <th scope="col">Type</th>
-                            <th scope="col">Value</th>
-                        </tr>
-                        </thead>
-                        <tbody>`;
-            for (let item of data) {
-                list += `
-                <tr>
-                    <td ></td>
-                    <td ></td>
-                </tr>  
-                `;
-            }
-            list += `</tbody>`
+            let data_string = JSON.stringify(data);
+            document.getElementById('weather_submit').value = data_string;
             document.getElementById("loading").setAttribute("class", "spinner-border hide");
-            document.getElementById('weatherdata').innerHTML = list;
-
         }
     </script>
-    
 </body>
 
 </html>

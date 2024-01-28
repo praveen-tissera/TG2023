@@ -152,7 +152,8 @@ class estate extends CI_Controller
         $data["weather"] = NULL;
         $this->load->view('estate/one_day_report', $data);
     }
-    public function weather(){
+    public function weather()
+    {
         $success = $this->session->flashdata('success');
         $error = $this->session->flashdata('error');
         $data = [];
@@ -164,5 +165,27 @@ class estate extends CI_Controller
         }
         $data["current_date"] = date('Y-m-d');
         $this->load->view('estate/weather', $data);
+    }
+    public function weather_submit()
+    {
+        $weather_all = json_decode($_POST["weather"]);
+        print_r($weather_all);
+        $weather = array();
+        $weather["date"] = $weather_all->daily->time["0"];
+        $weather["relative_humidity"] = $weather_all->current->relative_humidity_2m;
+        $weather["max_temp"] = $weather_all->daily->temperature_2m_max["0"];
+        $weather["min_temp"] = $weather_all->daily->temperature_2m_min["0"];
+        $weather["daylight_duration"] = $weather_all->daily->daylight_duration["0"];
+        $weather["rain_sum"] = $weather_all->daily->rain_sum["0"];
+        $weather["max_wind_speed"] = $weather_all->daily->wind_speed_10m_max["0"];
+        $weather["wind_direction"] = $weather_all->daily->wind_direction_10m_dominant["0"];
+        print_r($weather);
+        if ($this->estate_model->insert_weather_data($weather)) {
+            $this->session->set_flashdata('success', 'Weather data inserted successfully');
+            redirect('estate/manage_estate');
+        } else {
+            $this->session->set_flashdata('error', 'Weather data was not inserted. Please try again');
+            redirect('estate/weather');
+        }
     }
 }
