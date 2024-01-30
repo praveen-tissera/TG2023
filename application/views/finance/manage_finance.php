@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
-    <title>Chemical Dashboard</title>
+    <title>Financial Dashboard</title>
 </head>
 
 <body>
@@ -69,22 +69,11 @@
                         <div class="card-body">
                             <h5 class="card-title">Add Income type</h5>
                             <p class="card-text">Add a new income type</p>
-                            <a href="<?php echo base_url() . 'finance/add_incomes' ?>" class="stretched-link"></a>
+                            <a href="<?php echo base_url() . 'finance/add_income_type' ?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-3">
-                    <div class="card text-white bg-success mb-3">
-
-                        <div class="card-body">
-                            <h5 class="card-title">View History</h5>
-                            <p class="card-text">View transaction history</p>
-                            <a href="<?php echo base_url() . 'chemicals/consume_chemicals' ?>" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-
+                
             <?php } ?>
         </div>
     </div>
