@@ -88,4 +88,17 @@ class estate_model extends CI_Model
             return (0);
         }
     }
+    public function check_weather_data($date)
+    {
+        $condition = "date='{$date}'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('weather_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
+    }
 }

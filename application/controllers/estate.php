@@ -163,8 +163,14 @@ class estate extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
-        $data["current_date"] = date('Y-m-d');
-        $this->load->view('estate/weather', $data);
+        $date = date('Y-m-d');
+        if ($this->estate_model->check_weather_data($date)) {
+            $this->session->set_flashdata('error', 'Weather data for today has already been inserted');
+            redirect('estate/manage_estate');
+        } else {
+            $data["current_date"] = date('Y-m-d'); 
+            $this->load->view('estate/weather', $data);
+        }
     }
     public function weather_submit()
     {

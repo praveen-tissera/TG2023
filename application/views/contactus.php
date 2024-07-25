@@ -8,7 +8,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
-  <title>Welcome</title>
+  <title>Contact Information</title>
 
 
 </head>
@@ -20,6 +20,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
   <div class="container">
     <div class="row">
       <div class="col">
+        <!-- Display Errors -->
         <?php
         if (isset($success)) {
           echo "<div class='alert alert-success'>";

@@ -60,6 +60,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
                         <span class="sr-only">Next</span>
                     </a>
                 </div>
+                
                 <script>
                     $('.carousel').carousel({
                         interval: 2000

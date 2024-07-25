@@ -35,6 +35,7 @@
 
                 echo "<table class='table'>";
                 $userId = 0;
+                print_r($myprofile);
                 foreach ($myprofile as $key => $value) {
                     // print_r($value->id);
                     $userId = $value->id;
@@ -73,6 +74,16 @@
                     echo "</td>";
                     echo "<td>";
                     echo $value->address;
+                    echo "</td>";
+                    echo "</tr>";
+
+                    echo "</tr>";
+                    echo "<tr>";
+                    echo "<td>";
+                    echo "Role";
+                    echo "</td>";
+                    echo "<td>";
+                    echo $value->role;
                     echo "</td>";
                     echo "</tr>";
 

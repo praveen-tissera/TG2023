@@ -81,8 +81,10 @@ class Login extends CI_Controller
             // $this->load->view('formsuccess');
         }
     }
+
     public function loginSubmit()
     {
+        //debuging
         print_r($_POST);
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
