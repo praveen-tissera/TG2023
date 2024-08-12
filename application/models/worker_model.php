@@ -216,4 +216,15 @@ class worker_model extends CI_Model
         );
         return $data;
     }
+
+    public function get_count() {
+        return $this->db->count_all('worker_tbl');
+    }
+
+    public function get_paginantion_users($limit, $start) {
+        $this->db->limit($limit, $start);
+        $query = $this->db->get('worker_tbl');
+
+        return $query->result();
+    }
 }

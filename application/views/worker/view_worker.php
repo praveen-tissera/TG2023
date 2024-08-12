@@ -68,7 +68,7 @@
                     </tr>
 
                     <?php
-                    foreach ($result as $key => $value) {
+                    foreach ($items as $key => $value) {
                     ?>
                         <tr>
                             <?php
@@ -99,6 +99,7 @@
 
 
                 </table>
+                <p><?php echo($links) ?> </p>
             </div>
         </div>
     </div>
