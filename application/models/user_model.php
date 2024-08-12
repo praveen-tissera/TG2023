@@ -13,13 +13,15 @@ class User_model extends CI_Model{
         if($query->num_rows() == 1){
             return false;
         }else{
+            $data['password'] = sha1($data['password']);
             $this->db->insert('user_tbl', $data);
             return true;
         }
         
     }
     public function loginCheck($data){
-        $condition = "email='{$data['email']}' && password='{$data['password']}'";
+        $data['e_password'] = sha1($data['password']);
+        $condition = "email='{$data['email']}' && password='{$data['e_password']}'";
         $query = $this->db->select('*')
                         ->where($condition)
                         ->get('user_tbl');

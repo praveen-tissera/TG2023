@@ -177,6 +177,7 @@ class worker extends CI_Controller
         }
         $result = $this->worker_model->getworkerData();
         $data['result'] = $result;
+        
         $this->load->view('worker/view_worker', $data);
     }
 
@@ -305,5 +306,10 @@ class worker extends CI_Controller
             $this->session->set_flashdata('error', 'Something went wrong. Please try again');
             redirect("/worker/manage_worker/");
         }
+    }
+    public function search_worker() {
+        $query = $this->input->post('query');
+        $results = $this->worker_model->get_results($query);
+        echo json_encode($results);
     }
 }

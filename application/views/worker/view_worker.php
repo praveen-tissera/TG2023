@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
+    <script src="<?php echo base_url() . '/js/jquery-3.7.1.min.js' ?>"></script>
     <title>Workers</title>
 </head>
 
@@ -15,7 +16,6 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>Workers</h1>
                 <?php
                 if (isset($success)) {
                     echo "<div class='alert alert-success'>";
@@ -27,142 +27,108 @@
                     echo $error;
                     echo "</div>";
                 }
+                echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
-                ?>
-                <?php
-                foreach ($result as $key => $value) {
-                    echo "<table class='table'>";
-
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "<h3>";
-                    echo "Name";
-                    echo "</h3>";
-                    echo "</td>";
-                    echo "<td>";
-                    echo "<h3>";
-                    echo $value->name;
-                    echo "</h3>";
-                    echo "</td>";
-                    echo "</tr>";
-
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Worker ID";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->worker_id;
-                    echo "</td>";
-                    echo "</tr>";
+                <h1>Workers</h1>
 
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Date Of Birth";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->dob;
-                    echo "</td>";
 
-                    echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Employment Status";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->emp_status;
-                    echo "</td>";
-                    echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Wage";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->wage;
-                    echo "</td>";
-                    echo "</tr>";
+                <search>
+                    <form id="searchForm">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <input class="form-control" type="text" placeholder="Search.." id="query">
+                                </td>
+                                <td>
+                                    <button class="btn btn-success" type="submit" value="Search"> Search </button>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </search>
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "EPF";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->EPF;
-                    echo "</td>";
-                    echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "EPF Number";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->EPF_no;
-                    echo "</td>";
-                    echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "ETF";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->ETF;
-                    echo "</td>";
-                    echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "ETF Number";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->ETF_no;
-                    echo "</td>";
-                    echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Gender";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->gender;
-                    echo "</td>";
-                    echo "</tr>";
-
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Education";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->education;
-                    echo "</td>";
-                    echo "</tr>";
-
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Address";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->address;
-                    echo "</td>";
-                    echo "</tr>";
-                ?>
+                <table class="table table-striped" id="resultsTable">
+                    <tr>
+                        <th>Worker ID</th>
+                        <th>Worker Name</th>
+                        <th>Date of Birth</th>
+                        <th>Gender</th>
+                        <?php
+                        if ($this->session->userdata('routing')['profile']['edit']) { ?>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        <?php } ?>
+                    </tr>
 
                     <?php
-                    echo "</table>";
-                    if ($this->session->userdata('routing')['profile']['edit']) { ?>
-                        <a class="btn btn-primary" href="<?php echo base_url() . '/worker/editworker/' . $value->worker_id ?>" role="button">Edit Worker</a>
-                        <a class="btn btn-warning" href="<?php echo base_url() . '/worker/deleteworker/' . $value->worker_id ?>" role="button">Delete Worker</a>
-                <?php }
-                }
-                ?>
+                    foreach ($result as $key => $value) {
+                    ?>
+                        <tr>
+                            <?php
+                            echo "<td>";
+                            echo $value->worker_id;
+                            echo "</td>";
+                            echo "<td>";
+                            echo $value->name;
+                            echo "</td>";
+                            echo "<td>";
+                            echo $value->dob;
+                            echo "</td>";
+                            echo "<td>";
+                            echo $value->gender;
+                            echo "</td>";
+
+                            if ($this->session->userdata('routing')['profile']['edit']) { ?>
+                                <td>
+                                    <a class="btn btn-primary" href="<?php echo base_url() . '/worker/editworker/' . $value->worker_id ?>" role="button">Edit Worker</a>
+                                </td>
+                                <td>
+                                    <a class="btn btn-warning" href="<?php echo base_url() . '/worker/deleteworker/' . $value->worker_id ?>" role="button">Delete Worker</a>
+                                </td>
+                            <?php } ?>
+                        </tr>
+                    <?php }
+                    ?>
 
 
-
+                </table>
             </div>
         </div>
     </div>
-
+    <script>
+        $(document).ready(function() {
+            $('#searchForm').on('submit', function(e) {
+                e.preventDefault();
+                var query = $('#query').val();
+                $.ajax({
+                    url: '<?php echo base_url("worker/search_worker"); ?>',
+                    type: 'POST',
+                    data: {
+                        query: query
+                    },
+                    success: function(data) {
+                        var results = JSON.parse(data);
+                        var tableBody = $('#resultsTable tbody');
+                        tableBody.empty();
+                        if (results.length > 0) {
+                            results.forEach(function(row) {
+                                tableBody.append('<tr><td>' + row.id + '</td><td>' + row.name + '</td><td>' + row.email + '</td></tr>');
+                            });
+                        } else {
+                            tableBody.append('<tr><td colspan="3">No results found</td></tr>');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

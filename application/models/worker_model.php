@@ -174,7 +174,8 @@ class worker_model extends CI_Model
             return $query->result();
         }
     }
-    public function perm_deleteworker($id){
+    public function perm_deleteworker($id)
+    {
         $condition = "worker_id='{$id}'";
         $query = $this->db->select('*')
             ->where($condition)
@@ -198,5 +199,21 @@ class worker_model extends CI_Model
         } else {
             return (0);
         }
+    }
+
+    public function get_results($query)
+    {
+        echo print_r($query);
+        $this->db->like('name', $query);
+        $this->db->or_like('worker_id', $query);
+        $query = $this->db->get('worker_table');
+        $query_result = $query->result();
+        $data = array(
+            'worker_id' => $query_result['worker_id'],
+            'name' => $query_result['name'],
+            'dob' => $query_result['dob'],
+            'gender' => $query_result['gender']
+        );
+        return $data;
     }
 }
