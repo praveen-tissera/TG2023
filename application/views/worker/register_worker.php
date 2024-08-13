@@ -9,10 +9,18 @@
     <script src="<?php echo base_url() . '/js/jquery-ui.js' ?>"></script>
     <script src="<?php echo base_url() . '/js/popper.min.js' ?>"></script>
     <script src="<?php echo base_url() . '/js/bootstrap.min.js' ?>"></script>
+    <style>
+        .hide {
+            display: none;
+        }
+    </style>
     <title>Register</title>
 </head>
 
 <body>
+    <?php
+    $this->load->view('/common/nav.php');
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -42,41 +50,41 @@
                         <td><input class="form-control" type="text" name="name"></td>
                     </tr>
                     <tr>
-                        <td>Date Of Birth (YYYY-MM-DD)</td>
-                        <td><input class="form-control" type="text" name="dob"></td>
+                        <td>Date Of Birth</td>
+                        <td><input class="form-control" type="date" name="dob"></td>
                     </tr>
                     <tr>
                         <td>Employment Status</td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="emp_status" id="Permanent" autocomplete="off" value="permanent">Permanent
+                                    <input type="radio" name="emp_status" id="Permanent" autocomplete="off" value="permanent" onclick="perm_emp();">Permanent
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="emp_status" id="Temporary" autocomplete="off" value="temporary"> Temporary
+                                    <input type="radio" name="emp_status" id="Temporary" autocomplete="off" value="temporary" onclick="temp_emp();"> Temporary
                                 </label>
                             </div>
                         </td>
                     </tr>
                     <tr>
-                        <td>Wage</td>
+                        <td>Wage (Rs.)</td>
                         <td><input class="form-control" type="text" name="wage"></td>
                     </tr>
                     <tr>
                         <td>EPF</td>
-                        <td><input class="form-control" type="text" name="EPF"></td>
+                        <td><input class="form-control" type="text" name="EPF" id="EPF"></td>
                     </tr>
                     <tr>
                         <td>EPF Number</td>
-                        <td><input class="form-control" type="text" name="EPF_no"></td>
+                        <td><input class="form-control" type="text" name="EPF_no" id="EPF_no"></td>
                     </tr>
                     <tr>
                         <td>ETF</td>
-                        <td><input class="form-control" type="text" name="ETF"></td>
+                        <td><input class="form-control" type="text" name="ETF" id="ETF"></td>
                     </tr>
                     <tr>
                         <td>ETF Number</td>
-                        <td><input class="form-control" type="text" name="ETF_no"></td>
+                        <td><input class="form-control" type="text" name="ETF_no" id="ETF_no"></td>
                     </tr>
                     <tr>
                         <td>Gender</td>
@@ -117,6 +125,22 @@
     </div>
     <script>
         $('.btn-group').button('toggle');
+    </script>
+    <script>
+        function temp_emp() {
+            document.getElementById("EPF").setAttribute("disabled", "1");
+            document.getElementById("EPF_no").setAttribute("disabled", "1");
+            document.getElementById("ETF").setAttribute("disabled", "1");
+            document.getElementById("ETF_no").setAttribute("disabled", "1");
+        }
+    </script>
+    <script>
+        function perm_emp() {
+            document.getElementById("EPF").removeAttribute('disabled');
+            document.getElementById("EPF_no").removeAttribute('disabled');
+            document.getElementById("ETF").removeAttribute('disabled');
+            document.getElementById("ETF_no").removeAttribute('disabled');
+        }
     </script>
 </body>
 

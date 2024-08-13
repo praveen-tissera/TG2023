@@ -80,15 +80,24 @@ class worker extends CI_Controller
                 'dob' => $_POST['dob'],
                 'emp_status' => $_POST['emp_status'],
                 'wage' => $_POST['wage'],
-                'EPF' => $_POST['EPF'],
-                'EPF_no' => $_POST['EPF_no'],
-                'ETF' => $_POST['ETF'],
-                'ETF_no' => $_POST['ETF_no'],
                 'gender' => $_POST['gender'],
                 'education' => $_POST['education'],
                 'address' => $_POST['address']
             );
 
+            if ($data['emp_status'] == "permanent") {
+                $data = array_merge(
+                    $data,
+                    array(
+                        'EPF' => $_POST['EPF'],
+                        'EPF_no' => $_POST['EPF_no'],
+                        'ETF' => $_POST['ETF'],
+                        'ETF_no' => $_POST['ETF_no']
+                    )
+                );
+            }
+            echo ($data['dob']);
+            $data['dob'] = date("Y-m-d", strtotime($data['dob']));
 
             $result = $this->worker_model->registerworker($data);
             if ($result) {

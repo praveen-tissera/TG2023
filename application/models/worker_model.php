@@ -205,22 +205,23 @@ class worker_model extends CI_Model
     {
         $this->db->like('name', $query);
         $this->db->or_like('worker_id', $query);
-        $query = $this->db->get('worker_table');
-        $query_result = $query->result();
-        $data = array(
-            'worker_id' => $query_result['worker_id'],
-            'name' => $query_result['name'],
-            'dob' => $query_result['dob'],
-            'gender' => $query_result['gender']
-        );
-        return $data;
+        $query = $this->db->get('worker_tbl');
+        if ($query->num_rows() == 0) {
+            return false;
+        } else {
+            $query_result = $query->result();
+            
+            return $query_result;
+        }
     }
 
-    public function get_count() {
+    public function get_count()
+    {
         return $this->db->count_all('worker_tbl');
     }
 
-    public function get_paginantion_users($limit, $start) {
+    public function get_paginantion_users($limit, $start)
+    {
         $this->db->limit($limit, $start);
         $query = $this->db->get('worker_tbl');
 

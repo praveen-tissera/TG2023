@@ -56,50 +56,53 @@
 
                 <table class="table table-striped" id="resultsTable">
                     <tr>
-                        <th>Worker ID</th>
-                        <th>Worker Name</th>
-                        <th>Date of Birth</th>
-                        <th>Gender</th>
-                        <?php
-                        if ($this->session->userdata('routing')['profile']['edit']) { ?>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        <?php } ?>
-                    </tr>
-
-                    <?php
-                    foreach ($items as $key => $value) {
-                    ?>
-                        <tr>
+                        <thead>
+                            <th>Worker ID</th>
+                            <th>Worker Name</th>
+                            <th>Date of Birth</th>
+                            <th>Gender</th>
                             <?php
-                            echo "<td>";
-                            echo $value->worker_id;
-                            echo "</td>";
-                            echo "<td>";
-                            echo $value->name;
-                            echo "</td>";
-                            echo "<td>";
-                            echo $value->dob;
-                            echo "</td>";
-                            echo "<td>";
-                            echo $value->gender;
-                            echo "</td>";
-
                             if ($this->session->userdata('routing')['profile']['edit']) { ?>
-                                <td>
-                                    <a class="btn btn-primary" href="<?php echo base_url() . '/worker/editworker/' . $value->worker_id ?>" role="button">Edit Worker</a>
-                                </td>
-                                <td>
-                                    <a class="btn btn-warning" href="<?php echo base_url() . '/worker/deleteworker/' . $value->worker_id ?>" role="button">Delete Worker</a>
-                                </td>
+                                <th>Edit</th>
+                                <th>Delete</th>
                             <?php } ?>
-                        </tr>
-                    <?php }
-                    ?>
+                        </thead>
+                    </tr>
+                    <tbody>
+                        <?php
+                        foreach ($items as $key => $value) {
+                        ?>
+                            <tr>
+                                <?php
+                                echo "<td>";
+                                echo $value->worker_id;
+                                echo "</td>";
+                                echo "<td>";
+                                echo $value->name;
+                                echo "</td>";
+                                echo "<td>";
+                                echo $value->dob;
+                                echo "</td>";
+                                echo "<td>";
+                                echo $value->gender;
+                                echo "</td>";
 
+                                if ($this->session->userdata('routing')['profile']['edit']) { ?>
+                                    <td>
+                                        <a class="btn btn-primary" href="<?php echo base_url() . '/worker/editworker/' . $value->worker_id ?>" role="button">Edit Worker</a>
+                                    </td>
+                                    <td>
+                                        <a class="btn btn-warning" href="<?php echo base_url() . '/worker/deleteworker/' . $value->worker_id ?>" role="button">Delete Worker</a>
+                                    </td>
+                                <?php } ?>
+                            </tr>
+                        <?php }
+                        ?>
+
+                    </tbody>
 
                 </table>
-                <p><?php echo($links) ?> </p>
+                <p><?php echo ($links) ?> </p>
             </div>
         </div>
     </div>
@@ -115,12 +118,23 @@
                         query: query
                     },
                     success: function(data) {
+                        console.log(data);
                         var results = JSON.parse(data);
                         var tableBody = $('#resultsTable tbody');
                         tableBody.empty();
                         if (results.length > 0) {
                             results.forEach(function(row) {
-                                tableBody.append('<tr><td>' + row.id + '</td><td>' + row.name + '</td><td>' + row.email + '</td></tr>');
+                                tableBody.append('<tr><td>' + row.worker_id + '</td><td>' + row.name + '</td><td>' + row.dob + '</td><td>' + row.gender + "</td>" + <?php if ($this->session->userdata('routing')['profile']['edit']) { ?> '<td>' +
+                                        "<a class='btn btn-primary' href=" +
+                                        "<?php echo(base_url()) ?>" + 
+                                        '/worker/editworker/' + row.worker_id + " role='button'>Edit Worker</a>" +
+                                        '</td>' +
+                                        '<td>' +
+                                        "<a class='btn btn-warning' href=" +
+                                        "<?php echo(base_url()) ?>" +
+                                        '/worker/deleteworker/' + row.worker_id + " role='button'>Delete Worker</a>" +
+                                        '</td>' +
+                                    <?php } ?> '</tr>');
                             });
                         } else {
                             tableBody.append('<tr><td colspan="3">No results found</td></tr>');
