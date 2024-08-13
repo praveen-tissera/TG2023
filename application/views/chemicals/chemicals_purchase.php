@@ -56,7 +56,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>Cost</td>
+                        <td>Cost (Rs.)</td>
                         <td>
                             <input type="text" class="form-control" name="cost" id="new_name">
                         </td>

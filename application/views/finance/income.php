@@ -60,9 +60,14 @@
                             <a class="btn btn-success" href="<?php echo base_url() . 'finance/add_income_type'  ?>" role="button">Add new Income</a>
                         </td>
                     </tr>
-
                     <tr>
-                        <td>Amount</td>
+                        <td>Date</td>
+                        <td>
+                            <input type="date" class="form-control" name="date" disabled>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Amount (Rs.)</td>
                         <td>
                             <input type="text" class="form-control" name="amount">
                         </td>
