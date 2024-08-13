@@ -13,6 +13,9 @@
 </head>
 
 <body>
+    <?php
+    $this->load->view('/common/nav.php');
+    ?>
     <div class="container">
         <div class="col">
             <div class="row">
@@ -29,33 +32,59 @@
                 }
 
                 ?>
-                <h1>Mark Attendance</h1>
+                <h1><?php echo ($date) ?> </h1>
+            </div>
+            <div class="row">
+                <h3>Mark Attendance</h3>
             </div>
             <div class="row">
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
                 <?php echo form_open('worker/attendanceSubmit'); ?>
-                <?php if (isset($attendance)) {
-                    foreach ($attendance as $key => $value) { ?>
-                        <div class="form-group">
-                            <h3><?php printf($value->name) ?></h3>
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="status_<?php echo $value->worker_id ?>" id="present" autocomplete="off" value="1"> Present
-                                </label>
-                                <label class="btn btn-secondary">
-                                    <input type="radio" name="status_<?php echo $value->worker_id ?>" id="absent" autocomplete="off" value="0"> Absent
-                                </label>
-                            </div>
-                        <?php } ?>
-                        </div>
-                        <div class="row">
-                            <input class="btn btn-primary" type="submit" name="submit" value="Submit">
-                        </div>
-                    <?php } else { ?>
-                        <h2>Error</h2>
-                        <p>Something went wrong and the attendance data was not retrived</p>
+
+                <?php if (isset($attendance)) { ?>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Worker ID</th>
+                                <th scope="col">Worker Name</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($attendance as $key => $value) { ?>
+                                <div class="form-group">
+                                    <tr>
+                                        <th scope="row"><?php echo ($value->worker_id) ?></th>
+                                        <td><?php echo ($value->name) ?></td>
+                                        <td>
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn btn-secondary">
+                                                    <input type="radio" name="status_<?php echo $value->worker_id ?>" id="present" autocomplete="off" value="1"> Present
+                                                </label>
+                                                <label class="btn btn-secondary">
+                                                    <input type="radio" name="status_<?php echo $value->worker_id ?>" id="absent" autocomplete="off" value="0"> Absent
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                                </div>
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <input class="btn btn-primary" type="submit" name="submit" value="Submit">
+                                        </div>
+                                    </td>
+                                </tr>
+                        </tbody>
+                    </table>
+                <?php } else { ?>
+                    <h2>Error</h2>
+                    <p>Something went wrong and the attendance data was not retrived</p>
             </div>
         <?php } ?>
+
         <?php $this->session->set_flashdata('attendance', $attendance); ?>
         <?php echo form_close(); ?>
 

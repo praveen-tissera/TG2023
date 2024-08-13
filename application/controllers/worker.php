@@ -59,7 +59,7 @@ class worker extends CI_Controller
         if ($this->worker_model->check_if_attendance()) {
             $data['info'] = "Attendance has already been marked for today";
         }
-
+        $data['date'] = date('Y-m-d');
         $attendance = $this->worker_model->attendance();
         $data['attendance'] = $attendance;
         $this->load->view('worker/mark_attendance', $data);
@@ -104,6 +104,7 @@ class worker extends CI_Controller
             }
         }
     }
+
     public function attendanceSubmit()
     {
         print_r($_POST);

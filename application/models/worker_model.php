@@ -203,7 +203,6 @@ class worker_model extends CI_Model
 
     public function get_results($query)
     {
-        echo print_r($query);
         $this->db->like('name', $query);
         $this->db->or_like('worker_id', $query);
         $query = $this->db->get('worker_table');
