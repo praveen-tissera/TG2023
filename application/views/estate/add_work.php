@@ -13,6 +13,9 @@
 </head>
 
 <body>
+    <?php
+    $this->load->view('/common/nav.php');
+    ?>
     <div class="container">
         <div class="row">
             <div class="col-12">
@@ -55,12 +58,12 @@
                                 </label>
                             </div>
                         </td>
-                    
+
                     <tr>
                         <td>Task</td>
                         <td>
                             <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-secondary">
+                                <label class="btn btn-secondary">
                                     <input type="radio" name="task" id="fertilizer" autocomplete="off" value="fertilizer">fertilizer
                                 </label>
                                 <label class="btn btn-secondary">
@@ -70,7 +73,7 @@
                                     <input type="radio" name="task" id="weedicide" autocomplete="off" value="weedicide">weedicide
                                 </label>
                                 <label class="btn btn-secondary">
-                                    <input type="radio" name="task"id="harvest" autocomplete="off" value="harvest">harvest
+                                    <input type="radio" name="task" id="harvest" autocomplete="off" value="harvest">harvest
                                 </label>
                                 <label class="btn btn-secondary">
                                     <input type="radio" name="task" id="weeding" autocomplete="off" value="weeding">weeding

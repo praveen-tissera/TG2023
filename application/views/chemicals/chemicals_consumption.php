@@ -44,7 +44,18 @@
                             </select>
                         </td>
                     </tr>
-
+                    <tr>
+                        <td>Supplier</td>
+                        <td>
+                            <select class="selectpicker" name="supp_id" data-live-search="true" multiple title="Please select an Option">
+                                <?php
+                                foreach ($suppliers as $key => $value) {
+                                    echo "<option value='$value->supplier_id'>$value->name</option>";
+                                }
+                                ?>
+                            </select>
+                        </td>
+                    </tr>
                     <tr>
                         <td>Amount(Liters/Kg)</td>
                         <td>

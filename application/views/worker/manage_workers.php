@@ -63,8 +63,8 @@
                 <div class="col-3">
                     <div class="card text-white bg-primary mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">Delete</h5>
-                            <p class="card-text">Perform Final Deletion</p>
+                            <h5 class="card-title">Recover</h5>
+                            <p class="card-text">Recover workers marked for deletion</p>
                             <a href="<?php echo base_url() . 'worker/for_deletion' ?>" class="stretched-link"></a>
                         </div>
                     </div>

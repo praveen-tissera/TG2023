@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
+    <script src="<?php echo base_url() . '/js/jquery-3.2.1.slim.min.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/jquery-ui.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/popper.min.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/bootstrap.min.js' ?>"></script>
     <title>Register</title>
 </head>
 

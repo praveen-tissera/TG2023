@@ -29,131 +29,132 @@
                 }
 
                 ?>
-                <?php
-                foreach ($result as $key => $value) {
-                    echo "<table class='table'>";
+                <?php if ($result) {
+                    foreach ($result as $key => $value) {
+                        echo "<table class='table'>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "<h3>";
-                    echo "Name";
-                    echo "</h3>";
-                    echo "</td>";
-                    echo "<td>";
-                    echo "<h3>";
-                    echo $value->name;
-                    echo "</h3>";
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "<h3>";
+                        echo "Name";
+                        echo "</h3>";
+                        echo "</td>";
+                        echo "<td>";
+                        echo "<h3>";
+                        echo $value->name;
+                        echo "</h3>";
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Worker ID";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->worker_id;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "Worker ID";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->worker_id;
+                        echo "</td>";
+                        echo "</tr>";
 
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Date Of Birth";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->dob;
-                    echo "</td>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "Date Of Birth";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->dob;
+                        echo "</td>";
 
-                    echo "</tr>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Employment Status";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->emp_status;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "Employment Status";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->emp_status;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Wage";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->wage;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "Wage";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->wage;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "EPF";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->EPF;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "EPF";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->EPF;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "EPF Number";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->EPF_no;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "EPF Number";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->EPF_no;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "ETF";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->ETF;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "ETF";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->ETF;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "ETF Number";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->ETF_no;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "ETF Number";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->ETF_no;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Gender";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->gender;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "Gender";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->gender;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Education";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->education;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "Education";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->education;
+                        echo "</td>";
+                        echo "</tr>";
 
-                    echo "<tr>";
-                    echo "<td>";
-                    echo "Address";
-                    echo "</td>";
-                    echo "<td>";
-                    echo $value->address;
-                    echo "</td>";
-                    echo "</tr>";
+                        echo "<tr>";
+                        echo "<td>";
+                        echo "Address";
+                        echo "</td>";
+                        echo "<td>";
+                        echo $value->address;
+                        echo "</td>";
+                        echo "</tr>";
                 ?>
 
-                    <?php
-                    echo "</table>";
-                    if ($this->session->userdata('routing')['worker']['perm_delete']) { ?>
-                        <a class="btn btn-primary" href="<?php echo base_url() . '/worker/restore_worker/' . $value->worker_id ?>" role="button">Restore Worker</a>
-                        <a class="btn btn-warning" href="<?php echo base_url() . '/worker/perm_delete_worker/' . $value->worker_id ?>" role="button">Delete Worker</a>
+                        <?php
+                        echo "</table>";
+                        if ($this->session->userdata('routing')['worker']['perm_delete']) { ?>
+                            <a class="btn btn-primary" href="<?php echo base_url() . '/worker/restore_worker/' . $value->worker_id ?>" role="button">Restore Worker</a>
+                            <a class="btn btn-warning" href="<?php echo base_url() . '/worker/perm_delete_worker/' . $value->worker_id ?>" role="button">Delete Worker</a>
                 <?php }
+                    }
                 }
                 ?>
 

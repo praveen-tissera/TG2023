@@ -94,9 +94,9 @@ class chemicals_model extends CI_Model
             return (0);
         }
     }
-    public function update_current_chemicals($data, $supplier_id)
+    public function update_current_chemicals($data)
     {
-        $condition = "chem_id = {$data['chem_id']}";
+        $condition = "chem_id = '{$data['chem_id']}' && supp_id = '{$data['supp_id']}'";
         $query = $this->db->select('*')
             ->where($condition)
             ->get('current_chemical_tbl');
@@ -109,7 +109,7 @@ class chemicals_model extends CI_Model
             $query_result = $query->result();
             print_r($query_result);
             echo $amount = $query_result[0]->amount + $data['amount'];
-            $condition = "chem_id= {$data['chem_id']}";
+            $condition = "chem_id= '{$data['chem_id']}' && supp_id = '{$data['supp_id']}' ";
             $this->db->set('amount', $amount);
             $this->db->set('cost', $data['cost']);
             $this->db->where($condition);
@@ -119,14 +119,14 @@ class chemicals_model extends CI_Model
                 return (0);
             }
         }
-        $condition = "chem_id = '{$data['chem_id']}' && supplier_id = '$supplier_id' ";
+        $condition = "chem_id = '{$data['chem_id']}' && supplier_id = '{$data['supp_id']}' ";
         $query = $this->db->select('*')
             ->where($condition)
             ->get('chem_supplier_tbl');
         if ($query->num_rows() == 0) {
             $chem_supp = array(
                 "chem_id" => $data['chem_id'],
-                "supplier_id" => $supplier_id
+                "supplier_id" => $data['supp_id']
             );
             $this->db->insert('chem_supplier_tbl', $chem_supp);
             if ($this->db->affected_rows() == 0) {
@@ -150,16 +150,20 @@ class chemicals_model extends CI_Model
     public function chemicals_out($data)
     {
         $this->db->insert('chemical_out_tbl', $data);
+        echo $this->db->last_query();
         if ($this->db->affected_rows() == 0) {
             return (0);
         } else {
-            $condition = "chem_id = {$data['chem_id']}";
+            $condition = "chem_id = '{$data['chem_id']}' && supp_id = '{$data['supp_id']}' ";
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('current_chemical_tbl');
             $query_result = $query->result();
+            echo $this->db->last_query();
+            print_r($query_result);
             $amount = $query_result[0]->amount - $data['amount'];
-            $condition = "chem_id= {$data['chem_id']}";
+            echo($amount);
+            $condition = "chem_id= '{$data['chem_id']}' && supp_id = '{$data['supp_id']}' ";
             $this->db->set('amount', $amount);
             $this->db->where($condition);
             $this->db->update('current_chemical_tbl');
@@ -198,5 +202,16 @@ class chemicals_model extends CI_Model
             $date = date_format($formated_date, "Y-m-d");
         }
         return $result;
+    }
+    public function get_current_chems()
+    {
+        $query = $this->db->select('*')
+            ->get('current_chemical_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
     }
 }

@@ -111,6 +111,7 @@ class chemicals extends CI_Controller
 
         $current_chem_data = array(
             'chem_id' => $_POST['chem_id'],
+            'supp_id' => $_POST['supplier_id'],
             'amount' => $_POST['amount'],
             'cost' => $_POST['cost']
         );
@@ -122,7 +123,7 @@ class chemicals extends CI_Controller
             'supplier' => $_POST['supplier_id']
         );
 
-        if ($this->chemicals_model->update_current_chemicals($current_chem_data, $_POST['supplier_id'])) {
+        if ($this->chemicals_model->update_current_chemicals($current_chem_data)) {
             if ($this->chemicals_model->chemicals_in($in_chem_data)) {
                 $this->session->set_flashdata('success', 'Transaction recorded Sucessfully');
                 redirect('chemicals/manage_chemicals');
@@ -146,7 +147,9 @@ class chemicals extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
+
         $data["chemicals"] = $this->chemicals_model->get_chemicals();
+        $data["suppliers"] = $this->chemicals_model->get_suppliers();
         $this->load->view('chemicals/chemicals_consumption', $data);
     }
     public function consume_chemicals_submit()
@@ -162,6 +165,7 @@ class chemicals extends CI_Controller
         }
         $data = array(
             'chem_id' => $_POST['chem_id'],
+            'supp_id' => $_POST['supp_id'],
             'date' => date('Y-m-d'),
             'amount' => $_POST['amount']
         );
@@ -169,7 +173,7 @@ class chemicals extends CI_Controller
             $this->session->set_flashdata('success', 'Transaction recorded Sucessfully');
             redirect('chemicals/manage_chemicals');
         } else {
-            $this->session->set_flashdata('error', 'Tranaction failed. Please try again');
+            $this->session->set_flashdata('error', 'Transaction failed. Please try again');
             redirect('chemicals/consume_chemicals');
         }
     }
@@ -286,5 +290,22 @@ class chemicals extends CI_Controller
         $data["end_date"] = $end_date;
         //load view with array data
         $this->load->view('chemicals/view_history', $data);
+    }
+
+    public function view_current_chem()
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $data["result"] = $this->chemicals_model->get_current_chems();
+        $data["suppliers"] = $this->chemicals_model->get_suppliers();
+        $data["chemicals"] = $this->chemicals_model->get_chemicals();
+        $this->load->view('chemicals/view_current', $data);
     }
 }
