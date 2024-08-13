@@ -80,7 +80,7 @@ class estate_model extends CI_Model
     }
     public function insert_weather_data($data)
     {
-        
+
         $this->db->insert('weather_tbl', $data);
         if ($this->db->affected_rows() == 1) {
             return (1);

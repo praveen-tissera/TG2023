@@ -95,30 +95,32 @@ class worker_model extends CI_Model
 
     public function attendance_submit($data)
     {
-
         $condition = array('worker_id' => $data['worker_id'], 'date' => $data['date']);
-        $this->db->set('status', $data['status']);
-        $this->db->where($condition);
-        $this->db->update('attendance_tbl');
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('attendance_tbl');
+        if ($query->num_rows() == 0) {
+            $this->db->insert('attendance_tbl', $data);
+            if ($this->db->affected_rows() == 1) {
+                return (1);
+            }else {
+                return (0);
+            }
+        } else {
+            $condition = array('worker_id' => $data['worker_id'], 'date' => $data['date']);
+            $this->db->set('status', $data['status']);
+            $this->db->where($condition);
+            $this->db->update('attendance_tbl');
 
-        echo $this->db->last_query();
-        //A diffrent methord must be used check wheather the query worked
-        if ($this->db->affected_rows() == 1) {
-            return (1);
-        } elseif ($this->db->affected_rows() == 0) {
-            return (1);
-        } else {
-            return (0);
-        }
-    }
-    public function attendance_submit_unset($data)
-    {
-        $this->db->insert('attendance_tbl', $data);
-        echo $this->db->last_query();
-        if ($this->db->affected_rows() == 1) {
-            return (1);
-        } else {
-            return (0);
+            echo $this->db->last_query();
+            //A diffrent methord must be used check wheather the query worked
+            if ($this->db->affected_rows() == 1) {
+                return (1);
+            } elseif ($this->db->affected_rows() == 0) {
+                return (1);
+            } else {
+                return (0);
+            }
         }
     }
 
@@ -210,7 +212,7 @@ class worker_model extends CI_Model
             return false;
         } else {
             $query_result = $query->result();
-            
+
             return $query_result;
         }
     }
@@ -226,5 +228,23 @@ class worker_model extends CI_Model
         $query = $this->db->get('worker_tbl');
 
         return $query->result();
+    }
+
+    public function attendance_history($start_date, $end_date)
+    {
+        $date = $start_date;
+        $result = array();
+        while ($date <= $end_date) {
+            $condition = "date='{$date}'";
+            $query = $this->db->select('*')
+                ->where($condition)
+                ->get('attendance_tbl');
+            echo ($this->db->last_query());
+            $result[$date] = $query->result();
+            $formated_date = date_create($date);
+            date_add($formated_date, date_interval_create_from_date_string("1 day"));
+            $date = date_format($formated_date, "Y-m-d");
+        }
+        return $result;
     }
 }

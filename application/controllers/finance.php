@@ -13,9 +13,9 @@ class finance extends CI_Controller
         $this->load->model('finance_model');
         date_default_timezone_set("Asia/colombo");
         $this->checkSessionExist();
-        $this->load->library('upload');
         $this->load->library('pagination');
         $this->load->helper('array');
+        $this->load->helper('url');
     }
 
     public function manage_finance()
@@ -82,13 +82,37 @@ class finance extends CI_Controller
     public function expense_submit()
     {
         $currentdate = date('Y-m-d');
+
+        $new_name = time() . $_FILES["expense_reference"]['name'];
+        $new_name = preg_replace('/\s+/', '', $new_name);
+        $config = array(
+            'upload_path' => './uploads/image/expense/',
+            'allowed_types' => "gif|jpg|png|jpeg|pdf",
+            'overwrite' => TRUE,
+            'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+            // 'max_height' => "768",
+            // 'max_width' => "1024",
+            'file_name' => $new_name
+        );
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if ($this->upload->do_upload("expense_reference")) {
+            $data = array('upload_data' => $this->upload->data());
+            echo "sucess";
+        } else {
+            $error = array('error' => $this->upload->display_errors());
+            //echo $config['upload_path'];
+            print_r($error);
+            //$this->load->view('custom_view', $error);
+        }
+
         $data = array(
             'date' => $currentdate,
             'amount' => $_POST["amount"],
             'type_ID' => $_POST["type_id"],
             'source' => $_POST["source"],
-            'comments' => $_POST['comments']
-
+            'comments' => $_POST['comments'],
+            'image' => $new_name
         );
 
         if ($this->finance_model->add_expense($data)) {
@@ -158,12 +182,35 @@ class finance extends CI_Controller
     public function income_submit()
     {
         $currentdate = date('Y-m-d');
+
+        $new_name = time() . $_FILES["income_reference"]['name'];
+        $new_name = preg_replace('/\s+/', '', $new_name);
+        $config = array(
+            'upload_path' => './uploads/image/income/',
+            'allowed_types' => "gif|jpg|png|jpeg|pdf",
+            'overwrite' => TRUE,
+            'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+            'file_name' => $new_name
+        );
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if ($this->upload->do_upload("income_reference")) {
+            $data = array('upload_data' => $this->upload->data());
+            echo "sucess";
+        } else {
+            $error = array('error' => $this->upload->display_errors());
+            //echo $config['upload_path'];
+            print_r($error);
+        }
+
+
         $data = array(
             'date' => $currentdate,
             'amount' => $_POST["amount"],
             'type_ID' => $_POST["type_id"],
             'source' => $_POST["source"],
-            'comments' => $_POST['comments']
+            'comments' => $_POST['comments'],
+            'image' => $new_name
 
         );
 
@@ -193,5 +240,4 @@ class finance extends CI_Controller
             return true;
         }
     }
-    
 }

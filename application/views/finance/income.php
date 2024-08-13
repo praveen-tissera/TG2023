@@ -30,7 +30,7 @@
                 ?>
                 <h1>Add Income</h1>
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-                <?php echo form_open('finance/income_submit') ?>
+                <?php echo form_open_multipart('finance/income_submit') ?>
                 <table class="table">
                     <tr>
                         <td>Income Type</td>
@@ -73,9 +73,17 @@
                             <textarea class="form-control" name="comments" cols="30" rows="10"></textarea>
                         </td>
                     </tr>
-                    <tr>
-                        <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"></td>
-                    </tr>
+                    <div class="form-group">
+                        <tr>
+                            <td>Upload Reference</td>
+                            <td>
+                                <input type='file' class='form-control' name='income_reference' size='20' required />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"></td>
+                        </tr>
+                    </div>
                 </table>
                 <?php echo form_close(); ?>
 

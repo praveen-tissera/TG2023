@@ -59,6 +59,15 @@
                     </div>
                 </div>
             </div>
+            <div class="col-3">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Attendance</h5>
+                        <p class="card-text">View Attendance</p>
+                        <a href="<?php echo base_url() . 'worker/view_attendance' ?>" class="stretched-link"></a>
+                    </div>
+                </div>
+            </div>
             <?php if ($this->session->userdata('routing')['worker']['perm_delete']) { ?>
                 <div class="col-3">
                     <div class="card text-white bg-primary mb-3">

@@ -30,7 +30,7 @@
                 ?>
                 <h1>Add expense</h1>
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
-                <?php echo form_open('finance/expense_submit') ?>
+                <?php echo form_open_multipart('finance/expense_submit') ?>
                 <table class="table">
                     <tr>
                         <td>Expense Source</td>
@@ -71,6 +71,12 @@
                         <td>Comments</td>
                         <td>
                             <textarea class="form-control" name="comments" cols="30" rows="10"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Upload Reference</td>
+                        <td>
+                            <input type='file' class='form-control' name='expense_reference' size='20' required />
                         </td>
                     </tr>
                     <tr>

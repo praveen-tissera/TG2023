@@ -124,45 +124,27 @@ class worker extends CI_Controller
         //        redirect("worker/mark_attendance");
         //    }
         //}
+
         $i = $result = 0;
-        if ($this->worker_model->check_if_attendance()) {
-            $i = $result = 0;
-            foreach ($_POST as $key => $value) {
-                if ($value == 'Submit') {
-                    break;
-                } else {
-                    $worker_id = mb_substr($key, -1);
-                    $data = array(
-                        'worker_id' => $worker_id,
-                        'date' => $currentdate,
-                        'status' => $value
+        foreach ($_POST as $key => $value) {
+            if ($value == 'Submit') {
+                break;
+            } else {
+                $worker_id = mb_substr($key, -1);
+                $data = array(
+                    'worker_id' => $worker_id,
+                    'date' => $currentdate,
+                    'status' => $value
 
-                    );
-                    if ($this->worker_model->attendance_Submit($data)) {
-                        $result = $result + 1;
-                    }
-                    $i = $i + 1;
+                );
+                print_r($data);
+                if ($this->worker_model->attendance_Submit($data)) {
+                    $result = $result + 1;
                 }
-            }
-        } else {
-            foreach ($_POST as $key => $value) {
-                if ($value == 'Submit') {
-                    break;
-                } else {
-                    $worker_id = mb_substr($key, -1);
-                    $data = array(
-                        'worker_id' => $worker_id,
-                        'date' => $currentdate,
-                        'status' => $value
-
-                    );
-                    if ($this->worker_model->attendance_Submit_unset($data)) {
-                        $result = $result + 1;
-                    }
-                    $i = $i + 1;
-                }
+                $i = $i + 1;
             }
         }
+
         printf($i);
         printf($result);
         if ($result == $i) {
@@ -372,5 +354,40 @@ class worker extends CI_Controller
         $query = $this->input->post('query');
         $results = $this->worker_model->get_results($query);
         echo json_encode($results);
+    }
+
+    public function view_attendance($start_date = NULL, $end_date = NULL)
+    {
+        //standard message handaling
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        //checks if start and enddates are set
+        //if not, the date range of 1 week from the current date is set
+        if (isset($_POST["start_date"])) {
+            $start_date = date("Y-m-d", strtotime($_POST["start_date"]));
+        } else {
+            $start_date = date_format(date_sub(date_create(date("Y-m-d")), date_interval_create_from_date_string("7 day")), "Y-m-d");
+        }
+        if (isset($_POST["end_date"])) {
+            $end_date = date("Y-m-d", strtotime($_POST["end_date"]));
+        } else {
+            $end_date = date("Y") . "-" . date("m") . "-" . date("d");
+        }
+        //calls the model estate_history with the start and end dates, and sets the return as index result in array data
+        $data["result"] = $this->worker_model->attendance_history($start_date, $end_date);
+        //pass the start and end dates to the array data
+        $data["start_date"] = $start_date;
+        $data["end_date"] = $end_date;
+
+        $data['worker'] = $this->worker_model->getworkerData();
+        //load view with array data
+        $this->load->view('worker/view_attendance', $data);
     }
 }
