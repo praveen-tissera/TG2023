@@ -121,4 +121,33 @@ class finance_model extends CI_Model
             return (0);
         }
     }
+
+    public function tran_history($start_date, $end_date)
+    {
+        $date = $start_date;
+        $result = array();
+        echo ($end_date);
+        echo ($start_date);
+        while ($date <= $end_date) {
+            $condition = "date='{$date}'";
+            $query = $this->db->select('*')
+                ->where($condition)
+                ->get('chemical_in_tbl');
+            print_r($this->db->last_query());
+            $result["in"][$date] = $query->result();
+
+            $condition = "date='{$date}'";
+            $query = $this->db->select('*')
+                ->where($condition)
+                ->get('chemical_out_tbl');
+            print_r($this->db->last_query());
+            $result["out"][$date] = $query->result();
+
+
+            $formated_date = date_create($date);
+            date_add($formated_date, date_interval_create_from_date_string("1 day"));
+            $date = date_format($formated_date, "Y-m-d");
+        }
+        return $result;
+    }
 }

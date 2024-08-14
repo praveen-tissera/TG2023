@@ -73,6 +73,17 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-3">
+                    <div class="card text-white bg-secondary mb-3">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Income/Expenses</h5>
+                            <p class="card-text">The Statement of Income and Expenses</p>
+                            <a href="<?php echo base_url() . 'finance/view_tran_history' ?>" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
                 
             <?php } ?>
         </div>

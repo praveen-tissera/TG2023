@@ -240,4 +240,45 @@ class finance extends CI_Controller
             return true;
         }
     }
+
+    public function view_tran_history($start_date = NULL, $end_date = NULL)
+    {
+        //standard message handaling
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        //checks if start and enddates are set
+        //if not, the date range of 1 week from the current date is set
+        $currentdate = date("Y-m-d");
+        if (isset($_POST["start_date"])) {
+            $formated_date = date_create($_POST["start_date"]);
+            $start_date = date_format($formated_date, "Y-m-d");
+        } else {
+            $formated_date = date_create($currentdate);
+            date_add($formated_date, date_interval_create_from_date_string("-7 day"));
+            $start_date = date_format($formated_date, "Y-m-d");
+        }
+        if (isset($_POST["end_date"])) {
+            $formated_date = date_create($_POST["end_date"]);
+            $end_date = date_format($formated_date, "Y-m-d");
+        } else {
+            $end_date = $currentdate;
+        }
+        //calls the model estate_history with the start and end dates, and sets the return as index result in array data
+        $data["result"] = $this->finance_model->tran_history($start_date, $end_date);
+        $data["chemicals"] = $this->chemicals_model->get_chemicals();
+        $data["suppliers"] = $this->chemicals_model->get_suppliers();
+        $data["current"] = $this->finance_model->get_current();
+        //pass the start and end dates to the array data
+        $data["start_date"] = $start_date;
+        $data["end_date"] = $end_date;
+        //load view with array data
+        $this->load->view('chemicals/view_history', $data);
+    }
 }
