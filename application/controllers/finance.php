@@ -261,7 +261,7 @@ class finance extends CI_Controller
             $start_date = date_format($formated_date, "Y-m-d");
         } else {
             $formated_date = date_create($currentdate);
-            date_add($formated_date, date_interval_create_from_date_string("-7 day"));
+            date_sub($formated_date, date_interval_create_from_date_string("7 day"));
             $start_date = date_format($formated_date, "Y-m-d");
         }
         if (isset($_POST["end_date"])) {
@@ -272,13 +272,27 @@ class finance extends CI_Controller
         }
         //calls the model estate_history with the start and end dates, and sets the return as index result in array data
         $data["result"] = $this->finance_model->tran_history($start_date, $end_date);
-        $data["chemicals"] = $this->chemicals_model->get_chemicals();
-        $data["suppliers"] = $this->chemicals_model->get_suppliers();
-        $data["current"] = $this->finance_model->get_current();
+        $data["incomes"] = $this->finance_model->get_income_types();
+        $data["expenses"] = $this->finance_model->get_expense_types();
+        $data["current"] = $this->finance_model->get_balance_types();
         //pass the start and end dates to the array data
         $data["start_date"] = $start_date;
         $data["end_date"] = $end_date;
         //load view with array data
-        $this->load->view('chemicals/view_history', $data);
+        $this->load->view('finance/view_tran_history', $data);
+    }
+    public function view_current()
+    {
+        $success = $this->session->flashdata('success');
+        $error = $this->session->flashdata('error');
+        $data = [];
+        if (!empty($success)) {
+            $data['success'] = $success;
+        }
+        if (!empty($error)) {
+            $data['error'] = $error;
+        }
+        $data["result"] = $this->finance_model->get_balance_types();
+        $this->load->view('finance/view_current', $data);
     }
 }

@@ -132,14 +132,14 @@ class finance_model extends CI_Model
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
-                ->get('chemical_in_tbl');
+                ->get('income_tbl');
             print_r($this->db->last_query());
             $result["in"][$date] = $query->result();
 
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
-                ->get('chemical_out_tbl');
+                ->get('expense_tbl');
             print_r($this->db->last_query());
             $result["out"][$date] = $query->result();
 

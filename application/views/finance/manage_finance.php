@@ -84,6 +84,17 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="col-3">
+                    <div class="card text-white bg-secondary mb-3">
+
+                        <div class="card-body">
+                            <h5 class="card-title">Current</h5>
+                            <p class="card-text">Current status</p>
+                            <a href="<?php echo base_url() . 'finance/view_current' ?>" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
                 
             <?php } ?>
         </div>

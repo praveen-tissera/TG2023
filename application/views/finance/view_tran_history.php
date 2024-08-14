@@ -25,8 +25,9 @@
         echo "</div>";
     }
     print_r($result);
-    print_r($chemicals);
-    print_r($suppliers);
+    print_r($incomes);
+    print_r($expenses);
+    print_r($current);
     ?>
 
     <div class="container">
@@ -36,7 +37,7 @@
 
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
-                <?php echo form_open('chemicals/view_history') ?>
+                <?php echo form_open('finance/view_tran_history') ?>
                 <table class="table">
 
                     <tr>
@@ -58,10 +59,11 @@
                     <thead>
                         <tr>
                             <th scope="col" style="text-align:center;">Date</th>
-                            <th scope="col" style="text-align:center;">Chemical</th>
+                            <th scope="col" style="text-align:center;">Source </th>
+                            <th scope="col" style="text-align:center;">Type</th>
+                            <th scope="col" style="text-align:center;">Comments</th>
+                            <th scope="col" style="text-align:center;">Image</th>
                             <th scope="col" style="text-align:center;">Amount</th>
-                            <th scope="col" style="text-align:center;">Cost</th>
-                            <th scope="col" style="text-align:center;">Supplier</th>
                         </tr>
                     </thead>
 
@@ -77,32 +79,35 @@
                                     </th>
                                     <td>
                                         <?php
-                                        foreach ($chemicals as $x => $chem) {
-                                            if ($chem->chem_id == $value->chem_id) {
-                                                echo ($chem->name);
+                                        foreach ($current as $x => $curr) {
+                                            if ($curr->id == $value->source) {
+                                                echo ($curr->type);
                                                 break;
                                             }
                                         }
                                         ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        foreach ($incomes as $x => $in) {
+                                            if ($in->type_id == $value->type_id) {
+                                                echo ($in->name);
+                                                break;
+                                            }
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo ($value->comments);
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <img class="img" alt="Income reference" src="<?php echo base_url() . '/uploads/image/income/' . $value->image ?>" height="40" width="auto">
                                     </td>
                                     <td>
                                         <?php
                                         echo ($value->amount);
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        echo ($value->cost);
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        foreach ($suppliers as $x => $sup) {
-                                            if ($sup->supplier_id == $value->supplier) {
-                                                echo ($sup->name);
-                                                break;
-                                            }
-                                        }
                                         ?>
                                     </td>
                                 </tr>
@@ -114,9 +119,9 @@
                                     </th>
                                     <td>
                                         <?php
-                                        foreach ($chemicals as $x => $chem) {
-                                            if ($chem->chem_id == $value->chem_id) {
-                                                echo ($chem->name);
+                                        foreach ($current as $x => $curr) {
+                                            if ($curr->id == $value->source) {
+                                                echo ($curr->type);
                                                 break;
                                             }
                                         }
@@ -124,18 +129,27 @@
                                     </td>
                                     <td>
                                         <?php
-                                        echo ($value->amount);
-                                        ?>
-                                    </td>
-                                    <td></td>
-                                    <td><?php
-                                        foreach ($suppliers as $x => $sup) {
-                                            if ($sup->supplier_id == $value->supp_id) {
-                                                echo ($sup->name);
+                                        foreach ($expenses as $x => $exp) {
+                                            if ($exp->type_ID == $value->type_ID) {
+                                                echo ($exp->name);
                                                 break;
                                             }
                                         }
-                                        ?></td>
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo ($value->comments);
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <img class="img" alt="Expense reference" src="<?php echo base_url() . '/uploads/image/expense/' . $value->image ?>" height="40" width="auto">
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo ($value->amount);
+                                        ?>
+                                    </td>
                                 </tr>
                             <?php } ?>
                         <?php
