@@ -48,45 +48,51 @@ class estate extends CI_Controller
 
     public function add_work_submit()
     {
-        $success = $this->session->flashdata('success');
-        $error = $this->session->flashdata('error');
-        $data = [];
-        if (!empty($success)) {
-            $data['success'] = $success;
-        }
-        if (!empty($error)) {
-            $data['error'] = $error;
-        }
-        $currentdate = date('Y-m-d');
-
-        if ($_POST['task'] == 'fertilizer') {
-            $colour = "table-success";
-        } elseif ($_POST['task'] == 'pesticide') {
-            $colour = "table-warning";
-        } elseif ($_POST['task'] == 'weedicide') {
-            $colour = "bg-danger";
-        } elseif ($_POST['task'] == 'harvest') {
-            $colour = "bg-success";
-        } elseif ($_POST['task'] == 'weeding') {
-            $colour = "bg-warning";
-        } elseif ($_POST['task'] == 'prune') {
-            $colour = "bg-info";
-        } elseif ($_POST['task'] == 'maintenance') {
-            $colour = "bg-primary";
-        }
-
-        $data = array(
-            'date' => $currentdate,
-            'id' => $_POST['zone'],
-            'status' => $_POST['task'],
-            'colour' => $colour
-        );
-        if ($this->estate_model->insert_estate_data($data)) {
-            $this->session->set_flashdata('success', 'Work data inserted successfully');
-            redirect('estate/manage_estate');
+        $this->form_validation->set_rules('zone', 'Zone', 'required');
+        $this->form_validation->set_rules('task', 'Task', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('estate/add_work');
         } else {
-            $this->session->set_flashdata('error', 'Work data was not inserted. Please try again');
-            redirect('estate/add_work');
+            $success = $this->session->flashdata('success');
+            $error = $this->session->flashdata('error');
+            $data = [];
+            if (!empty($success)) {
+                $data['success'] = $success;
+            }
+            if (!empty($error)) {
+                $data['error'] = $error;
+            }
+            $currentdate = date('Y-m-d');
+
+            if ($_POST['task'] == 'fertilizer') {
+                $colour = "table-success";
+            } elseif ($_POST['task'] == 'pesticide') {
+                $colour = "table-warning";
+            } elseif ($_POST['task'] == 'weedicide') {
+                $colour = "bg-danger";
+            } elseif ($_POST['task'] == 'harvest') {
+                $colour = "bg-success";
+            } elseif ($_POST['task'] == 'weeding') {
+                $colour = "bg-warning";
+            } elseif ($_POST['task'] == 'prune') {
+                $colour = "bg-info";
+            } elseif ($_POST['task'] == 'maintenance') {
+                $colour = "bg-primary";
+            }
+
+            $data = array(
+                'date' => $currentdate,
+                'id' => $_POST['zone'],
+                'status' => $_POST['task'],
+                'colour' => $colour
+            );
+            if ($this->estate_model->insert_estate_data($data)) {
+                $this->session->set_flashdata('success', 'Work data inserted successfully');
+                redirect('estate/manage_estate');
+            } else {
+                $this->session->set_flashdata('error', 'Work data was not inserted. Please try again');
+                redirect('estate/add_work');
+            }
         }
     }
     private function checkSessionExist()
@@ -142,14 +148,25 @@ class estate extends CI_Controller
         if (!empty($error)) {
             $data['error'] = $error;
         }
+
+
         if (isset($_POST["date"])) {
-            $date = $_POST["date"];
+            $data["date"] = date("Y-m-d", strtotime($_POST['date']));;
         } else {
-            $date =  date("Y-m-d");
+            $data["date"] =  date("Y-m-d");
         }
-        $data["date"] = $date;
-        $data["work_done"] = $this->estate_model->one_day_report_estate($date);
-        $data["weather"] = NULL;
+
+        $data["work_done"] = $this->estate_model->ODR_estate($data["date"]);
+        $data["weather"] = $this->estate_model->ODR_weather($data["date"]);
+        $data["attendance"] = $this->estate_model->ODR_attendance($data["date"]);
+        $data["worker"] = $this->estate_model->ODR_worker();
+        $data["fin_info"] = $this->estate_model->ODR_fin_info($data["date"]);
+        $data["fin_types"] = $this->estate_model->ODR_fin_types();
+        $data["fin_current"] = $this->estate_model->ODR_fin_current();
+        $data["chem_info"] = $this->estate_model->ODR_chem_info($data["date"]);
+        $data["chem_types"] = $this->estate_model->ODR_chem_types();
+        $data["suppliers"] = $this->estate_model->ODR_suppliers();
+
         $this->load->view('estate/one_day_report', $data);
     }
     public function weather()
@@ -168,30 +185,35 @@ class estate extends CI_Controller
             $this->session->set_flashdata('error', 'Weather data for today has already been inserted');
             redirect('estate/manage_estate');
         } else {
-            $data["current_date"] = date('Y-m-d'); 
+            $data["current_date"] = date('Y-m-d');
             $this->load->view('estate/weather', $data);
         }
     }
     public function weather_submit()
     {
-        $weather_all = json_decode($_POST["weather"]);
-        print_r($weather_all);
-        $weather = array();
-        $weather["date"] = $weather_all->daily->time["0"];
-        $weather["relative_humidity"] = $weather_all->current->relative_humidity_2m;
-        $weather["max_temp"] = $weather_all->daily->temperature_2m_max["0"];
-        $weather["min_temp"] = $weather_all->daily->temperature_2m_min["0"];
-        $weather["daylight_duration"] = $weather_all->daily->daylight_duration["0"];
-        $weather["rain_sum"] = $weather_all->daily->rain_sum["0"];
-        $weather["max_wind_speed"] = $weather_all->daily->wind_speed_10m_max["0"];
-        $weather["wind_direction"] = $weather_all->daily->wind_direction_10m_dominant["0"];
-        print_r($weather);
-        if ($this->estate_model->insert_weather_data($weather)) {
-            $this->session->set_flashdata('success', 'Weather data inserted successfully');
-            redirect('estate/manage_estate');
+        $this->form_validation->set_rules('weather', 'Weather', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('estate/weather');
         } else {
-            $this->session->set_flashdata('error', 'Weather data was not inserted. Please try again');
-            redirect('estate/weather');
+            $weather_all = json_decode($_POST["weather"]);
+            print_r($weather_all);
+            $weather = array();
+            $weather["date"] = $weather_all->daily->time["0"];
+            $weather["relative_humidity"] = $weather_all->current->relative_humidity_2m;
+            $weather["max_temp"] = $weather_all->daily->temperature_2m_max["0"];
+            $weather["min_temp"] = $weather_all->daily->temperature_2m_min["0"];
+            $weather["daylight_duration"] = $weather_all->daily->daylight_duration["0"];
+            $weather["rain_sum"] = $weather_all->daily->rain_sum["0"];
+            $weather["max_wind_speed"] = $weather_all->daily->wind_speed_10m_max["0"];
+            $weather["wind_direction"] = $weather_all->daily->wind_direction_10m_dominant["0"];
+            print_r($weather);
+            if ($this->estate_model->insert_weather_data($weather)) {
+                $this->session->set_flashdata('success', 'Weather data inserted successfully');
+                redirect('estate/manage_estate');
+            } else {
+                $this->session->set_flashdata('error', 'Weather data was not inserted. Please try again');
+                redirect('estate/weather');
+            }
         }
     }
 }

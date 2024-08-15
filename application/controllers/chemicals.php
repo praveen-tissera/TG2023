@@ -47,20 +47,27 @@ class chemicals extends CI_Controller
     }
     public function add_chemical_submit()
     {
-        $data = array(
-            'chem_id' => NULL,
-            'name' => $_POST["name"],
-            'type' => $_POST['type'],
-            'description' => $_POST['description'],
-
-        );
-
-        if ($this->chemicals_model->add_chemical($data)) {
-            $this->session->set_flashdata('success', 'Chemical Added Successfully');
-            redirect('chemicals/manage_chemicals');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('type', 'Type', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('chemicals/add_chemical');
         } else {
-            $this->session->set_flashdata('error', 'Chemical Failed to Add. Please try again');
-            redirect('chemicals/add_chemicals');
+            $data = array(
+                'chem_id' => NULL,
+                'name' => $_POST["name"],
+                'type' => $_POST['type'],
+                'description' => $_POST['description'],
+
+            );
+
+            if ($this->chemicals_model->add_chemical($data)) {
+                $this->session->set_flashdata('success', 'Chemical Added Successfully');
+                redirect('chemicals/manage_chemicals');
+            } else {
+                $this->session->set_flashdata('error', 'Chemical Failed to Add. Please try again');
+                redirect('chemicals/add_chemicals');
+            }
         }
     }
 
@@ -97,43 +104,51 @@ class chemicals extends CI_Controller
 
     public function add_chemicals_submit()
     {
-        $success = $this->session->flashdata('success');
-        $error = $this->session->flashdata('error');
-        $data = [];
-        if (!empty($success)) {
-            $data['success'] = $success;
-        }
-        if (!empty($error)) {
-            $data['error'] = $error;
-        }
-        $currentdate = date('Y-m-d');
-        print_r($_POST);
+        $this->form_validation->set_rules('chem_id', 'Chemical', 'required');
+        $this->form_validation->set_rules('supplier_id', 'Supplier', 'required');
+        $this->form_validation->set_rules('amount', 'Amount', 'required');
+        $this->form_validation->set_rules('cost', 'Cost', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->purchase_chemicals();
+        } else {
+            $success = $this->session->flashdata('success');
+            $error = $this->session->flashdata('error');
+            $data = [];
+            if (!empty($success)) {
+                $data['success'] = $success;
+            }
+            if (!empty($error)) {
+                $data['error'] = $error;
+            }
+            $currentdate = date('Y-m-d');
+            print_r($_POST);
 
-        $current_chem_data = array(
-            'chem_id' => $_POST['chem_id'],
-            'supp_id' => $_POST['supplier_id'],
-            'amount' => $_POST['amount'],
-            'cost' => $_POST['cost']
-        );
-        $in_chem_data = array(
-            'chem_id' => $_POST['chem_id'],
-            'date' => $currentdate,
-            'amount' => $_POST['amount'],
-            'cost' => $_POST['cost'],
-            'supplier' => $_POST['supplier_id']
-        );
+            $current_chem_data = array(
+                'chem_id' => $_POST['chem_id'],
+                'supp_id' => $_POST['supplier_id'],
+                'amount' => $_POST['amount'],
+                'cost' => $_POST['cost']
+            );
+            $in_chem_data = array(
+                'chem_id' => $_POST['chem_id'],
+                'date' => $currentdate,
+                'amount' => $_POST['amount'],
+                'cost' => $_POST['cost'],
+                'supplier' => $_POST['supplier_id']
+            );
 
-        if ($this->chemicals_model->update_current_chemicals($current_chem_data)) {
-            if ($this->chemicals_model->chemicals_in($in_chem_data)) {
-                $this->session->set_flashdata('success', 'Transaction recorded Sucessfully');
-                redirect('chemicals/manage_chemicals');
+            if ($this->chemicals_model->update_current_chemicals($current_chem_data)) {
+                if ($this->chemicals_model->chemicals_in($in_chem_data)) {
+                    $this->session->set_flashdata('success', 'Transaction recorded Sucessfully');
+                    redirect('chemicals/manage_chemicals');
+                } else {
+                    $this->session->set_flashdata('error', 'Tranaction failed. Please try again');
+                    redirect('chemicals/add_chemicals');
+                }
             } else {
                 $this->session->set_flashdata('error', 'Tranaction failed. Please try again');
                 redirect('chemicals/add_chemicals');
             }
-        } else {
-            $this->session->set_flashdata('error', 'Tranaction failed. Please try again');
-            redirect('chemicals/add_chemicals');
         }
     }
     public function consume_chemicals()
@@ -154,27 +169,34 @@ class chemicals extends CI_Controller
     }
     public function consume_chemicals_submit()
     {
-        $success = $this->session->flashdata('success');
-        $error = $this->session->flashdata('error');
-        $data = [];
-        if (!empty($success)) {
-            $data['success'] = $success;
-        }
-        if (!empty($error)) {
-            $data['error'] = $error;
-        }
-        $data = array(
-            'chem_id' => $_POST['chem_id'],
-            'supp_id' => $_POST['supp_id'],
-            'date' => date('Y-m-d'),
-            'amount' => $_POST['amount']
-        );
-        if ($this->chemicals_model->chemicals_out($data)) {
-            $this->session->set_flashdata('success', 'Transaction recorded Sucessfully');
-            redirect('chemicals/manage_chemicals');
+        $this->form_validation->set_rules('chem_id', 'Chemical', 'required');
+        $this->form_validation->set_rules('supp_id', 'Supplier', 'required');
+        $this->form_validation->set_rules('amount', 'Amount', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->consume_chemicals();
         } else {
-            $this->session->set_flashdata('error', 'Transaction failed. Please try again');
-            redirect('chemicals/consume_chemicals');
+            $success = $this->session->flashdata('success');
+            $error = $this->session->flashdata('error');
+            $data = [];
+            if (!empty($success)) {
+                $data['success'] = $success;
+            }
+            if (!empty($error)) {
+                $data['error'] = $error;
+            }
+            $data = array(
+                'chem_id' => $_POST['chem_id'],
+                'supp_id' => $_POST['supp_id'],
+                'date' => date('Y-m-d'),
+                'amount' => $_POST['amount']
+            );
+            if ($this->chemicals_model->chemicals_out($data)) {
+                $this->session->set_flashdata('success', 'Transaction recorded Sucessfully');
+                redirect('chemicals/manage_chemicals');
+            } else {
+                $this->session->set_flashdata('error', 'Transaction failed. Please try again');
+                redirect('chemicals/consume_chemicals');
+            }
         }
     }
     private function checkSessionExist()
@@ -206,21 +228,28 @@ class chemicals extends CI_Controller
     }
     public function editChemicalSubmit()
     {
-        print_r($_POST);
-        $data = array(
-            'chem_id' => $_POST["chem_id"],
-            'name' => $_POST["name"],
-            'type' => $_POST['type'],
-            'description' => $_POST['description'],
-
-        );
-
-        if ($this->chemicals_model->edit_chemical($data)) {
-            $this->session->set_flashdata('success', 'Chemical Edited Successfully');
-            redirect('chemicals/manage_chemicals');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('type', 'Type', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->editchemical($_POST["chem_id"]);
         } else {
-            $this->session->set_flashdata('error', 'Chemical Failed to Edit. Please try again');
-            redirect('chemicals/editchemical');
+            print_r($_POST);
+            $data = array(
+                'chem_id' => $_POST["chem_id"],
+                'name' => $_POST["name"],
+                'type' => $_POST['type'],
+                'description' => $_POST['description'],
+
+            );
+
+            if ($this->chemicals_model->edit_chemical($data)) {
+                $this->session->set_flashdata('success', 'Chemical Edited Successfully');
+                redirect('chemicals/manage_chemicals');
+            } else {
+                $this->session->set_flashdata('error', 'Chemical Failed to Edit. Please try again');
+                redirect('chemicals/editchemical');
+            }
         }
     }
     public function deletechemical($id)

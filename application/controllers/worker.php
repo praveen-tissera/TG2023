@@ -68,9 +68,13 @@ class worker extends CI_Controller
     public function register_worker_Submit()
     {
         $this->form_validation->set_rules('name', 'Username', 'required');
+        $this->form_validation->set_rules('dob', 'Date of birth', 'required');
+        $this->form_validation->set_rules('emp_status', 'Employment Status', 'required');
+        $this->form_validation->set_rules('gender', 'Gender', 'required');
+        $this->form_validation->set_rules('education', 'Education Status', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Name and Address are required');
+            $this->session->set_flashdata('error', 'All Fields are required');
             redirect("worker/register_worker");
         } else {
             // associative array
@@ -118,12 +122,16 @@ class worker extends CI_Controller
     {
         print_r($_POST);
         $currentdate = date('Y-m-d');
-        //***foreach ($_POST as $key => $value) {
-        //    if ($value->status == NULL) {
-        //        $this->session->set_flashdata('error', 'Attendance cannot be empty');
-        //        redirect("worker/mark_attendance");
-        //    }
-        //}
+        foreach ($_POST as $key => $value) {
+            if ($value == 'Submit') {
+                break;
+            } else {
+                if ($value == NULL) {
+                    $this->session->set_flashdata('error', 'Attendance cannot be empty');
+                    redirect("worker/mark_attendance");
+                }
+            }
+        }
 
         $i = $result = 0;
         foreach ($_POST as $key => $value) {

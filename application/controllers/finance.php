@@ -47,22 +47,27 @@ class finance extends CI_Controller
     }
     public function add_expense_type_submit()
     {
-        $data = array(
-            'type_ID' => NULL,
-            'name' => $_POST["name"],
-            'description' => $_POST['description']
-
-        );
-
-        if ($this->finance_model->add_expense_type($data)) {
-            $this->session->set_flashdata('success', 'Expense type Added Successfully');
-            redirect('finance/manage_finance');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('finance/add_expense');
         } else {
-            $this->session->set_flashdata('error', 'Expense type Failed to Add. Please try again');
-            redirect('finance/add_expenses');
+            $data = array(
+                'type_ID' => NULL,
+                'name' => $_POST["name"],
+                'description' => $_POST['description']
+
+            );
+
+            if ($this->finance_model->add_expense_type($data)) {
+                $this->session->set_flashdata('success', 'Expense type Added Successfully');
+                redirect('finance/manage_finance');
+            } else {
+                $this->session->set_flashdata('error', 'Expense type Failed to Add. Please try again');
+                redirect('finance/add_expenses');
+            }
         }
     }
-
     public function expense()
     {
         $success = $this->session->flashdata('success');
@@ -81,57 +86,63 @@ class finance extends CI_Controller
 
     public function expense_submit()
     {
-        $currentdate = date('Y-m-d');
-
-        $new_name = time() . $_FILES["expense_reference"]['name'];
-        $new_name = preg_replace('/\s+/', '', $new_name);
-        $config = array(
-            'upload_path' => './uploads/image/expense/',
-            'allowed_types' => "gif|jpg|png|jpeg|pdf",
-            'overwrite' => TRUE,
-            'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
-            // 'max_height' => "768",
-            // 'max_width' => "1024",
-            'file_name' => $new_name
-        );
-        $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-        if ($this->upload->do_upload("expense_reference")) {
-            $data = array('upload_data' => $this->upload->data());
-            echo "sucess";
+        $this->form_validation->set_rules('amount', 'Amount', 'required');
+        $this->form_validation->set_rules('type_id', 'Type', 'required');
+        $this->form_validation->set_rules('source', 'Source', 'required');
+        $this->form_validation->set_rules('comments', 'Comment', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->expense();
         } else {
-            $error = array('error' => $this->upload->display_errors());
-            //echo $config['upload_path'];
-            print_r($error);
-            //$this->load->view('custom_view', $error);
-        }
+            $currentdate = date('Y-m-d');
 
-        $data = array(
-            'date' => $currentdate,
-            'amount' => $_POST["amount"],
-            'type_ID' => $_POST["type_id"],
-            'source' => $_POST["source"],
-            'comments' => $_POST['comments'],
-            'image' => $new_name
-        );
+            $new_name = time() . $_FILES["expense_reference"]['name'];
+            $new_name = preg_replace('/\s+/', '', $new_name);
+            $config = array(
+                'upload_path' => './uploads/image/expense/',
+                'allowed_types' => "gif|jpg|png|jpeg|pdf",
+                'overwrite' => TRUE,
+                'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+                // 'max_height' => "768",
+                // 'max_width' => "1024",
+                'file_name' => $new_name
+            );
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if ($this->upload->do_upload("expense_reference")) {
+                $data = array('upload_data' => $this->upload->data());
+                echo "sucess";
+            } else {
+                $error = array('error' => $this->upload->display_errors());
+                $this->session->set_flashdata('error', $error);
+                redirect('finance/expense');
+            }
 
-        if ($this->finance_model->add_expense($data)) {
-            $bal = $this->finance_model->get_bal($_POST["source"]);
-            echo (print_r($bal));
-            $bal = $bal - $_POST["amount"];
-            if ($this->finance_model->set_bal($_POST["source"], $bal)) {
-                $this->session->set_flashdata('success', 'Expense Added Successfully');
-                redirect('finance/manage_finance');
+            $data = array(
+                'date' => $currentdate,
+                'amount' => $_POST["amount"],
+                'type_ID' => $_POST["type_id"],
+                'source' => $_POST["source"],
+                'comments' => $_POST['comments'],
+                'image' => $new_name
+            );
+
+            if ($this->finance_model->add_expense($data)) {
+                $bal = $this->finance_model->get_bal($_POST["source"]);
+                echo (print_r($bal));
+                $bal = $bal - $_POST["amount"];
+                if ($this->finance_model->set_bal($_POST["source"], $bal)) {
+                    $this->session->set_flashdata('success', 'Expense Added Successfully');
+                    redirect('finance/manage_finance');
+                } else {
+                    $this->session->set_flashdata('error', 'Expense Failed to Add. Please try again');
+                    redirect('finance/expense');
+                }
             } else {
                 $this->session->set_flashdata('error', 'Expense Failed to Add. Please try again');
                 redirect('finance/expense');
             }
-        } else {
-            $this->session->set_flashdata('error', 'Expense Failed to Add. Please try again');
-            redirect('finance/expense');
         }
     }
-
     public function add_income_type()
     {
         $success = $this->session->flashdata('success');
@@ -147,22 +158,27 @@ class finance extends CI_Controller
     }
     public function add_income_type_submit()
     {
-        $data = array(
-            'type_ID' => NULL,
-            'name' => $_POST["name"],
-            'description' => $_POST['description']
-
-        );
-
-        if ($this->finance_model->add_income_type($data)) {
-            $this->session->set_flashdata('success', 'Income type Added Successfully');
-            redirect('finance/manage_finance');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->load->view('finance/add_income');
         } else {
-            $this->session->set_flashdata('error', 'Income type Failed to Add. Please try again');
-            redirect('finance/add_income_type');
+            $data = array(
+                'type_ID' => NULL,
+                'name' => $_POST["name"],
+                'description' => $_POST['description']
+
+            );
+
+            if ($this->finance_model->add_income_type($data)) {
+                $this->session->set_flashdata('success', 'Income type Added Successfully');
+                redirect('finance/manage_finance');
+            } else {
+                $this->session->set_flashdata('error', 'Income type Failed to Add. Please try again');
+                redirect('finance/add_income_type');
+            }
         }
     }
-
     public function income()
     {
         $success = $this->session->flashdata('success');
@@ -181,56 +197,62 @@ class finance extends CI_Controller
 
     public function income_submit()
     {
-        $currentdate = date('Y-m-d');
-
-        $new_name = time() . $_FILES["income_reference"]['name'];
-        $new_name = preg_replace('/\s+/', '', $new_name);
-        $config = array(
-            'upload_path' => './uploads/image/income/',
-            'allowed_types' => "gif|jpg|png|jpeg|pdf",
-            'overwrite' => TRUE,
-            'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
-            'file_name' => $new_name
-        );
-        $this->load->library('upload', $config);
-        $this->upload->initialize($config);
-        if ($this->upload->do_upload("income_reference")) {
-            $data = array('upload_data' => $this->upload->data());
-            echo "sucess";
+        $this->form_validation->set_rules('amount', 'Amount', 'required');
+        $this->form_validation->set_rules('type_id', 'Type', 'required');
+        $this->form_validation->set_rules('source', 'Source', 'required');
+        $this->form_validation->set_rules('comments', 'Comment', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->income();
         } else {
-            $error = array('error' => $this->upload->display_errors());
-            //echo $config['upload_path'];
-            print_r($error);
-        }
+            $currentdate = date('Y-m-d');
 
-
-        $data = array(
-            'date' => $currentdate,
-            'amount' => $_POST["amount"],
-            'type_ID' => $_POST["type_id"],
-            'source' => $_POST["source"],
-            'comments' => $_POST['comments'],
-            'image' => $new_name
-
-        );
-
-        if ($this->finance_model->add_income($data)) {
-            $bal = $this->finance_model->get_bal($_POST["source"]);
-            echo (print_r($bal));
-            $bal = $bal + $_POST["amount"];
-            if ($this->finance_model->set_bal($_POST["source"], $bal)) {
-                $this->session->set_flashdata('success', 'Income Added Successfully');
-                redirect('finance/manage_finance');
+            $new_name = time() . $_FILES["income_reference"]['name'];
+            $new_name = preg_replace('/\s+/', '', $new_name);
+            $config = array(
+                'upload_path' => './uploads/image/income/',
+                'allowed_types' => "gif|jpg|png|jpeg|pdf",
+                'overwrite' => TRUE,
+                'max_size' => "2048000", // Can be set to particular file size , here it is 2 MB(2048 Kb)
+                'file_name' => $new_name
+            );
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if ($this->upload->do_upload("income_reference")) {
+                $data = array('upload_data' => $this->upload->data());
+                echo "sucess";
             } else {
-                $this->session->set_flashdata('error', 'Balance Failed to set. Please try again');
+                $this->session->set_flashdata('error', $this->upload->display_errors());
+                redirect('finance/expense');
+            }
+
+
+            $data = array(
+                'date' => $currentdate,
+                'amount' => $_POST["amount"],
+                'type_ID' => $_POST["type_id"],
+                'source' => $_POST["source"],
+                'comments' => $_POST['comments'],
+                'image' => $new_name
+
+            );
+
+            if ($this->finance_model->add_income($data)) {
+                $bal = $this->finance_model->get_bal($_POST["source"]);
+                echo (print_r($bal));
+                $bal = $bal + $_POST["amount"];
+                if ($this->finance_model->set_bal($_POST["source"], $bal)) {
+                    $this->session->set_flashdata('success', 'Income Added Successfully');
+                    redirect('finance/manage_finance');
+                } else {
+                    $this->session->set_flashdata('error', 'Balance Failed to set. Please try again');
+                    redirect('finance/income');
+                }
+            } else {
+                $this->session->set_flashdata('error', 'Income Failed to Add. Please try again');
                 redirect('finance/income');
             }
-        } else {
-            $this->session->set_flashdata('error', 'Income Failed to Add. Please try again');
-            redirect('finance/income');
         }
     }
-
     private function checkSessionExist()
     {
         if (!$this->session->has_userdata('userinfo')) {

@@ -45,23 +45,28 @@ class chem_supplier extends CI_Controller
     }
     public function add_supplier_submit()
     {
-        $data = array(
-            'supplier_id' => NULL,
-            'name' => $_POST["name"],
-            'address' => $_POST['address'],
-            'status' => TRUE
-
-        );
-
-        if ($this->chem_supplier_model->add_supplier($data)) {
-            $this->session->set_flashdata('success', 'Supplier Added Successfully');
-            redirect('chem_supplier/manage_suppliers');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->add_supplier();
         } else {
-            $this->session->set_flashdata('error', 'Supplier Failed to Add. Please try again');
-            redirect('chem_supplier/add_suppliers');
+            $data = array(
+                'supplier_id' => NULL,
+                'name' => $_POST["name"],
+                'address' => $_POST['address'],
+                'status' => TRUE
+
+            );
+
+            if ($this->chem_supplier_model->add_supplier($data)) {
+                $this->session->set_flashdata('success', 'Supplier Added Successfully');
+                redirect('chem_supplier/manage_suppliers');
+            } else {
+                $this->session->set_flashdata('error', 'Supplier Failed to Add. Please try again');
+                redirect('chem_supplier/add_suppliers');
+            }
         }
     }
-
     public function view_suppliers()
     {
         $success = $this->session->flashdata('success');
@@ -106,26 +111,32 @@ class chem_supplier extends CI_Controller
     }
     public function edit_supplier_submit()
     {
-        print_r($_POST);
-        $data = array(
-            'supplier_id' => $_POST['supplier_id'],
-            'name' => $_POST["name"],
-            'address' => $_POST['address']
-
-        );
-        $result = $this->chem_supplier_model->edit_supplier($data);
-        if ($result == 1) {
-            $this->session->set_flashdata('success', 'Supplier Edited Successfully');
-            redirect('chem_supplier/manage_suppliers');
-        } elseif ($result == 0) {
-            $this->session->set_flashdata('success', 'No Data Changed');
-            redirect('chem_supplier/manage_suppliers');
+        $this->form_validation->set_rules('name', 'Name', 'required');
+        $this->form_validation->set_rules('supplier_id', 'Supplier', 'required');
+        $this->form_validation->set_rules('address', 'Address', 'required');
+        if ($this->form_validation->run() == FALSE) {
+            $this->edit_supplier($_POST['supplier_id']);
         } else {
-            $this->session->set_flashdata('error', 'Supplier Failed to Edit. Please try again');
-            redirect('chem_supplier/manage_suppliers');
+            print_r($_POST);
+            $data = array(
+                'supplier_id' => $_POST['supplier_id'],
+                'name' => $_POST["name"],
+                'address' => $_POST['address']
+
+            );
+            $result = $this->chem_supplier_model->edit_supplier($data);
+            if ($result == 1) {
+                $this->session->set_flashdata('success', 'Supplier Edited Successfully');
+                redirect('chem_supplier/manage_suppliers');
+            } elseif ($result == 0) {
+                $this->session->set_flashdata('success', 'No Data Changed');
+                redirect('chem_supplier/manage_suppliers');
+            } else {
+                $this->session->set_flashdata('error', 'Supplier Failed to Edit. Please try again');
+                redirect('chem_supplier/manage_suppliers');
+            }
         }
     }
-
     public function delete_supplier($id)
     {
         $success = $this->session->flashdata('success');

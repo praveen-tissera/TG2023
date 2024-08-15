@@ -65,7 +65,7 @@ class estate_model extends CI_Model
         }
         return $result;
     }
-    public function one_day_report_estate($date)
+    public function ODR_estate($date)
     {
         $condition = "date='{$date}'";
         $query = $this->db->select('*')
@@ -101,4 +101,143 @@ class estate_model extends CI_Model
             return $query->result();
         }
     }
+    public function ODR_weather($date)
+    {
+        $condition = "date='{$date}'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('weather_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
+    }
+    public function ODR_attendance($date)
+    {
+        $condition = "date='{$date}'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('attendance_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
+    }
+    public function ODR_worker()
+    {
+        $condition = "active='1'";
+        $query = $this->db->select('*')
+        ->where($condition)
+            ->get('worker_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
+    }
+    public function ODR_fin_types()
+    {
+        $query = $this->db->select('*')
+            ->get('income_types_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            $data["in"] = $query->result();
+        }
+        $query = $this->db->select('*')
+            ->get('expense_types_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            $data["out"] = $query->result();
+        }
+        return ($data);
+    }
+    public function ODR_fin_info($date)
+    {
+        $condition = "date='{$date}'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('income_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            $data["in"] = $query->result();
+        }
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('expense_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            $data["out"] = $query->result();
+        }
+        return ($data);
+    }
+    public function ODR_fin_current()
+    {
+        $query = $this->db->select('*')
+            ->get('current_finance_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
+    }
+    public function ODR_suppliers()
+    {
+        $query = $this->db->select('*')
+            ->get('supplier_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
+    }
+    public function ODR_chem_types()
+    {
+        $query = $this->db->select('*')
+            ->get('chemical_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            return $query->result();
+        }
+    }
+    public function ODR_chem_info($date)
+    {
+        $condition = "date='{$date}'";
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('chemical_in_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            $data["in"] = $query->result();
+        }
+        $query = $this->db->select('*')
+            ->where($condition)
+            ->get('chemical_out_tbl');
+        echo ($this->db->last_query());
+        if ($query->num_rows() == 0) {
+            return NULL;
+        } else {
+            $data["out"] = $query->result();
+        }
+        return ($data);
+    }
+
 }

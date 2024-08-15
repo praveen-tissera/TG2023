@@ -28,6 +28,7 @@
         echo $error;
         echo "</div>";
     }
+    echo validation_errors('<div class="alert alert-danger">', '</div>');
     ?>
     <main class="container">
         <div class="row">

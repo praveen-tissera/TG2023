@@ -47,7 +47,6 @@
 
                 <div class="col-3">
                     <div class="card text-white bg-secondary mb-3">
-
                         <div class="card-body">
                             <h5 class="card-title">Add Estate Work</h5>
                             <p class="card-text">Add work done on current date</p>
@@ -61,11 +60,20 @@
 
                 <div class="col-3">
                     <div class="card text-white bg-success mb-3">
-
                         <div class="card-body">
                             <h5 class="card-title">Add Weather</h5>
                             <p class="card-text">Add the weather for today</p>
                             <a href="<?php echo base_url() . 'estate/weather' ?>" class="stretched-link"></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-3">
+                    <div class="card text-white bg-success mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">One Day Report</h5>
+                            <p class="card-text">The complete report fot one day</p>
+                            <a href="<?php echo base_url() . 'estate/one_day_report' ?>" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

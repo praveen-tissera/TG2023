@@ -27,7 +27,7 @@
                     echo $error;
                     echo "</div>";
                 }
-
+                echo validation_errors('<div class="alert alert-danger">', '</div>');
                 ?>
                 <?php
                 print_r($this->session->userdata('userinfo'));
