@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -38,7 +39,7 @@
                                 <h3>Name</h3>
                             </td>
                             <td>
-                                <h3><?php echo($value->name); ?></h3>
+                                <h3><?php echo ($value->name); ?></h3>
                             </td>
                         </tr>
                         <tr>
@@ -46,7 +47,7 @@
                                 Chemical ID
                             </td>
                             <td>
-                                <?php echo($value->chem_id); ?>
+                                <?php echo ($value->chem_id); ?>
                             </td>
                         </tr>
                         <tr>
@@ -54,7 +55,7 @@
                                 Type
                             </td>
                             <td>
-                                <?php echo($value->type); ?>
+                                <?php echo ($value->type); ?>
                             </td>
                         </tr>
                         <tr>
@@ -62,7 +63,7 @@
                                 Description
                             </td>
                             <td>
-                                <?php echo($value->description); ?>
+                                <?php echo ($value->description); ?>
                             </td>
                         </tr>
                         <?php
@@ -79,7 +80,9 @@
             </div>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     $this->load->helper('array');
     ?>
     <?php
@@ -49,8 +50,7 @@
                     </tr>
 
                 </table>
-                <?php echo form_close();
-                print_r($result); ?>
+                <?php echo form_close(); ?>
 
                 <table class="table table-bordered">
                     <thead>
@@ -104,6 +104,9 @@
             </div>
         </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

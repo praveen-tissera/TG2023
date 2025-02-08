@@ -11,12 +11,9 @@ class worker_model extends CI_Model
     }
     public function registerworker($data)
     {
-        // print_r($data);
         $query = $this->db->select('*')
             ->where('name', $data['name'])
             ->get('worker_tbl');
-
-        // echo $query->num_rows();
         if ($query->num_rows() == 1) {
             return false;
         } else {
@@ -30,7 +27,6 @@ class worker_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('user_tbl');
-        echo $this->db->last_query();
         // return $query->result();
         if ($query->num_rows() == 1) {
             return true;
@@ -45,7 +41,6 @@ class worker_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('worker_tbl');
-        echo $this->db->last_query();
         return $query->result();
     }
 
@@ -55,7 +50,6 @@ class worker_model extends CI_Model
         $this->db->set('active', "0");
         $this->db->where($condition);
         $this->db->update('worker_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else {
@@ -70,7 +64,6 @@ class worker_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('attendance_tbl');
-        echo $this->db->last_query();
         if ($query->num_rows() == 0) {
             return false;
         } else {
@@ -84,7 +77,6 @@ class worker_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('worker_tbl');
-        echo $this->db->last_query();
         if ($query->num_rows() == 0) {
             return false;
         } else {
@@ -103,7 +95,7 @@ class worker_model extends CI_Model
             $this->db->insert('attendance_tbl', $data);
             if ($this->db->affected_rows() == 1) {
                 return (1);
-            }else {
+            } else {
                 return (0);
             }
         } else {
@@ -111,8 +103,6 @@ class worker_model extends CI_Model
             $this->db->set('status', $data['status']);
             $this->db->where($condition);
             $this->db->update('attendance_tbl');
-
-            echo $this->db->last_query();
             //A diffrent methord must be used check wheather the query worked
             if ($this->db->affected_rows() == 1) {
                 return (1);
@@ -130,7 +120,6 @@ class worker_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('worker_tbl');
-        echo $this->db->last_query();
         // return $query->result();
         if ($query->num_rows() == 1) {
             return $query->result();
@@ -154,7 +143,6 @@ class worker_model extends CI_Model
         $this->db->set('address', $data['address']);
         $this->db->where($condition);
         $this->db->update('worker_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else if ($this->db->affected_rows() == 0) {
@@ -169,7 +157,6 @@ class worker_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('worker_tbl');
-        echo $this->db->last_query();
         if ($query->num_rows() == 0) {
             return false;
         } else {
@@ -182,7 +169,6 @@ class worker_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->delete('worker_tbl');
-        echo $this->db->last_query();
         if ($query->num_rows() == 0) {
             return false;
         } else {
@@ -195,7 +181,6 @@ class worker_model extends CI_Model
         $this->db->set('active', "1");
         $this->db->where($condition);
         $this->db->update('worker_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else {
@@ -239,7 +224,6 @@ class worker_model extends CI_Model
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('attendance_tbl');
-            echo ($this->db->last_query());
             $result[$date] = $query->result();
             $formated_date = date_create($date);
             date_add($formated_date, date_interval_create_from_date_string("1 day"));

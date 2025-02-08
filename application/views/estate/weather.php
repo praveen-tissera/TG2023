@@ -16,6 +16,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <?php
     if (isset($success)) {
@@ -41,7 +42,7 @@
                 <?php echo form_open('estate/weather_submit') ?>
                 <table class="table">
                     <tr>
-                        <td><input class="form-control" type="text" name="weather" id="weather_submit"></td>
+                        <td><input class="form-control" type="text" name="weather" id="weather_submit" readonly></td>
                     </tr>
                     <tr>
                         <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"></td>
@@ -53,6 +54,9 @@
     </main>
 
 
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
     <script>
         async function get_data() {
             document.getElementById("loading").setAttribute("class", "spinner-border view");

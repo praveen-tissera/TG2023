@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -34,7 +35,7 @@
         <div class="row">
             <?php if ($this->session->userdata('routing')) { ?>
                 <div class="col-3">
-                    <div class="card text-white bg-primary mb-3">
+                    <div class="card text-white bg-info mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Chemical History</h5>
                             <p class="card-text">View Chemical transaction History</p>
@@ -54,7 +55,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-secondary mb-3">
+                    <div class="card text-white bg-primary mb-3">
                         <div class="card-body">
                             <h5 class="card-title">New Chemicals</h5>
                             <p class="card-text">Add New Chemicals</p>
@@ -65,7 +66,7 @@
 
 
                 <div class="col-3">
-                    <div class="card text-white bg-secondary mb-3">
+                    <div class="card text-white bg-success mb-3">
 
                         <div class="card-body">
                             <h5 class="card-title">Add Chemicals</h5>
@@ -77,7 +78,7 @@
 
 
                 <div class="col-3">
-                    <div class="card text-white bg-success mb-3">
+                    <div class="card text-white bg-warning mb-3">
 
                         <div class="card-body">
                             <h5 class="card-title">Remove Chemicals</h5>
@@ -88,7 +89,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-success mb-3">
+                    <div class="card text-white bg-dark mb-3">
 
                         <div class="card-body">
                             <h5 class="card-title">Suppliers</h5>
@@ -99,7 +100,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-success mb-3">
+                    <div class="card text-white bg-info mb-3">
 
                         <div class="card-body">
                             <h5 class="card-title">Current Chemical Stocks</h5>
@@ -111,7 +112,9 @@
             <?php } ?>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

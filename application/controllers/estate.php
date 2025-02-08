@@ -128,6 +128,10 @@ class estate extends CI_Controller
         } else {
             $end_date = date("Y") . "-" . date("m") . "-" . date("d");
         }
+        if (strtotime($start_date) > strtotime($end_date)) {
+            $this->session->set_flashdata('error', 'The start date cannot be earlier than the end date');
+            $this->manage_estate();
+        } else {
         //calls the model estate_history with the start and end dates, and sets the return as index result in array data
         $data["result"] = $this->estate_model->estate_history($start_date, $end_date);
         //pass the start and end dates to the array data
@@ -135,6 +139,7 @@ class estate extends CI_Controller
         $data["end_date"] = $end_date;
         //load view with array data
         $this->load->view('estate/view_history', $data);
+        }
     }
     public function one_day_report()
     {
@@ -196,7 +201,6 @@ class estate extends CI_Controller
             $this->load->view('estate/weather');
         } else {
             $weather_all = json_decode($_POST["weather"]);
-            print_r($weather_all);
             $weather = array();
             $weather["date"] = $weather_all->daily->time["0"];
             $weather["relative_humidity"] = $weather_all->current->relative_humidity_2m;
@@ -206,7 +210,6 @@ class estate extends CI_Controller
             $weather["rain_sum"] = $weather_all->daily->rain_sum["0"];
             $weather["max_wind_speed"] = $weather_all->daily->wind_speed_10m_max["0"];
             $weather["wind_direction"] = $weather_all->daily->wind_direction_10m_dominant["0"];
-            print_r($weather);
             if ($this->estate_model->insert_weather_data($weather)) {
                 $this->session->set_flashdata('success', 'Weather data inserted successfully');
                 redirect('estate/manage_estate');

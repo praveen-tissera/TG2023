@@ -6,12 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap-select.min.css' ?>">
+    <script src="<?php echo base_url() . '/js/jquery-3.2.1.slim.min.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/popper.min.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/bootstrap.min.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/bootstrap-select.min.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/defaults-en_US.min.js' ?>"></script>
+    <script src="<?php echo base_url() . '/js/jquery-ui.js' ?>"></script>
     <title>Expense</title>
 </head>
 
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -63,7 +70,7 @@
                     <tr>
                         <td>Date</td>
                         <td>
-                            <input type="date" class="form-control" name="date" disabled>
+                            <input type="date" class="form-control" name="date" value="<?php echo(date("Y-m-d")); ?>" disabled>
                         </td>
                     </tr>
                     <tr>
@@ -95,20 +102,16 @@
         </div>
 
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
+    
     <script>
         $('.btn-group').button('toggle');
     </script>
     <script>
         $('.selectpicker').selectpicker();
     </script>
-
-    <script src="<?php echo base_url() . '/js/jquery-3.2.1.slim.min.js' ?>"></script>
-    <script src="<?php echo base_url() . '/js/jquery-ui.js' ?>"></script>
-    <script src="<?php echo base_url() . '/js/popper.min.js' ?>"></script>
-    <script src="<?php echo base_url() . '/js/bootstrap.min.js' ?>"></script>
-    <script src="<?php echo base_url() . '/js/bootstrap-select.min.js' ?>"></script>
-    <script src="<?php echo base_url() . '/js/defaults-*.min.js' ?>"></script>
-
 </body>
 
 </html>

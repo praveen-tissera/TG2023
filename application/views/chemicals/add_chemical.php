@@ -15,6 +15,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -78,6 +79,9 @@
         </div>
 
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
     <script>
         $('.btn-group').button('toggle');
     </script>

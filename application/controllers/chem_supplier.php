@@ -117,7 +117,6 @@ class chem_supplier extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->edit_supplier($_POST['supplier_id']);
         } else {
-            print_r($_POST);
             $data = array(
                 'supplier_id' => $_POST['supplier_id'],
                 'name' => $_POST["name"],
@@ -161,7 +160,7 @@ class chem_supplier extends CI_Controller
         if ($this->chem_supplier_model->delete_supplier($id)) {
             $this->session->set_flashdata('success', 'Supplier Deleted Successfully');
         } else {
-            $this->session->set_flashdata('error', 'Chemical Failed to Delete. Please try again');
+            $this->session->set_flashdata('error', 'Supplier Failed to Delete. Please try again');
         }
         redirect('chem_supplier/manage_suppliers');
     }

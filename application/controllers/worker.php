@@ -67,14 +67,14 @@ class worker extends CI_Controller
 
     public function register_worker_Submit()
     {
-        $this->form_validation->set_rules('name', 'Username', 'required');
+        $this->form_validation->set_rules('name', 'Name', 'required');
         $this->form_validation->set_rules('dob', 'Date of birth', 'required');
         $this->form_validation->set_rules('emp_status', 'Employment Status', 'required');
         $this->form_validation->set_rules('gender', 'Gender', 'required');
         $this->form_validation->set_rules('education', 'Education Status', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'All Fields are required');
+            $this->session->set_flashdata('error', validation_errors());
             redirect("worker/register_worker");
         } else {
             // associative array
@@ -100,7 +100,6 @@ class worker extends CI_Controller
                     )
                 );
             }
-            echo ($data['dob']);
             $data['dob'] = date("Y-m-d", strtotime($data['dob']));
 
             $result = $this->worker_model->registerworker($data);
@@ -120,7 +119,6 @@ class worker extends CI_Controller
 
     public function attendanceSubmit()
     {
-        print_r($_POST);
         $currentdate = date('Y-m-d');
         foreach ($_POST as $key => $value) {
             if ($value == 'Submit') {
@@ -132,20 +130,19 @@ class worker extends CI_Controller
                 }
             }
         }
-
+        print_r($_POST);
         $i = $result = 0;
         foreach ($_POST as $key => $value) {
             if ($value == 'Submit') {
                 break;
             } else {
-                $worker_id = mb_substr($key, -1);
+                $worker_id = substr($key, strpos($key, "_") + 1);;
                 $data = array(
                     'worker_id' => $worker_id,
                     'date' => $currentdate,
                     'status' => $value
 
                 );
-                print_r($data);
                 if ($this->worker_model->attendance_Submit($data)) {
                     $result = $result + 1;
                 }
@@ -153,8 +150,6 @@ class worker extends CI_Controller
             }
         }
 
-        printf($i);
-        printf($result);
         if ($result == $i) {
             $this->session->set_flashdata('success', 'Attendance marked successfully');
             redirect("worker/manage_worker");
@@ -181,7 +176,7 @@ class worker extends CI_Controller
         $config = array();
         $config["base_url"] = base_url() . "worker/view_worker";
         $config["total_rows"] = $this->worker_model->get_count();
-        $config["per_page"] = 1;
+        $config["per_page"] = 5;
 
         //Encapsulate whole pagination    
         $config['full_tag_open']    = '<ul class="pagination justify-content-center">';
@@ -226,8 +221,6 @@ class worker extends CI_Controller
 
         $data["links"] = $this->pagination->create_links();
         $data['items'] = $this->worker_model->get_paginantion_users($config["per_page"], $offset);;
-        // $result = $this->product_model->getAllProducts();
-        // $products['items'] =  $result;
         $this->load->view('worker/view_worker', $data);
     }
 
@@ -251,12 +244,13 @@ class worker extends CI_Controller
     }
     public function editworkerSubmit()
     {
+        $this->form_validation->set_rules('wage', 'Wage', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
+        $this->form_validation->set_rules('name', 'Name', 'required');
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Form details cannot be empty');
+            $this->session->set_flashdata('error', validation_errors());
             redirect("/worker/editworker/{$_POST['worker_id']}");
         } else {
-            print_r($_POST);
             $data = array(
                 'worker_id' => $_POST['worker_id'],
                 'name' => $_POST['name'],
@@ -273,10 +267,10 @@ class worker extends CI_Controller
             );
             $result = $this->worker_model->updateworker($data);
             if ($result == 1) {
-                $this->session->set_flashdata('success', 'Profile data updated successfully');
+                $this->session->set_flashdata('success', 'Worker data updated successfully');
                 redirect("/worker/manage_worker/");
             } elseif ($result == 0) {
-                $this->session->set_flashdata('success', 'Profile data upto date');
+                $this->session->set_flashdata('success', 'Worker data upto date');
                 redirect("/worker/manage_worker/");
             } else {
                 $this->session->set_flashdata('error', 'Error occured Please try again');
@@ -388,14 +382,19 @@ class worker extends CI_Controller
         } else {
             $end_date = date("Y") . "-" . date("m") . "-" . date("d");
         }
-        //calls the model estate_history with the start and end dates, and sets the return as index result in array data
-        $data["result"] = $this->worker_model->attendance_history($start_date, $end_date);
-        //pass the start and end dates to the array data
-        $data["start_date"] = $start_date;
-        $data["end_date"] = $end_date;
+        if (strtotime($start_date) > strtotime($end_date)) {
+            $this->session->set_flashdata('error', 'The start date cannot be earlier than the end date');
+            $this->manage_worker();
+        } else {
+            //calls the model with the start and end dates, and sets the return as index result in array data
+            $data["result"] = $this->worker_model->attendance_history($start_date, $end_date);
+            //pass the start and end dates to the array data
+            $data["start_date"] = $start_date;
+            $data["end_date"] = $end_date;
 
-        $data['worker'] = $this->worker_model->getworkerData();
-        //load view with array data
-        $this->load->view('worker/view_attendance', $data);
+            $data['worker'] = $this->worker_model->getworkerData();
+            //load view with array data
+            $this->load->view('worker/view_attendance', $data);
+        }
     }
 }

@@ -10,7 +10,8 @@
 </head>
 
 <body>
-    <?php $this->load->view('common/nav'); ?>
+    <?php $this->load->view('common/nav');
+    $this->load->view('/common/carousel.php'); ?>
     <div class="container">
         <div class="row">
             <div class="col">
@@ -78,7 +79,9 @@
             </div>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
     <script>
         $(document).ready(function() {
             var canEdit = <?php echo json_encode($this->session->userdata('routing')['profile']['edit']); ?>;
@@ -90,7 +93,9 @@
                 $.ajax({
                     url: baseUrl + 'worker/search_worker',
                     type: 'POST',
-                    data: { query: query },
+                    data: {
+                        query: query
+                    },
                     success: function(data) {
                         console.log(data);
                         var results;

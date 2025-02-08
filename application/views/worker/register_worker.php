@@ -20,6 +20,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -36,7 +37,7 @@
                     echo "</div>";
                 }
                 ?>
-                <h1>Register New User</h1>
+                <h1>Register New Worker</h1>
 
                 <?php echo validation_errors('<div class="alert alert-danger">', '</div>'); ?>
 
@@ -123,6 +124,9 @@
         </div>
 
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
     <script>
         $('.btn-group').button('toggle');
     </script>

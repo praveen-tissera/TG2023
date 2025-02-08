@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -30,13 +31,10 @@
                 echo validation_errors('<div class="alert alert-danger">', '</div>');
                 ?>
                 <?php
-                print_r($this->session->userdata('userinfo'));
-                // print_r($myprofile);
                 echo form_open('user/editProfileSubmit');
                 echo "<table class='table'>";
                 $userId = 0;
                 foreach ($myprofile as $key => $value) {
-                    // print_r($value->id);
                     $userId = $value->id;
                     echo "<input type='hidden' name='userid' value='{$value->id}'>";
                     echo "<tr>";
@@ -101,7 +99,9 @@
             </div>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

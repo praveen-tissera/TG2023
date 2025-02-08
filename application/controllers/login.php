@@ -49,8 +49,6 @@ class Login extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->load->view('register');
         } else {
-            echo "success";
-            // print_r($_POST);
             $current_date = date('Y-m-d');
             // associative array
             $data = array(
@@ -62,7 +60,6 @@ class Login extends CI_Controller
                 'created_date' =>  $current_date
             );
 
-            // print_r($data);
             // pass this array to model
             $result = $this->user_model->registerUser($data);
             if ($result) {
@@ -77,15 +74,11 @@ class Login extends CI_Controller
                 $this->load->view('register', $data);
             }
 
-
-            // $this->load->view('formsuccess');
         }
     }
 
     public function loginSubmit()
     {
-        //debuging
-        print_r($_POST);
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('password', 'Password', 'required');
         if ($this->form_validation->run() == FALSE) {
@@ -99,7 +92,6 @@ class Login extends CI_Controller
             if ($result) {
                 // set session 
                 $resutlUserData = $this->user_model->getUserData($data);
-                print_r($resutlUserData);
                 $session_user = array(
                     'id' => $resutlUserData[0]->id,
                     'login' => true,
@@ -219,10 +211,6 @@ class Login extends CI_Controller
                 $this->session->set_userdata('routing', $actions);
                 redirect('/user/dashboard');
             } else {
-                // $data = array(
-                //     'error'=>'Email or password incorrect. Please check'
-                // );
-                // $this->load->view('login',$data);
                 $this->session->set_flashdata('error', 'Email or password incorrect. Please check');
                 redirect('login/userlogin');
             }
@@ -258,7 +246,6 @@ class Login extends CI_Controller
             $this->session->set_flashdata('error', 'Form details cannot be empty');
             redirect("/login/editProfile/{$_POST['userid']}");
         } else {
-            print_r($_POST);
             $data = array(
                 'id' => $_POST['userid'],
                 'name' => $_POST['username'],

@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -42,7 +43,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card text-white bg-secondary mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Mark attendance</h5>
                         <p class="card-text">Mark Attendance for the day</p>
@@ -51,7 +52,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card text-white bg-success mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Reigster</h5>
                         <p class="card-text">Add new workers</p>
@@ -60,7 +61,7 @@
                 </div>
             </div>
             <div class="col-3">
-                <div class="card text-white bg-primary mb-3">
+                <div class="card text-white bg-info mb-3">
                     <div class="card-body">
                         <h5 class="card-title">Attendance</h5>
                         <p class="card-text">View Attendance</p>
@@ -70,7 +71,7 @@
             </div>
             <?php if ($this->session->userdata('routing')['worker']['perm_delete']) { ?>
                 <div class="col-3">
-                    <div class="card text-white bg-primary mb-3">
+                    <div class="card text-white bg-warning mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Recover</h5>
                             <p class="card-text">Recover workers marked for deletion</p>
@@ -81,7 +82,9 @@
             <?php } ?>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

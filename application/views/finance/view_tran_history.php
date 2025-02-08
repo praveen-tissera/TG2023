@@ -5,12 +5,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
+    <script src="<?php echo base_url('js/echarts.min.js') ?>"></script>
     <title>Chemical History</title>
 </head>
 
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     $this->load->helper('array');
     ?>
     <?php
@@ -24,10 +26,6 @@
         echo $error;
         echo "</div>";
     }
-    print_r($result);
-    print_r($incomes);
-    print_r($expenses);
-    print_r($current);
     ?>
 
     <div class="container">
@@ -41,12 +39,12 @@
                 <table class="table">
 
                     <tr>
-                        <td>Start date (YYYY-MM-DD)</td>
-                        <td><input class="form-control" type="text" value='<?php echo $start_date ?>' name="start_date"></td>
+                        <td>Start date</td>
+                        <td><input class="form-control" type="date" value='<?php echo $start_date ?>' name="start_date"></td>
                     </tr>
                     <tr>
-                        <td>End Date (YYYY-MM-DD)</td>
-                        <td><input class="form-control" type="text" value='<?php echo $end_date ?>' name="end_date"></td>
+                        <td>End Date</td>
+                        <td><input class="form-control" type="date" value='<?php echo $end_date ?>' name="end_date"></td>
                     </tr>
                     <tr>
                         <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"></td>
@@ -160,9 +158,72 @@
                         ?>
                     </tbody>
                 </table>
+                <div id="chart" style="width: 600px; height: 400px;"></div>
             </div>
         </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
+
+    <script>
+        // Initialize ECharts
+        var myChart = echarts.init(document.getElementById('chart'));
+
+        // Student marks data
+        var result = <?php echo json_encode($result) ?>;
+        console.log(result);
+
+        
+        // console.log(mathMarks);
+        // ECharts configuration
+        var option1 = {
+            title: {
+                text: 'Income and Expenses'
+            },
+            tooltip: {
+                trigger: 'axis'
+            },
+            legend: {
+                data: ['Income', 'Expenses']
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false,
+                data: ['2024-08-21','2024-08-22','2024-08-23', '2024-08-24', '2024-08-25', '2024-08-26', '2024-08-27', '2024-08-28']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [{
+                    name: 'income',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [0, 0, 0, 0, 0, 0, 0,50000]
+                },
+                {
+                    name: 'expenses',
+                    type: 'line',
+                    stack: 'Total',
+                    data: [0, 0, 0, 0, 0, 0, 0,2000]
+                }
+            ]
+        };
+
+        // Set the configuration to the chart
+        myChart.setOption(option1);
+    </script>
 </body>
 
 </html>

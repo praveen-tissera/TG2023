@@ -16,6 +16,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 <body>
   <?php
   $this->load->view('/common/nav.php');
+  $this->load->view('/common/carousel.php');
   ?>
   <div class="container">
     <div class="row">
@@ -68,6 +69,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
       </div>
     </div>
   </div>
+  <?php
+  $this->load->view('/common/footer.php');
+  ?>
 </body>
 
 </html>

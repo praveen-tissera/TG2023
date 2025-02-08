@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -69,10 +70,10 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-success mb-3">
+                    <div class="card text-white bg-info mb-3">
                         <div class="card-body">
                             <h5 class="card-title">One Day Report</h5>
-                            <p class="card-text">The complete report fot one day</p>
+                            <p class="card-text">The complete report for one day</p>
                             <a href="<?php echo base_url() . 'estate/one_day_report' ?>" class="stretched-link"></a>
                         </div>
                     </div>
@@ -80,7 +81,9 @@
             <?php } ?>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
 </body>
 
 </html>

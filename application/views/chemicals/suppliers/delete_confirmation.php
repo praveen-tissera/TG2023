@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -59,19 +60,18 @@
                         </tr>
                         <?php
                         echo "</table>";
-                        echo "<h1>Please Confirm Deletion of Chemical</h1>";
+                        echo "<h1>Please Confirm Deletion of Chemical Supplier</h1>";
                         if ($this->session->userdata('routing')['profile']['edit']) { ?>
                             <a class="btn btn-warning" href="<?php echo base_url() . '/chem_supplier/delete_supplier_confirmation/' . $value->supplier_id ?>" role="button">Delete Supplier</a>
                     <?php }
                     }
                     ?>
-
-
-
             </div>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

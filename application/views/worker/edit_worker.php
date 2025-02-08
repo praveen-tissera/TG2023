@@ -14,17 +14,18 @@
             $("#datepicker").datepicker();
         });
     </script>
-    <title>Profle</title>
+    <title>Worker</title>
 </head>
 
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
             <div class="col">
-                <h1>My Profile</h1>
+                <h1>Edit Worker</h1>
                 <?php
                 if (isset($success)) {
                     echo "<div class='alert alert-success'>";
@@ -39,8 +40,6 @@
 
                 ?>
                 <?php
-                print_r($this->session->userdata('userinfo'));
-                // print_r($myprofile);
                 echo form_open('worker/editWorkerSubmit');
                 echo "<table class='table'>";
                 foreach ($workerdata as $key => $value) {
@@ -79,8 +78,24 @@
                     echo "<td>";
                     echo "Employment Status";
                     echo "</td>";
-                    echo "<td>";
-                    echo "<input class='form-control' type='text' value='{$value->emp_status}' name='emp_status'>";
+                    echo "<td>"; ?>
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-secondary <?php if ('permanent' == $value->emp_status) {
+                                                            echo 'active';
+                                                        } ?>">
+                            <input type="radio" name="emp_status" id="permanent" autocomplete="off" value="permanent" <?php if ('permanent' == $value->emp_status) {
+                                                                                                            echo 'checked';
+                                                                                                        } ?>> Permanent
+                        </label>
+                        <label class="btn btn-secondary <?php if ('temporary' == $value->emp_status) {
+                                                            echo 'active';
+                                                        } ?>">
+                            <input type="radio" name="emp_status" id="temporary" autocomplete="off" value="temporary" <?php if ('temporary' == $value->emp_status) {
+                                                                                                                echo 'checked';
+                                                                                                            } ?>> Temporary
+                        </label>
+                    </div>
+                    <?php 
                     echo "</td>";
                     echo "</tr>";
 
@@ -185,6 +200,9 @@
             </div>
         </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
     <script>
         $('.btn-group').button('toggle');
     </script>

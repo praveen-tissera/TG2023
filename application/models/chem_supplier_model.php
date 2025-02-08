@@ -17,7 +17,6 @@ class chem_supplier_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('supplier_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -30,7 +29,6 @@ class chem_supplier_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('supplier_tbl');
-        echo $this->db->last_query();
         if ($query->num_rows() == 1) {
             return $query->result();
         } else {
@@ -54,7 +52,6 @@ class chem_supplier_model extends CI_Model
         $this->db->set('address', $data['address']);
         $this->db->where($condition);
         $this->db->update('supplier_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else if ($this->db->affected_rows() == 0) {
@@ -69,7 +66,6 @@ class chem_supplier_model extends CI_Model
         $this->db->set('status', "0");
         $this->db->where($condition);
         $this->db->update('supplier_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else {

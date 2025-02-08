@@ -21,7 +21,6 @@ class chemicals_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('chemical_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -34,7 +33,6 @@ class chemicals_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('supplier_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -47,7 +45,6 @@ class chemicals_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('chemical_tbl');
-        echo $this->db->last_query();
         if ($query->num_rows() == 1) {
             return $query->result();
         } else {
@@ -72,7 +69,6 @@ class chemicals_model extends CI_Model
         $this->db->set('description', $data['description']);
         $this->db->where($condition);
         $this->db->update('chemical_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else if ($this->db->affected_rows() == 0) {
@@ -87,7 +83,6 @@ class chemicals_model extends CI_Model
         $this->db->set('status', "0");
         $this->db->where($condition);
         $this->db->update('chemical_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else {
@@ -107,14 +102,11 @@ class chemicals_model extends CI_Model
             }
         } else {
             $query_result = $query->result();
-            print_r($query_result);
-            echo $amount = $query_result[0]->amount + $data['amount'];
             $condition = "chem_id= '{$data['chem_id']}' && supp_id = '{$data['supp_id']}' ";
             $this->db->set('amount', $amount);
             $this->db->set('cost', $data['cost']);
             $this->db->where($condition);
             $this->db->update('current_chemical_tbl');
-            echo $this->db->last_query();
             if ($this->db->affected_rows() == 0) {
                 return (0);
             }
@@ -150,7 +142,6 @@ class chemicals_model extends CI_Model
     public function chemicals_out($data)
     {
         $this->db->insert('chemical_out_tbl', $data);
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 0) {
             return (0);
         } else {
@@ -158,16 +149,12 @@ class chemicals_model extends CI_Model
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('current_chemical_tbl');
-            $query_result = $query->result();
-            echo $this->db->last_query();
-            print_r($query_result);
+            $query_result = $query->result(); 
             $amount = $query_result[0]->amount - $data['amount'];
-            echo($amount);
             $condition = "chem_id= '{$data['chem_id']}' && supp_id = '{$data['supp_id']}' ";
             $this->db->set('amount', $amount);
             $this->db->where($condition);
             $this->db->update('current_chemical_tbl');
-            echo $this->db->last_query();
             if ($this->db->affected_rows() == 0) {
                 return (0);
             } else {
@@ -179,21 +166,17 @@ class chemicals_model extends CI_Model
     {
         $date = $start_date;
         $result = array();
-        echo ($end_date);
-        echo ($start_date);
         while ($date <= $end_date) {
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
-                ->get('chemical_in_tbl');
-            print_r($this->db->last_query());
+                ->get('chemical_in_tbl'); 
             $result["in"][$date] = $query->result();
 
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
-                ->get('chemical_out_tbl');
-            print_r($this->db->last_query());
+                ->get('chemical_out_tbl'); 
             $result["out"][$date] = $query->result();
 
 
@@ -207,7 +190,6 @@ class chemicals_model extends CI_Model
     {
         $query = $this->db->select('*')
             ->get('current_chemical_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {

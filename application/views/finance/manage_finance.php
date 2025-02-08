@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -34,7 +35,7 @@
         <div class="row">
             <?php if ($this->session->userdata('routing')) { ?>
                 <div class="col-3">
-                    <div class="card text-white bg-primary mb-3">
+                    <div class="card text-white bg-danger mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Expense</h5>
                             <p class="card-text">Add expenses</p>
@@ -44,7 +45,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-secondary mb-3">
+                    <div class="card text-white bg-warning mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Add Expense type</h5>
                             <p class="card-text">Add a new expense Type</p>
@@ -54,7 +55,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-secondary mb-3">
+                    <div class="card text-white bg-success mb-3">
                         <div class="card-body">
                             <h5 class="card-title">Income</h5>
                             <p class="card-text">Add Income</p>
@@ -64,7 +65,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-secondary mb-3">
+                    <div class="card text-white bg-dark mb-3">
 
                         <div class="card-body">
                             <h5 class="card-title">Add Income type</h5>
@@ -75,7 +76,7 @@
                 </div>
 
                 <div class="col-3">
-                    <div class="card text-white bg-secondary mb-3">
+                    <div class="card text-white bg-info mb-3">
 
                         <div class="card-body">
                             <h5 class="card-title">Income/Expenses</h5>
@@ -95,11 +96,13 @@
                         </div>
                     </div>
                 </div>
-                
+
             <?php } ?>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

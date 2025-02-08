@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -73,7 +74,7 @@
                     echo "</td>";
                     echo "</tr>";
 
-                  
+
                 ?>
 
                     <?php
@@ -90,7 +91,9 @@
             </div>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

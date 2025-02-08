@@ -121,7 +121,6 @@ class chemicals extends CI_Controller
                 $data['error'] = $error;
             }
             $currentdate = date('Y-m-d');
-            print_r($_POST);
 
             $current_chem_data = array(
                 'chem_id' => $_POST['chem_id'],
@@ -234,7 +233,6 @@ class chemicals extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->editchemical($_POST["chem_id"]);
         } else {
-            print_r($_POST);
             $data = array(
                 'chem_id' => $_POST["chem_id"],
                 'name' => $_POST["name"],
@@ -310,7 +308,11 @@ class chemicals extends CI_Controller
         } else {
             $end_date = $currentdate;
         }
-        //calls the model estate_history with the start and end dates, and sets the return as index result in array data
+        if (strtotime($start_date) > strtotime($end_date)) {
+            $this->session->set_flashdata('error', 'The end date cannot be earlier than the start date');
+            $this->manage_chemicals();
+        } else {
+        //calls the model with the start and end dates, and sets the return as index result in array data
         $data["result"] = $this->chemicals_model->chemical_history($start_date, $end_date);
         $data["chemicals"] = $this->chemicals_model->get_chemicals();
         $data["suppliers"] = $this->chemicals_model->get_suppliers();
@@ -319,6 +321,7 @@ class chemicals extends CI_Controller
         $data["end_date"] = $end_date;
         //load view with array data
         $this->load->view('chemicals/view_history', $data);
+        }
     }
 
     public function view_current_chem()

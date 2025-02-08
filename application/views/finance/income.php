@@ -12,6 +12,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -63,7 +64,7 @@
                     <tr>
                         <td>Date</td>
                         <td>
-                            <input type="date" class="form-control" name="date" disabled>
+                            <input type="date" class="form-control" name="date" value="<?php echo(date("Y-m-d")); ?>" disabled>
                         </td>
                     </tr>
                     <tr>
@@ -97,6 +98,9 @@
         </div>
 
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
     <script>
         $('.selectpicker').selectpicker();
     </script>

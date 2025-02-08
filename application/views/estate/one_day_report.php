@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -134,17 +135,17 @@
                 <?php if (isset($fin_info)) { ?>
                     <h3>Financial Transaction</h3>
                     <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="text-align:center;">Source </th>
-                            <th scope="col" style="text-align:center;">Type</th>
-                            <th scope="col" style="text-align:center;">Comments</th>
-                            <th scope="col" style="text-align:center;">Image</th>
-                            <th scope="col" style="text-align:center;">Amount</th>
-                        </tr>
-                    </thead>
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center;">Source </th>
+                                <th scope="col" style="text-align:center;">Type</th>
+                                <th scope="col" style="text-align:center;">Comments</th>
+                                <th scope="col" style="text-align:center;">Image</th>
+                                <th scope="col" style="text-align:center;">Amount</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
+                        <tbody>
                             <?php foreach ($fin_info["in"] as $key => $value) { ?>
                                 <tr class="table-success">
                                     <td>
@@ -219,24 +220,24 @@
                                     </td>
                                 </tr>
                             <?php } ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
                 <?php } ?>
 
                 <?php if (isset($chem_info)) { ?>
                     <h3>Chemical Transactions</h3>
                     <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col" style="text-align:center;">Chemical</th>
-                            <th scope="col" style="text-align:center;">Amount</th>
-                            <th scope="col" style="text-align:center;">Cost</th>
-                            <th scope="col" style="text-align:center;">Supplier</th>
-                        </tr>
-                    </thead>
+                        <thead>
+                            <tr>
+                                <th scope="col" style="text-align:center;">Chemical</th>
+                                <th scope="col" style="text-align:center;">Amount</th>
+                                <th scope="col" style="text-align:center;">Cost</th>
+                                <th scope="col" style="text-align:center;">Supplier</th>
+                            </tr>
+                        </thead>
 
-                    <tbody>
+                        <tbody>
                             <?php foreach ($chem_info["in"] as $key => $value) { ?>
                                 <tr class="table-success">
                                     <td>
@@ -299,14 +300,16 @@
                                         ?></td>
                                 </tr>
                             <?php } ?>
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
 
-                    <?php } ?> 
+                <?php } ?>
             </div>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

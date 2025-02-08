@@ -11,8 +11,9 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col">
 
@@ -37,6 +38,7 @@
                     <?php if ($key == 'myprofile' && $value == 1) { ?>
                         <div class="col-3">
                             <div class="card text-white bg-primary mb-3">
+                                <img class="card-img-top" src="<?php echo base_url() . 'images\dashboard\profile.jpg' ?>" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">Manage Users</h5>
                                     <p class="card-text">View/Edit Users</p>
@@ -49,7 +51,7 @@
                     <?php if ($key == 'product' && $value == 1) { ?>
                         <div class="col-3">
                             <div class="card text-white bg-secondary mb-3">
-
+                                <img class="card-img-top" src="<?php echo base_url() . 'images\dashboard\worker.jpg' ?>" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">Manage Workers</h5>
                                     <p class="card-text">Add/Remove/Modify Workers</p>
@@ -63,7 +65,7 @@
                     <?php if ($key == 'reports' && $value == 1) { ?>
                         <div class="col-3">
                             <div class="card text-white bg-success mb-3">
-
+                            <img class="card-img-top" src="<?php echo base_url() . 'images\dashboard\tea_estate.jpg' ?>" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">Estate</h5>
                                     <p class="card-text">Manage and track estate activities</p>
@@ -75,8 +77,8 @@
                     <?php } ?>
                     <?php if ($key == 'reports' && $value == 1) { ?>
                         <div class="col-3">
-                            <div class="card text-white bg-success mb-3">
-
+                            <div class="card text-white bg-warning mb-3">
+                            <img class="card-img-top" src="<?php echo base_url() . 'images\dashboard\chemicals.jpg' ?>" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">Chemicals</h5>
                                     <p class="card-text">Manage and track chemicals activities</p>
@@ -87,8 +89,8 @@
                     <?php } ?>
                     <?php if ($key == 'reports' && $value == 1) { ?>
                         <div class="col-3">
-                            <div class="card text-white bg-success mb-3">
-
+                            <div class="card text-white bg-info mb-3">
+                            <img class="card-img-top" src="<?php echo base_url() . 'images\dashboard\money.jpg' ?>" alt="Card image cap">
                                 <div class="card-body">
                                     <h5 class="card-title">Fianaces</h5>
                                     <p class="card-text">Manage and track financial activities</p>
@@ -101,7 +103,9 @@
             <?php } ?>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

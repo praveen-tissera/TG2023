@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     $this->load->helper('array');
     ?>
     <?php
@@ -37,12 +38,12 @@
                 <table class="table">
 
                     <tr>
-                        <td>Start date (YYYY-MM-DD)</td>
-                        <td><input class="form-control" type="text" value='<?php echo $start_date ?>' name="start_date"></td>
+                        <td>Start date</td>
+                        <td><input class="form-control" type="date" value='<?php echo $start_date ?>' name="start_date"></td>
                     </tr>
                     <tr>
-                        <td>End Date (YYYY-MM-DD)</td>
-                        <td><input class="form-control" type="text" value='<?php echo $end_date ?>' name="end_date"></td>
+                        <td>End Date</td>
+                        <td><input class="form-control" type="date" value='<?php echo $end_date ?>' name="end_date"></td>
                     </tr>
                     <tr>
                         <td><input class="btn btn-primary" type="submit" name="submit" value="Submit"></td>
@@ -199,6 +200,9 @@
             </div>
         </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
 </body>
 
 </html>

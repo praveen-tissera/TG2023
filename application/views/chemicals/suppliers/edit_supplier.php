@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -30,8 +31,6 @@
                 echo validation_errors('<div class="alert alert-danger">', '</div>');
                 ?>
                 <?php
-                print_r($this->session->userdata('userinfo'));
-                // print_r($myprofile);
                 echo form_open('chem_supplier/edit_supplier_submit');
                 echo "<table class='table'>";
                 foreach ($result as $key => $value) {
@@ -77,6 +76,9 @@
             </div>
         </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
 </body>
 
 </html>

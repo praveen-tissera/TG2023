@@ -15,6 +15,8 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
+
     ?>
     <div class="container">
         <div class="col">
@@ -30,10 +32,12 @@
                     echo $error;
                     echo "</div>";
                 }
-
                 ?>
+            </div>
+            <div class="row">
                 <h1><?php echo ($date) ?> </h1>
             </div>
+
             <div class="row">
                 <h3>Mark Attendance</h3>
             </div>
@@ -91,6 +95,9 @@
         </div>
     </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
     <script>
         $('.btn-group').button('toggle');
     </script>

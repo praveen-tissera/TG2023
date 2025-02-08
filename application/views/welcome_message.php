@@ -73,6 +73,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
             </div>
         </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?> 
 </body>
+
 
 </html>

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?php echo base_url() . '/css/bootstrap.min.css' ?>">
-    <title>Attendance</title>
+    <title>Current Chemicals</title>
     <script src="<?php echo base_url() . '/js/jquery-3.2.1.slim.min.js' ?>"></script>
     <script src="<?php echo base_url() . '/js/popper.min.js' ?>"></script>
     <script src="<?php echo base_url() . '/js/bootstrap.min.js' ?>"></script>
@@ -15,6 +15,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="col">
@@ -83,6 +84,9 @@
             </div>
         </div>
     </div>
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>

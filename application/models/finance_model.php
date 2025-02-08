@@ -27,7 +27,6 @@ class finance_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('expense_types_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -38,7 +37,6 @@ class finance_model extends CI_Model
     {
         $query = $this->db->select('*')
             ->get('current_finance_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -63,7 +61,6 @@ class finance_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('current_finance_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -72,13 +69,12 @@ class finance_model extends CI_Model
         }
     }
 
-    public function set_bal($id,$amount)
+    public function set_bal($id, $amount)
     {
         $condition = "id  ='{$id}'";
         $this->db->set('amount', $amount);
         $this->db->where($condition);
         $this->db->update('current_finance_tbl');
-        echo $this->db->last_query();
         if ($this->db->affected_rows() == 1) {
             return (1);
         } else if ($this->db->affected_rows() == 0) {
@@ -104,7 +100,6 @@ class finance_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('income_types_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -126,21 +121,17 @@ class finance_model extends CI_Model
     {
         $date = $start_date;
         $result = array();
-        echo ($end_date);
-        echo ($start_date);
         while ($date <= $end_date) {
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('income_tbl');
-            print_r($this->db->last_query());
             $result["in"][$date] = $query->result();
 
             $condition = "date='{$date}'";
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('expense_tbl');
-            print_r($this->db->last_query());
             $result["out"][$date] = $query->result();
 
 

@@ -111,10 +111,9 @@ class User extends CI_Controller
         $this->form_validation->set_rules('email', 'Email', 'required');
         $this->form_validation->set_rules('address', 'Address', 'required');
         if ($this->form_validation->run() == FALSE) {
-            $this->session->set_flashdata('error', 'Form details cannot be empty');
+            $this->session->set_flashdata('error', validation_errors());
             redirect("/login/editProfile/{$_POST['userid']}");
         } else {
-            print_r($_POST);
             $data = array(
                 'id' => $_POST['userid'],
                 'name' => $_POST['username'],
@@ -143,7 +142,6 @@ class User extends CI_Controller
             return true;
         }
     }
-
     public function register()
     {
         $this->load->view('register');
@@ -153,5 +151,4 @@ class User extends CI_Controller
     {
         redirect('worker/manage_worker');
     }
-
 }

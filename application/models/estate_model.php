@@ -34,7 +34,6 @@ class estate_model extends CI_Model
                 //if data does not exist, insert a new record for that day
                 $this->db->insert('estate_status_tbl', $data);
             }
-            echo $this->db->last_query();
             if ($this->db->affected_rows() == 1) {
                 return (1);
             } else {
@@ -57,7 +56,6 @@ class estate_model extends CI_Model
             $query = $this->db->select('*')
                 ->where($condition)
                 ->get('estate_status_tbl');
-            echo ($this->db->last_query());
             $result[$date] = $query->result();
             $formated_date = date_create($date);
             date_add($formated_date, date_interval_create_from_date_string("1 day"));
@@ -71,7 +69,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('estate_status_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -94,7 +91,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('weather_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -107,7 +103,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('weather_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -120,7 +115,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('attendance_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -131,9 +125,8 @@ class estate_model extends CI_Model
     {
         $condition = "active='1'";
         $query = $this->db->select('*')
-        ->where($condition)
+            ->where($condition)
             ->get('worker_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -144,7 +137,6 @@ class estate_model extends CI_Model
     {
         $query = $this->db->select('*')
             ->get('income_types_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -152,7 +144,6 @@ class estate_model extends CI_Model
         }
         $query = $this->db->select('*')
             ->get('expense_types_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -166,7 +157,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('income_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -175,7 +165,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('expense_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -187,7 +176,6 @@ class estate_model extends CI_Model
     {
         $query = $this->db->select('*')
             ->get('current_finance_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -198,7 +186,6 @@ class estate_model extends CI_Model
     {
         $query = $this->db->select('*')
             ->get('supplier_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -209,7 +196,6 @@ class estate_model extends CI_Model
     {
         $query = $this->db->select('*')
             ->get('chemical_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -222,7 +208,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('chemical_in_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -231,7 +216,6 @@ class estate_model extends CI_Model
         $query = $this->db->select('*')
             ->where($condition)
             ->get('chemical_out_tbl');
-        echo ($this->db->last_query());
         if ($query->num_rows() == 0) {
             return NULL;
         } else {
@@ -239,5 +223,4 @@ class estate_model extends CI_Model
         }
         return ($data);
     }
-
 }

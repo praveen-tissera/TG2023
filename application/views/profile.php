@@ -11,6 +11,7 @@
 <body>
     <?php
     $this->load->view('/common/nav.php');
+    $this->load->view('/common/carousel.php');
     ?>
     <div class="container">
         <div class="row">
@@ -30,14 +31,10 @@
 
                 ?>
                 <?php
-                print_r($this->session->userdata('userinfo'));
-                // print_r($myprofile);
 
                 echo "<table class='table'>";
                 $userId = 0;
-                print_r($myprofile);
                 foreach ($myprofile as $key => $value) {
-                    // print_r($value->id);
                     $userId = $value->id;
                     echo "<tr>";
                     echo "<td>";
@@ -107,7 +104,9 @@
             </div>
         </div>
     </div>
-
+    <?php
+    $this->load->view('/common/footer.php');
+    ?>
 </body>
 
 </html>
